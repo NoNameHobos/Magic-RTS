@@ -7,14 +7,15 @@ import org.newdawn.slick.Graphics;
 
 import main.engine.State;
 import main.entities.Entity;
-import main.entities.Mob;
-import main.entities.military.Golem;
+import main.entities.Unit;
+import main.entities.unit.Axeman;
+import main.entities.unit.Golem;
 
 public class GameState extends State {
 
-	private ArrayList<Mob> mobs = new ArrayList<Mob>();
+	private ArrayList<Unit> mobs = new ArrayList<Unit>();
 	
-	private Mob golem;
+	private Unit axeman;
 	
 	public GameState(String name) {
 		super(name);
@@ -33,7 +34,7 @@ public class GameState extends State {
 
 	//Render the Game State
 	public void render(Graphics g) {
-		g.setBackground(new Color(50, 50, 50));
+		g.setBackground(new Color(0, 40, 0));
 		g.setColor(Color.white);
 		//Render Entities
 		ArrayList<Entity> entities = Entity.getEntities();
@@ -44,8 +45,7 @@ public class GameState extends State {
 
 	@Override
 	public void initState() {
-		golem = new Golem(null, 300, 200);
-		
+		axeman = new Axeman(null, 500, 400);
 		init = false;
 	}
 

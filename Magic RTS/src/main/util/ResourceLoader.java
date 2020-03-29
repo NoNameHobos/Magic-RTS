@@ -60,6 +60,12 @@ public class ResourceLoader {
 		//LOAD GOLEM SPRITE AND WALK
 		SPRITES.put("spr_golem", loadImage("res\\mobs\\Golem"));
 		SPRITE_SHEETS.put("golem_walk", loadSpriteSheet("res\\mobs\\golemwalk_ss", 32, 32));
+		
+		//Axeman
+		SPRITES.put("axeman", loadImage("res\\mobs\\vikeaxe"));
+		SPRITE_SHEETS.put("axeman_down", loadSpriteSheet("res\\mobs\\vikeaxe_down", 48, 48));
+		
+		//Report loaded resources
 		int resourceCount = SPRITES.size() + SPRITE_SHEETS.size();
 		System.out.println("Loaded " + resourceCount + " Resources!");
 	}

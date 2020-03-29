@@ -3,9 +3,9 @@ package main.entities;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
-import main.engine.Player;
+import main.player.Player;
 
-public abstract class Mob extends Entity {
+public abstract class Unit extends Entity {
 
 	protected float health, health_max;
 	protected float move_speed;
@@ -19,7 +19,7 @@ public abstract class Mob extends Entity {
 	
 	protected Player player;
 	
-	public Mob(Player player, float x, float y, Image sprite) {
+	public Unit(Player player, float x, float y, Image sprite) {
 		super(new Point(x, y), sprite);
 		this.player = player;
 	}
