@@ -1,4 +1,4 @@
-package main.entities.military;
+package main.entities.mob;
 
 import static main.engine.Engine.ENGINE;
 import static main.util.ResourceLoader.SPRITES;

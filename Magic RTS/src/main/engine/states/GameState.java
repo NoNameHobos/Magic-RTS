@@ -8,7 +8,7 @@ import org.newdawn.slick.Graphics;
 import main.engine.State;
 import main.entities.Entity;
 import main.entities.Mob;
-import main.entities.military.Golem;
+import main.entities.mob.Golem;
 
 public class GameState extends State {
 
