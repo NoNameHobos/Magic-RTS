@@ -38,12 +38,10 @@ public class Axeman extends Unit {
 
 	@Override
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
-		if(speed != 0 && getFacing() == 0) {
+		if(speed != 0 && getFacing() == 0)
 			walk.draw(pos.getX(), pos.getY());
-		} else 
+		else 
 			sprite.draw(pos.getX(), pos.getY());
-		g.drawString(Integer.toString(getFacing()), pos.getX() + 70, pos.getY());
 	}
 
 	@Override
@@ -51,18 +49,4 @@ public class Axeman extends Unit {
 		moveTo(ENGINE.getMouse().getPos());
 		move(speed, direction);
 	}
-	
-	public int getFacing() {
-		float dir = Math.abs(360 - direction);
-		if(dir > 45 && dir < 135) {
-			return 1; //Up (For Now)
-		} else if(dir <= 45 || (dir >= 305 && dir <= 360)) {
-			return 2; //Right (For Now)
-		} else if(dir >= 135 && dir <= 205) {
-			return 3; //Left (For Now)
-		} else {
-			return 0; //Down (For Now)
-		}
-	}
-
 }

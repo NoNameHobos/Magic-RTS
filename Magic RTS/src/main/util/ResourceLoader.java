@@ -13,6 +13,9 @@ public class ResourceLoader {
 	public static HashMap<String, Image> SPRITES = new HashMap<String, Image>();
 	public static HashMap<String, SpriteSheet> SPRITE_SHEETS = new HashMap<String, SpriteSheet>();
 	
+	public static Image missing;
+	public static SpriteSheet missingSS;
+	
 	/*public static HashMap<String, Animation> ANIMATIONS = new HashMap<String, Animation>();
 	
 	public static Animation loadAnimation(String dir, int duration) {
@@ -22,7 +25,6 @@ public class ResourceLoader {
 	public static Animation loadAnimation(SpriteSheet ss, int duration) {
 		
 	}*/
-	
 	public static Image loadImage(String dir) {
 		Image i;
 		try {
@@ -32,7 +34,10 @@ public class ResourceLoader {
 		} catch(SlickException e) {
 			System.err.println("Failed to load image at: " + dir);
 			e.printStackTrace();
-			return null;
+			return missing;
+		} catch(RuntimeException e) {
+			System.err.println("Failed to load image: " + dir);
+			return missing;
 		}
 	}	
 
@@ -52,11 +57,23 @@ public class ResourceLoader {
 		} catch(SlickException e) {
 			System.err.println("Failed to load Sprite Sheet at: " + dir);
 			e.printStackTrace();
-			return null;
+			return missingSS;
+		} catch(RuntimeException e) {
+			System.err.println("Failed to load Sprite Sheet at: " + dir);
+			return missingSS;
 		}
 	}
 	
 	public static void initResources() {
+		
+		try {
+			missing = new Image(ABS_PATH + "res\\missingtex.png");
+			missingSS = new SpriteSheet(ABS_PATH + "res\\missingtex.png", 48, 48);
+		} catch (SlickException e) {
+			System.err.println("Failed to load missingtex.png");
+			e.printStackTrace();
+		}
+		
 		//LOAD GOLEM SPRITE AND WALK
 		SPRITES.put("spr_golem", loadImage("res\\mobs\\Golem"));
 		SPRITE_SHEETS.put("golem_walk", loadSpriteSheet("res\\mobs\\golemwalk_ss", 32, 32));

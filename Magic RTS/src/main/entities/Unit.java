@@ -38,6 +38,19 @@ public abstract class Unit extends Entity {
 		} else speed = 0;
 	}
 	
+	public int getFacing() {
+		float dir = Math.abs(360 - direction);
+		if(dir > 45 && dir < 135) {
+			return 1; //Up (For Now)
+		} else if(dir <= 45 || (dir >= 305 && dir <= 360)) {
+			return 2; //Right (For Now)
+		} else if(dir >= 135 && dir <= 205) {
+			return 3; //Left (For Now)
+		} else {
+			return 0; //Down (For Now)
+		}
+	}
+	
 	public float getHealth() {
 		return health;
 	}
