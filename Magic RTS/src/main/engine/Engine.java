@@ -1,6 +1,7 @@
 package main.engine;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
@@ -11,18 +12,19 @@ import org.newdawn.slick.SlickException;
 import main.engine.states.GameState;
 import main.graphics.Display;
 import main.input.Mouse;
+import main.player.Player;
 import main.util.ResourceLoader;
 
 public class Engine implements Runnable, Game {
 
 	public static Engine ENGINE;
-	
+		
 	private Thread displayThread;
 	private Display display;
 	
 	private boolean running;
 	
-	private static State currentState = new GameState("Game");
+	private static State currentState;
 	public static String ABS_PATH = (new File("").getAbsolutePath() + "\\");
 	
 	private int WIDTH, HEIGHT;
@@ -43,10 +45,13 @@ public class Engine implements Runnable, Game {
 	}
 	
 	public void init(GameContainer gc) throws SlickException {
-		input = gc.getInput();
-		mouse = new Mouse(input);
 		System.out.println("Loading Resources..");
 		ResourceLoader.initResources();
+		input = gc.getInput();
+		mouse = new Mouse(input);
+		
+		//Start game here once everything is loaded
+		currentState = new GameState("Game");
 	}
 
 	public void update(GameContainer gc, int i) throws SlickException {

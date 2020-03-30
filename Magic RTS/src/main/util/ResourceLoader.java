@@ -82,6 +82,8 @@ public class ResourceLoader {
 		SPRITES.put("axeman", loadImage("res\\mobs\\vikeaxe"));
 		SPRITE_SHEETS.put("axeman_down", loadSpriteSheet("res\\mobs\\vikeaxe_down", 48, 48));
 		
+		//Houses
+		SPRITES.put("vikehut", loadImage("res\\buildings\\vikehut"));
 		//Report loaded resources
 		int resourceCount = SPRITES.size() + SPRITE_SHEETS.size();
 		System.out.println("Loaded " + resourceCount + " Resources!");

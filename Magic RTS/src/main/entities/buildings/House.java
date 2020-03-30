@@ -1,0 +1,26 @@
+package main.entities.buildings;
+
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Point;
+
+import main.entities.Building;
+import main.player.Player;
+
+public class House extends Building {
+	
+	public House(Player player, Point pos) {
+		super(player, pos, player.getFaction().getSprite("house"));
+	}
+
+	@Override
+	public void render(Graphics g) {
+		sprite.draw(pos.getX(), pos.getY());
+	}
+
+	@Override
+	public void tick() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}
