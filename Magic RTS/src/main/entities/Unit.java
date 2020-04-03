@@ -5,7 +5,7 @@ import org.newdawn.slick.geom.Point;
 
 import main.player.Player;
 
-public abstract class Unit extends Entity {
+public abstract class Unit extends SelectableEntity {
 
 	protected float health, health_max;
 	protected float move_speed;

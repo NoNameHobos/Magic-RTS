@@ -4,21 +4,21 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import main.entities.Building;
 import main.entities.Entity;
 import main.entities.Unit;
 import main.entities.buildings.House;
-import main.util.ResourceLoader;
 
 public class Player {
 
 	public static final ArrayList<Player> PLAYERS = new ArrayList<Player>();
 	
 	private Color playerColor;
-	private ArrayList<Entity> selected;
+	
+	private ArrayList<Entity> selectedGroup;
+	private Entity selected;
 	
 	private ArrayList<Building> buildings;
 	private ArrayList<Unit> units;
@@ -58,10 +58,14 @@ public class Player {
 		return playerColor;
 	}
 
-	public ArrayList<Entity> getSelected() {
+	public Entity getSelected() {
 		return selected;
 	}
 
+	public ArrayList<Entity> getSelectedGroup() {
+		return selectedGroup;
+	}
+	
 	public boolean isAI() {
 		return isAI;
 	}

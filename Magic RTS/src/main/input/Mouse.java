@@ -17,7 +17,7 @@ public class Mouse {
 	
 	public Mouse(Input input) {
 		this.input = input;
-		pos = new Point(input.getMouseX(), input.getMouseY());
+		pos = new Point(input.getMouseX(), input.getMouseY());		
 	}
 	
 	public void update() {
@@ -31,7 +31,7 @@ public class Mouse {
 		pos.setX(input.getMouseX() - 16);
 		pos.setY(input.getMouseY() - 16);
 	}
-
+	
 	public boolean isLeftPressed() {
 		return leftPressed;
 	}
@@ -59,5 +59,4 @@ public class Mouse {
 	public Point getPos() {
 		return pos;
 	}
-
 }

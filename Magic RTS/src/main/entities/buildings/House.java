@@ -7,14 +7,14 @@ import main.entities.Building;
 import main.player.Player;
 
 public class House extends Building {
-	
+		
 	public House(Player player, Point pos) {
 		super(player, pos, player.getFaction().getSprite("house"));
 	}
 
 	@Override
 	public void render(Graphics g) {
-		sprite.draw(pos.getX(), pos.getY());
+		sprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY());
 	}
 
 	@Override

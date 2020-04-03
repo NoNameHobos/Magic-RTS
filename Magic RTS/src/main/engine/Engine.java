@@ -1,7 +1,6 @@
 package main.engine;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
@@ -9,10 +8,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-import main.engine.states.GameState;
+import main.game.states.GameState;
 import main.graphics.Display;
 import main.input.Mouse;
-import main.player.Player;
 import main.util.ResourceLoader;
 
 public class Engine implements Runnable, Game {

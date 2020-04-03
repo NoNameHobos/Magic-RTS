@@ -41,9 +41,6 @@ public class Golem extends Unit {
 			walk.draw(pos.getX(), pos.getY());
 			walk.getCurrentFrame().setRotation(direction);
 		}
-		sprite.setRotation(direction);
-		sprite.draw(pos.getX(), pos.getY());
-		// g.drawString(Float.toString(getPointDirection(ENGINE.getMouse().getPos())), pos.getX(), pos.getY() - 30);
 	}
 	
 	//Tick/Step event for the Golem

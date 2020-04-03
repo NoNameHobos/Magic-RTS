@@ -5,7 +5,7 @@ import org.newdawn.slick.geom.Point;
 
 import main.player.Player;
 
-public abstract class Building extends Entity {
+public abstract class Building extends SelectableEntity {
 
 	protected Player player;
 	

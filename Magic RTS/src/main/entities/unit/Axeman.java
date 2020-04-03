@@ -40,8 +40,8 @@ public class Axeman extends Unit {
 	public void render(Graphics g) {
 		if(speed != 0 && getFacing() == 0)
 			walk.draw(pos.getX(), pos.getY());
-		else 
-			sprite.draw(pos.getX(), pos.getY());
+		else
+			sprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY());
 	}
 
 	@Override
