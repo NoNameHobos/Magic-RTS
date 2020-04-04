@@ -32,7 +32,7 @@ public abstract class Unit extends SelectableEntity {
 	}
 	
 	public void moveTo(Point target) {
-		if(getDistanceTo(target) >= 16) {
+		if(getDistanceTo(target) >= sprite.getWidth()/2) {
 			direction = getPointDirection(target);
 			if(speed < move_speed) speed += acc;
 		} else speed = 0;

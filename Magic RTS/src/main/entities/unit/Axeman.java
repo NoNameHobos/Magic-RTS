@@ -1,6 +1,5 @@
 package main.entities.unit;
 
-import static main.engine.Engine.ENGINE;
 import static main.util.ResourceLoader.SPRITES;
 import static main.util.ResourceLoader.SPRITE_SHEETS;
 
@@ -38,14 +37,16 @@ public class Axeman extends Unit {
 
 	@Override
 	public void render(Graphics g) {
+		super.render(g);
 		if(speed != 0 && getFacing() == 0)
-			walk.draw(pos.getX(), pos.getY());
+			walk.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY());
 		else
 			sprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY());
 	}
 
 	@Override
 	public void tick() {
+		super.tick();
 		moveTo(ENGINE.getMouse().getPos());
 		move(speed, direction);
 	}

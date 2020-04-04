@@ -61,7 +61,6 @@ public class Engine implements Runnable, Game {
 	public void render(GameContainer gc, Graphics g) throws SlickException{
 		if(currentState != null)
 			currentState.render(g);
-		g.drawOval(mouse.getPos().getX(), mouse.getPos().getY(), 32, 32);
 	}
 
 	public boolean closeRequested() {

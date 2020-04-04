@@ -10,8 +10,8 @@ import static main.engine.Engine.ABS_PATH;
 
 public class ResourceLoader {
 
-	public static HashMap<String, Image> SPRITES = new HashMap<String, Image>();
-	public static HashMap<String, SpriteSheet> SPRITE_SHEETS = new HashMap<String, SpriteSheet>();
+	public static final HashMap<String, Image> SPRITES = new HashMap<String, Image>();
+	public static final HashMap<String, SpriteSheet> SPRITE_SHEETS = new HashMap<String, SpriteSheet>();
 	
 	public static Image missing;
 	public static SpriteSheet missingSS;

@@ -1,6 +1,5 @@
 package main.entities.unit;
 
-import static main.engine.Engine.ENGINE;
 import static main.util.ResourceLoader.SPRITES;
 import static main.util.ResourceLoader.SPRITE_SHEETS;
 
@@ -35,7 +34,9 @@ public class Golem extends Unit {
 		
 	}
 	//Render/Draw event for the Golem
+	@Override
 	public void render(Graphics g) {
+		super.render(g);
 		//walk.getCurrentFrame().setRotation(direction);
 		if(speed != 0) {
 			walk.draw(pos.getX(), pos.getY());
@@ -45,6 +46,7 @@ public class Golem extends Unit {
 	
 	//Tick/Step event for the Golem
 	public void tick() {
+		super.tick();
 		moveTo(ENGINE.getMouse().getPos());
 		move(speed, direction);
 	}

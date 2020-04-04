@@ -10,6 +10,7 @@ import main.entities.Building;
 import main.entities.Entity;
 import main.entities.Unit;
 import main.entities.buildings.House;
+import main.entities.unit.Axeman;
 
 public class Player {
 
@@ -42,6 +43,7 @@ public class Player {
 		units = new ArrayList<Unit>();
 		
 		buildings.add(new House(this, spawn));
+		units.add(new Axeman(this, spawn.getX() + 30, spawn.getY() + 30));
 		
 		PLAYERS.add(this);
 	}

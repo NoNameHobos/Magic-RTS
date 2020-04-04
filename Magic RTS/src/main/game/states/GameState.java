@@ -32,7 +32,7 @@ public class GameState extends State {
 		//Update Entities
 		ArrayList<Entity> entities = Entity.getEntities();
 		for(int j = 0; j < entities.size(); j++) {
-			entities.get(j).pollEntity();
+			entities.get(j).tick();
 		}
 	}
 
@@ -43,7 +43,7 @@ public class GameState extends State {
 		//Render Entities
 		ArrayList<Entity> entities = Entity.getEntities();
 		for(int i = 0; i < entities.size(); i++) {
-			entities.get(i).renderEntity(g);
+			entities.get(i).render(g);
 		}
 		ArrayList<Player> players = Player.getPlayers();
 		for(int i = 0; i < players.size(); i++) {

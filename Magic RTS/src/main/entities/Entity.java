@@ -2,15 +2,18 @@ package main.entities;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
-public abstract class Entity {
+import main.engine.Engine;
 
+public abstract class Entity {
+	
+	protected static final Engine ENGINE = Engine.ENGINE;
+	
 	protected Point pos;
 	protected Point origin; //Set an origin for sprite relative to position
 	
@@ -22,9 +25,6 @@ public abstract class Entity {
 	public final static ArrayList<Entity> ENTITIES = new ArrayList<Entity>();
 	
 	protected Rectangle collider;
-	
-	public abstract void render(Graphics g);
-	public abstract void tick();
 	
 	public Entity(Point _pos, Image sprite) {
 		this.pos = _pos;
@@ -55,23 +55,18 @@ public abstract class Entity {
 	}
 
 
-	public void pollEntity() {
-		updateAlarms();
-		tick();
-	}
-	
-	public void renderEntity(Graphics g) {
-		g.setColor(Color.red);
-		g.draw(collider);
-		render(g);
-	}
-	
-	protected void updateAlarms() {
+	public void tick() {
+		collider.setX(pos.getX() - origin.getX());
+		collider.setY(pos.getY() - origin.getY());
+		
 		for(int i = 0; i < alarm.length; i++) {
 			if(alarm[i] != -1) {
 				alarm[i] -= 1;
 			}
 		}
+	}
+	
+	public void render(Graphics g) {
 	}
 	
 	private void initAlarms() {
