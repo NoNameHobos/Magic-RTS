@@ -6,6 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
+import main.engine.Engine;
 import main.entities.Building;
 import main.entities.Entity;
 import main.entities.Unit;
@@ -13,8 +14,6 @@ import main.entities.buildings.House;
 import main.entities.unit.Axeman;
 
 public class Player {
-
-	public static final ArrayList<Player> PLAYERS = new ArrayList<Player>();
 	
 	private Color playerColor;
 	
@@ -27,6 +26,7 @@ public class Player {
 	private boolean isAI;
 	
 	private Point spawn;
+	private Camera playerCamera;
 	
 	private int playerID;
 	
@@ -38,14 +38,13 @@ public class Player {
 		this.faction = faction;
 		this.playerID = playerID;
 		this.spawn = spawn;
-		
 		buildings = new ArrayList<Building>();
 		units = new ArrayList<Unit>();
 		
 		buildings.add(new House(this, spawn));
 		units.add(new Axeman(this, spawn.getX() + 30, spawn.getY() + 30));
 		
-		PLAYERS.add(this);
+		playerCamera = new Camera(spawn.getX(), spawn.getY(), Engine.getWIDTH(), Engine.getHEIGHT());
 	}
 	
 	public void tick() {
@@ -88,7 +87,7 @@ public class Player {
 		return units;
 	}
 
-	public static ArrayList<Player> getPlayers() {
-		return PLAYERS;
+	public Camera getPlayerCamera() {
+		return playerCamera;
 	}
 }

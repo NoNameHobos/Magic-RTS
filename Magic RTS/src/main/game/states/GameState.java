@@ -9,26 +9,31 @@ import org.newdawn.slick.geom.Point;
 import main.engine.State;
 import main.entities.Entity;
 import main.entities.Unit;
+import main.game.map.Map;
 import main.player.Faction;
 import main.player.Player;
 import main.player.factions.Viking;
+
+import static main.util.ResourceLoader.*;
 
 public class GameState extends State {
 
 	private ArrayList<Unit> mobs = new ArrayList<Unit>();
 	
-	private Player player1;
+	private Map map;
 	
-	private static final Faction viking = new Viking();
+	public GameState() {
+		super("Game");
+	}
 	
-	public GameState(String name) {
-		super(name);
+	public void init() {
+		map = MAPS.get("map1");
+		System.out.println("Loaded map: Grass Map");
+		map.loadPlayers();
 	}
 	
 	//Main Step Event for Game State
 	public void tick() {
-		if(init)
-			initState();
 		//Update Entities
 		ArrayList<Entity> entities = Entity.getEntities();
 		for(int j = 0; j < entities.size(); j++) {
@@ -38,24 +43,17 @@ public class GameState extends State {
 
 	//Render the Game State
 	public void render(Graphics g) {
-		g.setBackground(new Color(0, 40, 0));
-		g.setColor(Color.white);
+		g.setBackground(Color.black);
+		//System.out.println(map.getName());
+		if(map != null) map.renderTiles(g);
 		//Render Entities
 		ArrayList<Entity> entities = Entity.getEntities();
 		for(int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(g);
 		}
-		ArrayList<Player> players = Player.getPlayers();
+		/*
 		for(int i = 0; i < players.size(); i++) {
 			players.get(i).render(g);
-		}
+		}*/
 	}
-
-	@Override
-	public void initState() {
-		init = false;
-		
-		player1 = new Player(0, false, new Color(255, 0, 0), viking, new Point(300, 300));
-	}
-
 }

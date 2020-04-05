@@ -9,58 +9,61 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import main.game.states.GameState;
+import main.game.states.LoadState;
 import main.graphics.Display;
 import main.input.Mouse;
 import main.util.ResourceLoader;
 
-public class Engine implements Runnable, Game {
+public class Engine implements Game {
 
 	public static Engine ENGINE;
 		
-	private Thread displayThread;
 	private Display display;
-	
-	private boolean running;
 	
 	private static State currentState;
 	public static String ABS_PATH = (new File("").getAbsolutePath() + "\\");
 	
-	private int WIDTH, HEIGHT;
-	private String TITLE;
+	private static int WIDTH, HEIGHT;
 	
 	private Input input;
 	private Mouse mouse;
 	
+	//Initialize States
+	public static final State loadState = new LoadState();
+	public static final State gameState = new GameState();
+	
+	
 	public Engine(int WIDTH, int HEIGHT, String TITLE) {
 		System.out.println("Initializing Engine..");
 		ENGINE = this;
-		this.WIDTH = WIDTH;
-		this.HEIGHT = HEIGHT;
-		this.TITLE = TITLE;
+		Engine.WIDTH = WIDTH;
+		Engine.HEIGHT = HEIGHT;
 		display = new Display(this, WIDTH, HEIGHT);
-		displayThread = new Thread(display, "DisplayThread");
 		
 	}
 	
 	public void init(GameContainer gc) throws SlickException {
-		System.out.println("Loading Resources..");
-		ResourceLoader.initResources();
 		input = gc.getInput();
 		mouse = new Mouse(input);
 		
 		//Start game here once everything is loaded
-		currentState = new GameState("Game");
+		Engine.currentState = loadState;
+		Engine.currentState.init();
 	}
 
 	public void update(GameContainer gc, int i) throws SlickException {
 		mouse.update();
-		if(currentState != null)
-			currentState.tick();
+		if(Engine.currentState == loadState) {
+			
+		}
+		if(Engine.currentState != null)
+			Engine.currentState.tick();
 	}
 
 	public void render(GameContainer gc, Graphics g) throws SlickException{
-		if(currentState != null)
-			currentState.render(g);
+		if(Engine.currentState != null) {
+			Engine.currentState.render(g);
+		}
 	}
 
 	public boolean closeRequested() {
@@ -72,15 +75,24 @@ public class Engine implements Runnable, Game {
 		return null;
 	}
 	
-	public void run() {
-		running = true;
-		//Start threads
-		System.out.println("Started Engine Thread");
-		displayThread.start();
-		
-	}
-	
 	public Mouse getMouse() {
 		return mouse;
+	}
+
+	public static int getWIDTH() {
+		return WIDTH;
+	}
+
+	public static int getHEIGHT() {
+		return HEIGHT;
+	}
+
+	public static State getCurrentState() {
+		return currentState;
+	}
+
+	public static void setCurrentState(State currentState) {
+		Engine.currentState = currentState;
+		Engine.currentState.init();
 	}
 }
