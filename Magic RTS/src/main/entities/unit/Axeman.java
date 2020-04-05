@@ -7,8 +7,10 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Point;
 
 import main.entities.Unit;
+import main.game.states.GameState;
 import main.player.Player;
 
 public class Axeman extends Unit {
@@ -47,7 +49,10 @@ public class Axeman extends Unit {
 	@Override
 	public void tick() {
 		super.tick();
-		moveTo(ENGINE.getMouse().getPos());
+		Point camPos = ((GameState) (ENGINE.getCurrentState())).getMap().getPlayers()[0].getCamera().getPos();
+		float desX = ENGINE.getMouse().getPos().getX() + camPos.getX();
+		float desY = ENGINE.getMouse().getPos().getY() + camPos.getY();
+		moveTo(new Point(desX, desY));
 		move(speed, direction);
 	}
 }
