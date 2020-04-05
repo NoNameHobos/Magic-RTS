@@ -12,6 +12,7 @@ import main.entities.Entity;
 import main.entities.Unit;
 import main.entities.buildings.House;
 import main.entities.unit.Axeman;
+import main.game.map.Map;
 
 public class Player {
 	
@@ -29,22 +30,25 @@ public class Player {
 	private Camera playerCamera;
 	
 	private int playerID;
+	private Map map;
 	
 	private Faction faction;
 	
-	public Player(int playerID, boolean AI, Color playerColor, Faction faction, Point spawn) {
+	public Player(int playerID, Map map, boolean AI, Color playerColor, Faction faction, Point spawn) {
 		this.playerColor = playerColor;
 		isAI = AI;
 		this.faction = faction;
 		this.playerID = playerID;
 		this.spawn = spawn;
+		this.map = map;
+		
 		buildings = new ArrayList<Building>();
 		units = new ArrayList<Unit>();
 		
 		buildings.add(new House(this, spawn));
 		units.add(new Axeman(this, spawn.getX() + 30, spawn.getY() + 30));
 		
-		playerCamera = new Camera(spawn.getX() - Engine.getWIDTH()/2, spawn.getY() - Engine.getHEIGHT()/2, Engine.getWIDTH(), Engine.getHEIGHT());
+		playerCamera = new Camera(map, spawn.getX() - Engine.getWIDTH()/2, spawn.getY() - Engine.getHEIGHT()/2, Engine.getWIDTH(), Engine.getHEIGHT());
 	}
 	
 	public void tick() {
@@ -91,5 +95,9 @@ public class Player {
 
 	public Camera getCamera() {
 		return playerCamera;
+	}
+
+	public Map getMap() {
+		return map;
 	}
 }

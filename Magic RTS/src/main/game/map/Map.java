@@ -44,7 +44,7 @@ public class Map {
 
 	public void loadPlayers() {
 		System.out.println("Loading player 0 with default attribs");
-		players[0] = new Player(0, false, new Color(255, 0, 0), new Viking(), new Point(300, 300));
+		players[0] = new Player(0, this, false, new Color(255, 0, 0), new Viking(), new Point(300, 300));
 	}
 	
 	public void loadTiles(String[][] tileData) {
@@ -93,6 +93,14 @@ public class Map {
 
 	public Player[] getPlayers() {
 		return players;
+	}
+
+	public int getMapWidth() {
+		return mapWidth;
+	}
+
+	public int getMapHeight() {
+		return mapHeight;
 	}
 
 }
