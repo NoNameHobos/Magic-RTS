@@ -36,12 +36,12 @@ public class Axeman extends Unit {
 	}
 
 	@Override
-	public void render(Graphics g) {
-		super.render(g);
+	public void render(Graphics g, float xOffset, float yOffset) {
+		super.render(g, xOffset, yOffset);
 		if(speed != 0 && getFacing() == 0)
-			walk.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY());
+			walk.draw(pos.getX() - origin.getX() - xOffset, pos.getY() - origin.getY() - yOffset);
 		else
-			sprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY());
+			sprite.draw(pos.getX() - origin.getX() - xOffset, pos.getY() - origin.getY() - yOffset);
 	}
 
 	@Override

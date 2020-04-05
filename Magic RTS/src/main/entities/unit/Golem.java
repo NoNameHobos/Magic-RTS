@@ -35,8 +35,8 @@ public class Golem extends Unit {
 	}
 	//Render/Draw event for the Golem
 	@Override
-	public void render(Graphics g) {
-		super.render(g);
+	public void render(Graphics g, float xOffset, float yOffset) {
+		super.render(g, xOffset, yOffset);
 		//walk.getCurrentFrame().setRotation(direction);
 		if(speed != 0) {
 			walk.draw(pos.getX(), pos.getY());

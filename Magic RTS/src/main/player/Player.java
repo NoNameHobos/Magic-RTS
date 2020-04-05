@@ -44,15 +44,17 @@ public class Player {
 		buildings.add(new House(this, spawn));
 		units.add(new Axeman(this, spawn.getX() + 30, spawn.getY() + 30));
 		
-		playerCamera = new Camera(spawn.getX(), spawn.getY(), Engine.getWIDTH(), Engine.getHEIGHT());
+		playerCamera = new Camera(spawn.getX() - Engine.getWIDTH()/2, spawn.getY() - Engine.getHEIGHT()/2, Engine.getWIDTH(), Engine.getHEIGHT());
 	}
 	
 	public void tick() {
-		
+		playerCamera.update();
 	}
 	
 	public void render(Graphics g) {
-		
+		Point p = playerCamera.getPos();
+		g.drawString("X: " + Float.toString(p.getX()), 20, 20);
+		g.drawString("Y: " + Float.toString(p.getY()), 20, 40);
 	}
 	
 	public Color getPlayerColor() {
@@ -87,7 +89,7 @@ public class Player {
 		return units;
 	}
 
-	public Camera getPlayerCamera() {
+	public Camera getCamera() {
 		return playerCamera;
 	}
 }

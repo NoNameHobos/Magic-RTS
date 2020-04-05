@@ -30,8 +30,8 @@ public abstract class SelectableEntity extends Entity {
 	}
 	
 	@Override
-	public void render(Graphics g) {
-		super.render(g);
+	public void render(Graphics g, float xOffset, float yOffset) {
+		super.render(g, xOffset, yOffset);
 		if(!mouseOver()) g.setColor(Color.red);
 		else g.setColor(Color.blue);
 		g.draw(collider);

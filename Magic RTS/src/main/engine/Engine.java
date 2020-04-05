@@ -12,7 +12,6 @@ import main.game.states.GameState;
 import main.game.states.LoadState;
 import main.graphics.Display;
 import main.input.Mouse;
-import main.util.ResourceLoader;
 
 public class Engine implements Game {
 
@@ -25,8 +24,9 @@ public class Engine implements Game {
 	
 	private static int WIDTH, HEIGHT;
 	
-	private Input input;
+	private static Input input;
 	private Mouse mouse;
+	
 	
 	//Initialize States
 	public static final State loadState = new LoadState();
@@ -62,6 +62,9 @@ public class Engine implements Game {
 
 	public void render(GameContainer gc, Graphics g) throws SlickException{
 		if(Engine.currentState != null) {
+			if(Engine.currentState == gameState) {
+				Engine.currentState.render(g);
+			} else
 			Engine.currentState.render(g);
 		}
 	}
@@ -94,5 +97,9 @@ public class Engine implements Game {
 	public static void setCurrentState(State currentState) {
 		Engine.currentState = currentState;
 		Engine.currentState.init();
+	}
+	
+	public static Input getInput() {
+		return input;
 	}
 }
