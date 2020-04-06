@@ -35,18 +35,6 @@ public class ResourceLoader {
 	public static final int thingsToLoad = 7;
 	private static int loaded = 0;
 
-	/*
-	 * public static HashMap<String, Animation> ANIMATIONS = new HashMap<String,
-	 * Animation>();
-	 * 
-	 * public static Animation loadAnimation(String dir, int duration) {
-	 * 
-	 * }
-	 * 
-	 * public static Animation loadAnimation(SpriteSheet ss, int duration) {
-	 * 
-	 * }
-	 */
 	public static Image loadImage(String dir) {
 		Image i;
 		loaded++;
@@ -149,7 +137,7 @@ public class ResourceLoader {
 		String path = "res\\tilesets\\";
 
 		// Load grassLand tile set
-		SpriteSheet grassLand = loadSpriteSheet(path + "plains", 128, 128);
+		SpriteSheet grassLand = loadSpriteSheet(path + "plains", TILE_WIDTH, TILE_HEIGHT);
 		TILE_SETS.put("grass", new TileSet(grassLand));
 		TILE_SETS.get("grass").addKey("darkGrass", 0, 0);
 		TILE_SETS.get("grass").addKey("lightGrass", 0, 1);

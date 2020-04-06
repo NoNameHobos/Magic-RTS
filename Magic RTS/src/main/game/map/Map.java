@@ -34,6 +34,12 @@ public class Map {
 
 		mapWidth = mapData.get(0).split(" ").length;
 		mapHeight = mapData.size();
+		
+		System.out.print("Loaded map with size: ");
+		System.out.print(mapWidth);
+		System.out.print(" x ");
+		System.out.print(mapHeight);
+		
 		String[][] tileData = new String[mapHeight][mapWidth];
 
 		for(int i = 0; i < mapHeight; i++) {
@@ -49,7 +55,7 @@ public class Map {
 	
 	public void loadTiles(String[][] tileData) {
 		
-		tiles = new Tile[mapHeight][mapWidth];
+		tiles = new Tile[mapWidth][mapHeight];
 		
 		for(int i = 0; i < tileData.length; i++) {
 			for(int j = 0; j < tileData[i].length; j++) {
@@ -62,7 +68,7 @@ public class Map {
                     tileType = "darkWater";
                     break;
                 }
-                tiles[i][j] = new Tile(this, tileset.getTile(tileType), i * TILE_WIDTH, j * TILE_HEIGHT);
+                tiles[j][i] = new Tile(this, tileset.getTile(tileType), j * TILE_WIDTH, i * TILE_HEIGHT);
 			}
 		}
 	}

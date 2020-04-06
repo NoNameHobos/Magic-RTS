@@ -22,7 +22,7 @@ public class Display implements Runnable {
 			appgc = new AppGameContainer(engine);
 			appgc.setTargetFrameRate(60);
 			appgc.setShowFPS(true);
-			appgc.setDisplayMode(640, 480, false);
+			appgc.setDisplayMode(WIDTH, HEIGHT, false);
 			appgc.start();
 		} catch (SlickException ex) {
 			Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
