@@ -62,9 +62,6 @@ public class Engine implements Game {
 
 	public void render(GameContainer gc, Graphics g) throws SlickException{
 		if(Engine.currentState != null) {
-			if(Engine.currentState == gameState) {
-				Engine.currentState.render(g);
-			} else
 			Engine.currentState.render(g);
 		}
 	}

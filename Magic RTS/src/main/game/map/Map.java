@@ -29,7 +29,7 @@ public class Map {
 
 	public Map(String tileSet, ArrayList<String> mapData) {
 
-		tileset = TILE_SETS.get("grass");
+		tileset = TILE_SETS.get(tileSet);
 		players = new Player[maxPlayers];
 
 		mapWidth = mapData.get(0).split(" ").length;
@@ -86,7 +86,7 @@ public class Map {
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[i].length; j++) {
 				Point tilePos = tiles[i][j].getPos();
-				boolean inCam = currentCamera.getView().contains(tilePos.getX(), tilePos.getY());
+				boolean inCam = currentCamera.getRenderRect().contains(tilePos.getX(), tilePos.getY());
 				if (inCam)
 					tiles[i][j].getImage().draw(tilePos.getX() - xOffset, tilePos.getY() - yOffset);
 			}

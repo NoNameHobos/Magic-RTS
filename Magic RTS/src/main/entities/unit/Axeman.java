@@ -49,7 +49,7 @@ public class Axeman extends Unit {
 	@Override
 	public void tick() {
 		super.tick();
-		Point camPos = ((GameState) (ENGINE.getCurrentState())).getMap().getPlayers()[0].getCamera().getPos();
+		Point camPos = ((GameState) (ENGINE.getCurrentState())).getGame().getMap().getPlayers()[0].getCamera().getPos();
 		float desX = ENGINE.getMouse().getPos().getX() + camPos.getX();
 		float desY = ENGINE.getMouse().getPos().getY() + camPos.getY();
 		moveTo(new Point(desX, desY));

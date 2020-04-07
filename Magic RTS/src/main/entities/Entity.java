@@ -58,7 +58,7 @@ public abstract class Entity {
 
 
 	public void tick() {
-		Camera curCamera = ((GameState) Engine.getCurrentState()).getMap().getPlayers()[0].getCamera();
+		Camera curCamera = ((GameState) Engine.getCurrentState()).getGame().getMap().getPlayers()[0].getCamera();
 		float xOffset = curCamera.getPos().getX();
 		float yOffset = curCamera.getPos().getY();
 		collider.setX(pos.getX() - origin.getX() - xOffset);

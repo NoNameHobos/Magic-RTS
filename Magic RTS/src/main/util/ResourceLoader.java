@@ -68,11 +68,11 @@ public class ResourceLoader {
 			System.out.println("Loaded " + dir + ".png as Sprite Sheet with Tile: " + tw + "x" + th);
 			return ss;
 		} catch (SlickException e) {
-			System.err.println("Failed to load Sprite Sheet at: " + dir);
+			System.err.println("Failed to load Sprite Sheet at: " + dir + " (SlickException)");
 			e.printStackTrace();
 			return missingSS;
 		} catch (RuntimeException e) {
-			System.err.println("Failed to load Sprite Sheet at: " + dir);
+			System.err.println("Failed to load Sprite Sheet at: " + dir + " (RuntimeException)");
 			return missingSS;
 		}
 	}
@@ -109,7 +109,6 @@ public class ResourceLoader {
 			System.err.println("Failed to load missingtex.png");
 			e.printStackTrace();
 		}
-		
 		// Don't change the load order please
 		loadTiles();
 		report();
@@ -134,17 +133,9 @@ public class ResourceLoader {
 	}
 
 	public static void loadTiles() {
-		String path = "res\\tilesets\\";
 
 		// Load grassLand tile set
-		SpriteSheet grassLand = loadSpriteSheet(path + "plains", TILE_WIDTH, TILE_HEIGHT);
-		TILE_SETS.put("grass", new TileSet(grassLand));
-		TILE_SETS.get("grass").addKey("darkGrass", 0, 0);
-		TILE_SETS.get("grass").addKey("lightGrass", 0, 1);
-		TILE_SETS.get("grass").addKey("darkWater", 1, 0);
-		TILE_SETS.get("grass").addKey("lightWater", 0, 2);
-		TILE_SETS.get("grass").addKey("stone", 1, 1);
-		TILE_SETS.get("grass").addKey("darkDirt", 1, 2);
+		TILE_SETS.put("grass", TileSet.loadTileSet("plains"));
 	}
 
 	public static void loadSprites() {
