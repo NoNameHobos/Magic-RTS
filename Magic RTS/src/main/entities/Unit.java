@@ -1,5 +1,6 @@
 package main.entities;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
@@ -17,11 +18,8 @@ public abstract class Unit extends SelectableEntity {
 	
 	protected Point des;
 	
-	protected Player player;
-	
 	public Unit(Player player, float x, float y, Image sprite) {
-		super(new Point(x, y), sprite);
-		this.player = player;
+		super(player, new Point(x, y), sprite);
 	}
 	
 	public void move(float spd, float angle) {
@@ -37,6 +35,15 @@ public abstract class Unit extends SelectableEntity {
 			if(speed < move_speed) speed += acc;
 		} else speed = 0;
 	}
+	
+	@Override
+	public void render(Graphics g, float xOffset, float yOffset) {
+		super.render(g, xOffset, yOffset);
+		sprite.draw(pos.getX() - origin.getX() - xOffset, pos.getY() - origin.getY() - yOffset);
+		draw(g, xOffset, yOffset);
+	}
+
+	public abstract void draw(Graphics g, float xOffset, float yOffset);
 	
 	public int getFacing() {
 		float dir = Math.abs(360 - direction);
@@ -94,5 +101,6 @@ public abstract class Unit extends SelectableEntity {
 	public Player getPlayer() {
 		return player;
 	}
+	
 	
 }

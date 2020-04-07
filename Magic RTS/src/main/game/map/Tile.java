@@ -8,13 +8,10 @@ public class Tile {
 	public static final float TILE_WIDTH = 64;
 	public static final float TILE_HEIGHT= 64;
 	
-	private Map map;
-	
 	private Image image;
 	private Point pos;
 	
-	public Tile(Map map, Image tileSprite, float x, float y) {
-		this.map = map;
+	public Tile(Image tileSprite, float x, float y) {
 		image = tileSprite;
 		this.pos = new Point(x, y);
 	}

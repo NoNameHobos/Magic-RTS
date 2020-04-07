@@ -2,7 +2,10 @@ package main.game.ui;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+
+import main.game.map.Map;
 import main.player.Player;
 
 public class UI {
@@ -14,7 +17,7 @@ public class UI {
 	public UI(Player player) {
 		this.player = player;
 		
-		UIElement minimap = new Minimap(this);
+		new Minimap(this);
 	}
 
 	public ArrayList<UIElement> getElements() {
@@ -36,6 +39,29 @@ public class UI {
 		int size = elements.size();
 		for(int i = 0; i < size; i++) {
 			elements.get(i).render(g);
+		}
+		
+		Map m = player.getMap();
+		Player[] players = m.getPlayers();
+		for(int i = 0; i < players.length; i++) {
+			Player currentPlayer = players[i];
+			if(currentPlayer != null) {
+				float width = 8;
+				float height = 8;
+				
+				float marginX = 12;
+				float marginY = 12;
+				
+				float x1 = 30;
+				float y1 = 30 + (height+marginY)* i;
+				
+				g.setColor(Color.darkGray);
+				g.drawRect(x1, y1, width, height);
+				g.setColor(currentPlayer.getPlayerColor());
+				g.fillRect(x1+1, y1+1, width-2, height-2);
+				g.setColor(Color.white);
+				g.drawString(currentPlayer.getName(), x1 + marginX, y1-height/2);
+			}
 		}
 	}
 }

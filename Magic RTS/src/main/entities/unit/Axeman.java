@@ -9,6 +9,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 
+import main.engine.Engine;
 import main.entities.Unit;
 import main.game.states.GameState;
 import main.player.Player;
@@ -23,7 +24,9 @@ public class Axeman extends Unit {
 	private static Animation walk;
 	
 	public Axeman(Player player, float x, float y) {
-		super(null, x, y, SPRITE);
+		super(player
+				, x, y,
+					SPRITE);
 		
 		//Init Stats
 		health = 80;
@@ -38,21 +41,20 @@ public class Axeman extends Unit {
 	}
 
 	@Override
-	public void render(Graphics g, float xOffset, float yOffset) {
-		super.render(g, xOffset, yOffset);
+	public void draw(Graphics g, float xOffset, float yOffset) {
 		if(speed != 0 && getFacing() == 0)
 			walk.draw(pos.getX() - origin.getX() - xOffset, pos.getY() - origin.getY() - yOffset);
-		else
-			sprite.draw(pos.getX() - origin.getX() - xOffset, pos.getY() - origin.getY() - yOffset);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		Point camPos = ((GameState) (ENGINE.getCurrentState())).getGame().getMap().getPlayers()[0].getCamera().getPos();
-		float desX = ENGINE.getMouse().getPos().getX() + camPos.getX();
-		float desY = ENGINE.getMouse().getPos().getY() + camPos.getY();
-		moveTo(new Point(desX, desY));
-		move(speed, direction);
+		Point camPos = ((GameState) (Engine.getCurrentState())).getGame().getMap().getControlledPlayer().getCamera().getPos();
+		if(map.getControlledPlayer() == player) {
+			float desX = ENGINE.getMouse().getPos().getX() + camPos.getX();
+			float desY = ENGINE.getMouse().getPos().getY() + camPos.getY();
+			moveTo(new Point(desX, desY));
+			move(speed, direction);
+		}
 	}
 }

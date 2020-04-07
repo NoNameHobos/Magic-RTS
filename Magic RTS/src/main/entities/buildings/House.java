@@ -21,7 +21,6 @@ public class House extends Building {
 	@Override
 	public void tick() {
 		super.tick();
-		// TODO Auto-generated method stub
 	}
 	
 }

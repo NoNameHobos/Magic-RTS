@@ -16,8 +16,6 @@ import main.input.Mouse;
 public class Engine implements Game {
 
 	public static Engine ENGINE;
-		
-	private Display display;
 	
 	private static State currentState;
 	public static String ABS_PATH = (new File("").getAbsolutePath() + "\\");
@@ -38,7 +36,7 @@ public class Engine implements Game {
 		ENGINE = this;
 		Engine.WIDTH = WIDTH;
 		Engine.HEIGHT = HEIGHT;
-		display = new Display(this, WIDTH, HEIGHT);
+		new Display(this, WIDTH, HEIGHT);
 		
 	}
 	

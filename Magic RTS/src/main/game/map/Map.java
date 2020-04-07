@@ -1,11 +1,11 @@
 package main.game.map;
 
-import static main.util.ResourceLoader.TILE_SETS;
-
-import static main.util.ResourceLoader.TILE_WIDTH;
 import static main.util.ResourceLoader.TILE_HEIGHT;
+import static main.util.ResourceLoader.TILE_SETS;
+import static main.util.ResourceLoader.TILE_WIDTH;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -17,8 +17,18 @@ import main.player.factions.Viking;
 
 public class Map {
 
+	public final static String[] PLAYER_NAMES = {
+			"GARY",
+			"BEN",
+			"TOM",
+			"TODD",
+			"DAN",
+			"DANIELLE"
+	};
+	
 	private Tile[][] tiles;
 
+	private Player controlledPlayer;
 	private Player[] players;
 	private int maxPlayers = 8;
 	private int mapWidth, mapHeight;
@@ -27,6 +37,8 @@ public class Map {
 
 	private TileSet tileset;
 
+	private ArrayList<String> mapData;
+	
 	public Map(String tileSet, ArrayList<String> mapData) {
 
 		tileset = TILE_SETS.get(tileSet);
@@ -39,18 +51,28 @@ public class Map {
 		System.out.print(mapWidth);
 		System.out.print(" x ");
 		System.out.print(mapHeight);
-		
+		this.mapData = mapData;
+	}
+	
+	public void init() {
 		String[][] tileData = new String[mapHeight][mapWidth];
 
 		for(int i = 0; i < mapHeight; i++) {
 			tileData[i] = mapData.get(i).split(" ");
 		}
+		loadPlayers();
 		loadTiles(tileData);
 	}
-
+	
 	public void loadPlayers() {
 		System.out.println("Loading player 0 with default attribs");
-		players[0] = new Player(0, this, false, new Color(255, 0, 0), new Viking(), new Point(300, 300));
+		controlledPlayer = Player.createPlayer("Bryn", 0, this, new Color(0, 255, 0), new Viking(), new Point(100, 300));
+		players[0] = controlledPlayer;
+		Random r = new Random();
+		for(int i = 1; i < players.length; i++) {
+			String n = PLAYER_NAMES[Math.round(r.nextInt(PLAYER_NAMES.length))];
+			players[i] = Player.createPlayer(n, i, this, new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)), new Viking(), new Point(300+r.nextInt(3000), r.nextInt(1000)));
+		}
 	}
 	
 	public void loadTiles(String[][] tileData) {
@@ -68,7 +90,7 @@ public class Map {
                     tileType = "darkWater";
                     break;
                 }
-                tiles[j][i] = new Tile(this, tileset.getTile(tileType), j * TILE_WIDTH, i * TILE_HEIGHT);
+                tiles[j][i] = new Tile(tileset.getTile(tileType), j * TILE_WIDTH, i * TILE_HEIGHT);
 			}
 		}
 	}
@@ -78,8 +100,7 @@ public class Map {
 	}
 
 	public void renderTiles(Graphics g) {
-		Camera currentCamera = players[0].getCamera();
-		
+		Camera currentCamera = controlledPlayer.getCamera();
 		float xOffset = currentCamera.getPos().getX();
 		float yOffset = currentCamera.getPos().getY();
 		
@@ -107,6 +128,14 @@ public class Map {
 
 	public int getMapHeight() {
 		return mapHeight;
+	}
+
+	public Player getControlledPlayer() {
+		return controlledPlayer;
+	}
+
+	public void setControlledPlayer(Player controlledPlayer) {
+		this.controlledPlayer = controlledPlayer;
 	}
 
 }

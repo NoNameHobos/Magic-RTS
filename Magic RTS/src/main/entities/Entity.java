@@ -31,12 +31,11 @@ public abstract class Entity {
 	public Entity(Point _pos, Image sprite) {
 		this.pos = _pos;
 		this.sprite = sprite;
-		ENTITIES.add(this);
 		origin = new Point(sprite.getWidth() / 2, sprite.getHeight() / 2); //Set origin to centre of image
 		
 		collider = new Rectangle(pos.getX() - origin.getX(), pos.getY() - origin.getY(), sprite.getWidth(), sprite.getHeight());
-		
 		initAlarms();
+		ENTITIES.add(this);
 	}
 
 	

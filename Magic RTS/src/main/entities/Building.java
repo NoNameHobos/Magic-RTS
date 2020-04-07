@@ -10,7 +10,7 @@ public abstract class Building extends SelectableEntity {
 	protected Player player;
 	
 	public Building(Player player, Point _pos, Image sprite) {
-		super(_pos, sprite);
+		super(player, _pos, sprite);
 	}
 
 }

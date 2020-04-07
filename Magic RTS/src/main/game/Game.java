@@ -29,8 +29,8 @@ public class Game {
 	
 	public void init() {
 		map = MAPS.get(mapName);
+		map.init();
 		System.out.println("Loaded map: Grass Map");
-		map.loadPlayers();
 		started = true;
 	}
 	
@@ -38,7 +38,7 @@ public class Game {
 
 		map.renderTiles(g);
 		
-		Camera curCamera = map.getPlayers()[0].getCamera();
+		Camera curCamera = map.getControlledPlayer().getCamera();
 		Point offset = curCamera.getPos();
 		float xOffset = offset.getX();
 		float yOffset = offset.getY();
@@ -51,9 +51,13 @@ public class Game {
 		
 		g.setColor(Color.white);
 		for(int i = 0; i < map.getPlayers().length; i++) {
-			map.getPlayers()[0].render(g);
-			map.getPlayers()[0].getUI().render(g);
+			if(map.getPlayers()[i] != null) {
+				map.getPlayers()[i].render(g);
+				
+			}
 		}
+		if(map.getControlledPlayer() != null)
+			map.getControlledPlayer().getUI().render(g);
 	}
 	
 	public void tick() {
@@ -64,7 +68,9 @@ public class Game {
 		}
 		
 		for(int i = 0; i < map.getPlayers().length; i++) {
-			map.getPlayers()[0].tick();
+			if(map.getPlayers()[i] != null) {
+				map.getPlayers()[i].tick();
+			}
 		}
 	}
 

@@ -63,19 +63,20 @@ public class Camera {
 	}
 	
 	public void update() {
+		int mspeed = 10;
 		if(ui != null)
 			ui.tick();
 		int xDir = 0;
 		int yDir = 0;
 		if(input.isKeyDown(Input.KEY_S))
-			yDir = 1;
+			yDir = mspeed;
 		else if(input.isKeyDown(Input.KEY_W))
-			yDir = -1;
+			yDir = -mspeed;
 		
 		if(input.isKeyDown(Input.KEY_D))
-			xDir = 1;
+			xDir = mspeed;
 		else if(input.isKeyDown(Input.KEY_A))
-			xDir = -1;
+			xDir = -mspeed;
 		move(xDir, yDir);
 		cameraRect.setX(viewPos.getX() - TILE_WIDTH - 1);
 		cameraRect.setY(viewPos.getY() - TILE_HEIGHT - 1);

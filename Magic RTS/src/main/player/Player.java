@@ -18,7 +18,7 @@ import main.game.ui.UI;
 public class Player {
 	
 	private Color playerColor;
-	private String name = "Bobby";
+	private String name;
 	
 	private ArrayList<Entity> selectedGroup;
 	private Entity selected;
@@ -28,7 +28,7 @@ public class Player {
 	
 	private boolean isAI;
 	
-	private Point spawn;
+	//private Point spawn;
 	private Camera playerCamera;
 	private UI ui;
 	
@@ -37,34 +37,54 @@ public class Player {
 	
 	private Faction faction;
 	
-	public Player(int playerID, Map map, boolean AI, Color playerColor, Faction faction, Point spawn) {
+	public Player(String name, int playerID, Map map, boolean AI, Color playerColor, Faction faction, Point spawn) {
 		this.playerColor = playerColor;
-		isAI = AI;
+		this.isAI = AI;
 		this.faction = faction;
 		this.playerID = playerID;
-		this.spawn = spawn;
+		//this.spawn = spawn;
 		this.map = map;
+		this.name = name;
+		
 		
 		buildings = new ArrayList<Building>();
 		units = new ArrayList<Unit>();
 		
+		if(map.getControlledPlayer() != null) {
+			if(map.getControlledPlayer().getPlayerID() == playerID) {
+				//Create the camera
+				Point cP = new Point(spawn.getX() - Engine.getWIDTH()/2, spawn.getY() - Engine.getHEIGHT()/2);
+				
+				playerCamera = new Camera(map, cP, Engine.getWIDTH(), Engine.getHEIGHT());
+				ui = new UI(this);
+				playerCamera.setUI(ui);
+			}
+		}
+		else {
+			Point cP = new Point(spawn.getX() - Engine.getWIDTH()/2, spawn.getY() - Engine.getHEIGHT()/2);
+		
+			playerCamera = new Camera(map, cP, Engine.getWIDTH(), Engine.getHEIGHT());
+			ui = new UI(this);
+			playerCamera.setUI(ui);
+		}
+		units.add(new Axeman(this, spawn.getY() + 30, spawn.getX() + 30));
 		buildings.add(new House(this, spawn));
-		units.add(new Axeman(this, spawn.getX() + 30, spawn.getY() + 30));
-		
-		
-		//Create the camera
-		Point cP = new Point(spawn.getX() - Engine.getWIDTH()/2, spawn.getY() - Engine.getHEIGHT()/2);
-		
-		playerCamera = new Camera(map, cP, Engine.getWIDTH(), Engine.getHEIGHT());
-		ui = new UI(this);
-		playerCamera.setUI(ui);
 	}
 	
 	public void tick() {
-		playerCamera.update();
+		if(map.getControlledPlayer().getPlayerID() == playerID)
+			playerCamera.update();
 	}
 	
 	public void render(Graphics g) {
+	}
+
+	public static Player createPlayer(String name, int id, Map m, boolean ai, Color color, Faction f, Point spawn) {
+		return new Player(name, id, m, ai, color, f, spawn);
+	}
+	
+	public static Player createPlayer(String name, int id, Map m, Color color, Faction f, Point spawn) {
+		return new Player(name, id, m, false, color, f, spawn);
 	}
 	
 	public Color getPlayerColor() {
