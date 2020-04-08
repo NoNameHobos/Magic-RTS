@@ -1,15 +1,20 @@
 package main.entities;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import main.game.map.Map;
+import main.input.Mouse;
 import main.player.Player;
 
 public abstract class SelectableEntity extends Entity {
 
+	public static final ArrayList<SelectableEntity> SE = new ArrayList<SelectableEntity>();
+	
 	protected int width, height;
 	protected Map map;
 	protected Player player;
@@ -33,6 +38,17 @@ public abstract class SelectableEntity extends Entity {
 	public boolean mouseOver() {
 		Point mousePos = ENGINE.getMouse().getPos();
 		return collider.contains(mousePos.getX(), mousePos.getY());
+	}
+	
+	public void tick() {
+		super.tick();
+		Mouse m = ENGINE.getMouse();
+		if(m.getButton()[0]) {
+			if(mouseOver()) {
+				player.setSelected(this);
+			} else if(!m.overEntity())
+				player.setSelected(null);
+		}
 	}
 	
 	public void render(Graphics g, float xOffset, float yOffset) {

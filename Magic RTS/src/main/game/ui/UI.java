@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Point;
 
+import main.engine.Engine;
 import main.game.map.Map;
 import main.player.Player;
 
@@ -17,7 +19,8 @@ public class UI {
 	public UI(Player player) {
 		this.player = player;
 		
-		new Minimap(this);
+		new Minimap(this, new Point(0, Engine.getHEIGHT()/3*2));
+		new UnitInfo(this, new Point(300, Engine.getHEIGHT()/3 * 2));
 	}
 
 	public ArrayList<UIElement> getElements() {
@@ -41,6 +44,11 @@ public class UI {
 			elements.get(i).render(g);
 		}
 		
+		renderPlayerList(g);
+		
+	}
+	
+	public void renderPlayerList(Graphics g) {
 		Map m = player.getMap();
 		Player[] players = m.getPlayers();
 		for(int i = 0; i < players.length; i++) {
@@ -63,5 +71,6 @@ public class UI {
 				g.drawString(currentPlayer.getName(), x1 + marginX, y1-height/2);
 			}
 		}
+		
 	}
 }

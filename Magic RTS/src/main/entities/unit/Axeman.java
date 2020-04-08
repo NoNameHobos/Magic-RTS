@@ -51,9 +51,11 @@ public class Axeman extends Unit {
 		super.tick();
 		Point camPos = ((GameState) (Engine.getCurrentState())).getGame().getMap().getControlledPlayer().getCamera().getPos();
 		if(map.getControlledPlayer() == player) {
-			float desX = ENGINE.getMouse().getPos().getX() + camPos.getX();
-			float desY = ENGINE.getMouse().getPos().getY() + camPos.getY();
-			moveTo(new Point(desX, desY));
+			if(player.getSelected() == this) {
+				float desX = ENGINE.getMouse().getPos().getX() + camPos.getX();
+				float desY = ENGINE.getMouse().getPos().getY() + camPos.getY();
+				moveTo(new Point(desX, desY));
+			} else speed = 0;
 			move(speed, direction);
 		}
 	}

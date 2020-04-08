@@ -1,13 +1,17 @@
 package main.game.ui;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Point;
 
 public abstract class UIElement {
 
 	protected UI ui;
+	protected Point pos;
 	
-	public UIElement(UI ui) {
+	public UIElement(UI ui, Point pos) {
 		this.ui = ui;
+		this.pos = pos;
+		
 		ui.getElements().add(this);
 	}
 	
@@ -16,5 +20,13 @@ public abstract class UIElement {
 	
 	public UI getUI() {
 		return ui;
+	}
+	
+	public Point getPos() {
+		return pos;
+	}
+	
+	public void setPos(Point pos) {
+		this.pos = pos;
 	}
 }

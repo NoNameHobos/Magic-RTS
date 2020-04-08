@@ -2,6 +2,7 @@ package main.game.ui;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.game.map.Map;
@@ -18,8 +19,8 @@ public class Minimap extends UIElement {
 	
 	private Rectangle rectMinimap;
 	
-	public Minimap(UI ui) {
-		super(ui);
+	public Minimap(UI ui, Point pos) {
+		super(ui, pos);
 		this.player = ui.getPlayer();
 		this.map = player.getMap();
 		
@@ -27,9 +28,7 @@ public class Minimap extends UIElement {
 
 		float width = 300;
 		float height = 300;
-		float x = camera.getPos().getX();
-		float y = camera.getCamView().getHeight() - height -1;
-		rectMinimap = new Rectangle(x, y, width, height);
+		rectMinimap = new Rectangle(pos.getX(), pos.getY(), width, height);
 	}
 
 	@Override

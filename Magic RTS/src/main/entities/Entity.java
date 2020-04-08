@@ -102,4 +102,8 @@ public abstract class Entity {
 	public void setOrigin(Point origin) {
 		this.origin = origin;
 	}
+	
+	public Rectangle getCollider() {
+		return collider;
+	}
 }

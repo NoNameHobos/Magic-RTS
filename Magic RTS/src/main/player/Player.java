@@ -49,6 +49,7 @@ public class Player {
 		
 		buildings = new ArrayList<Building>();
 		units = new ArrayList<Unit>();
+		selectedGroup = new ArrayList<Entity>();
 		
 		if(map.getControlledPlayer() != null) {
 			if(map.getControlledPlayer().getPlayerID() == playerID) {
@@ -93,6 +94,10 @@ public class Player {
 
 	public Entity getSelected() {
 		return selected;
+	}
+
+	public void setSelected(Entity selected) {
+		this.selected = selected;
 	}
 
 	public ArrayList<Entity> getSelectedGroup() {
