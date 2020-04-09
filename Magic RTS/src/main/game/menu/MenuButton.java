@@ -9,13 +9,13 @@ import org.newdawn.slick.geom.Point;
 import main.game.states.MenuState;
 import main.util.ResourceLoader;
 
-public class Button extends MenuElement {
+public class MenuButton extends MenuElement {
 
-	private static Animation animation;
+	private Animation animation;
 	private String text;
 
-	public Button(MenuState menuState, Point pos, String text) {
-		super(menuState, pos, new Point(250, 48));
+	public MenuButton(MenuState menuState, Point pos, String text) {
+		super(menuState, text,  pos, new Point(250, 48));
 		this.text = text;
 		animation = new Animation(ResourceLoader.SPRITE_SHEETS.get("menu_button"), 5);
 		animation.setLooping(false);
@@ -23,8 +23,7 @@ public class Button extends MenuElement {
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -42,7 +41,10 @@ public class Button extends MenuElement {
 		float x = pos.getX() + animation.getFrame() * 0.5f;
 		g.setFont(ResourceLoader.FONTS.get("Menu"));
 		g.drawString(text, x, pos.getY() - g.getFont().getHeight(text)/8);
-		System.out.println();
+	}
+
+	public String getText() {
+		return text;
 	}
 
 }

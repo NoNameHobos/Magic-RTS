@@ -26,7 +26,7 @@ public class Engine implements Game {
 	
 	private static Input input;
 
-	private Mouse mouse;
+	private static Mouse mouse;
 	
 	
 	//Initialize States
@@ -77,7 +77,7 @@ public class Engine implements Game {
 		return null;
 	}
 	
-	public Mouse getMouse() {
+	public static Mouse getMouse() {
 		return mouse;
 	}
 
