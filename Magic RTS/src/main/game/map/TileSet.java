@@ -26,7 +26,7 @@ public class TileSet {
 	
 	public static TileSet loadTileSet(String p) {
 		System.err.println("Loading set: " + p);
-		String path = "res\\tilesets\\" + p;
+		String path = "res\\sprites\\tilesets\\" + p;
 		System.err.println("From: " + path);
 		
 		File tile_info = new File(Engine.ABS_PATH + path + "\\inf");

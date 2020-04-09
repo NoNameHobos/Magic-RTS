@@ -8,8 +8,10 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import main.game.State;
 import main.game.states.GameState;
 import main.game.states.LoadState;
+import main.game.states.MenuState;
 import main.graphics.Display;
 import main.input.Mouse;
 
@@ -23,10 +25,12 @@ public class Engine implements Game {
 	private static int WIDTH, HEIGHT;
 	
 	private static Input input;
+
 	private Mouse mouse;
 	
 	
 	//Initialize States
+	public static State menuState = new MenuState();
 	public static final State loadState = new LoadState();
 	public static final State gameState = new GameState();
 	

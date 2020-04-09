@@ -8,13 +8,9 @@ import org.newdawn.slick.SlickException;
 
 import main.engine.Engine;
 
-public class Display implements Runnable {
+public class Display {
 
 	private AppGameContainer appgc;
-	
-	public void run() {
-		System.out.println("Started Display Thread");
-	}
 	
 	public Display(Engine engine, int WIDTH, int HEIGHT) {
 		System.out.println("Initializing Display");

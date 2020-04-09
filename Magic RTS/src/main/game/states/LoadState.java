@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import main.engine.Engine;
-import main.engine.State;
+import main.game.State;
 import main.util.ResourceLoader;
 
 public class LoadState extends State {

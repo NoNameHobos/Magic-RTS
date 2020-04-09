@@ -3,8 +3,8 @@ package main.game.states;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import main.engine.State;
 import main.game.Game;
+import main.game.State;
 
 public class GameState extends State {
 

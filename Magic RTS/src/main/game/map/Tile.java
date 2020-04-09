@@ -4,9 +4,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 public class Tile {
-
-	public static final float TILE_WIDTH = 64;
-	public static final float TILE_HEIGHT= 64;
 	
 	private Image image;
 	private Point pos;
