@@ -43,8 +43,8 @@ public class ResourceLoader {
 	private static int loaded = 0;
 	
 	public static void loadMenuSprites() {
-		SPRITE_SHEETS.put("menu_button", loadSpriteSheet("res\\sprites\\menu\\button_anim", 250, 60));
-		SPRITE_SHEETS.put("menu_buttonR", loadSpriteSheet("res\\sprites\\menu\\button_animR", 250, 60));
+		SPRITE_SHEETS.put("menu_button", loadSpriteSheet("res\\sprites\\menu\\button_anim", 220, 60));
+		SPRITE_SHEETS.put("menu_buttonR", loadSpriteSheet("res\\sprites\\menu\\button_animR", 220, 60));
 	}
 	
 	public static void loadTiles() {

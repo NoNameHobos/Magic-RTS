@@ -16,7 +16,7 @@ public class MenuButton extends MenuElement {
 	private String text;
 
 	public MenuButton(MenuState menuState, Point pos, String text) {
-		super(menuState, text,  pos, new Point(250, 48));
+		super(menuState, text,  pos, new Point(190, 48));
 		this.text = text;
 		animation = new Animation(ResourceLoader.SPRITE_SHEETS.get("menu_button"), 5);
 		animation.setLooping(false);
