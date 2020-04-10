@@ -12,6 +12,7 @@ import main.util.ResourceLoader;
 public class MenuButton extends MenuElement {
 
 	private Animation animation;
+	private Animation backAnim;
 	private String text;
 
 	public MenuButton(MenuState menuState, Point pos, String text) {
@@ -19,6 +20,8 @@ public class MenuButton extends MenuElement {
 		this.text = text;
 		animation = new Animation(ResourceLoader.SPRITE_SHEETS.get("menu_button"), 5);
 		animation.setLooping(false);
+		backAnim = new Animation(ResourceLoader.SPRITE_SHEETS.get("menu_buttonR"), 5);
+		backAnim.setLooping(false);
 	}
 
 	@Override
@@ -28,18 +31,22 @@ public class MenuButton extends MenuElement {
 
 	@Override
 	public void render(Graphics g) {
+		g.setColor(Color.white);
+		float x;
+		g.setFont(ResourceLoader.FONTS.get("Menu"));
 		if (mouseOver()) {
 			animation.start();
 			animation.draw(pos.getX(), pos.getY());
+			backAnim.restart();
+			x = pos.getX() + animation.getFrame() * 0.5f;
+			backAnim.stop();
 		} else {
-			Image def = animation.getImage(0);
-			def.draw(pos.getX(), pos.getY());
 			animation.restart();
 			animation.stop();
+			backAnim.start();
+			x = pos.getX() + (backAnim.getFrameCount() - backAnim.getFrame()) * 0.5f;
+			backAnim.draw(pos.getX(), pos.getY());
 		}
-		g.setColor(Color.white);
-		float x = pos.getX() + animation.getFrame() * 0.5f;
-		g.setFont(ResourceLoader.FONTS.get("Menu"));
 		g.drawString(text, x, pos.getY() - g.getFont().getHeight(text)/8);
 	}
 
