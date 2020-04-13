@@ -115,13 +115,10 @@ public class Map {
 				if (inCam) {
 					Image image = tiles[i][j].getImage();
 					
-					float x = rendX;
-					float y = rendY;
-					
 					float width = (float)(image.getWidth() * currentCamera.getZoom());
 					float height = (float)(image.getHeight() * currentCamera.getZoom());
 					
-					image.draw(x, y, width, height);
+					image.draw(rendX, rendY, width, height);
 				}
 			}
 		}
