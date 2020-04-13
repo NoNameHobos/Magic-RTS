@@ -17,7 +17,7 @@ public class Camera {
 	private Rectangle cameraRect, viewRect;
 
 	private Input input;
-	private double zoom = 1;
+	private float zoom = 0.8f;
 	
 	private Map map;
 	
@@ -28,7 +28,7 @@ public class Camera {
 		if(pos.getY() < 0) pos.setY(0);
 		viewPos = pos;
 		cameraRect = new Rectangle(viewPos.getX(), viewPos.getY(), width + TILE_WIDTH + 1, height + TILE_HEIGHT + 1);
-		viewRect = new Rectangle(viewPos.getX(), viewPos.getY(), width, height);
+		viewRect = new Rectangle(viewPos.getX(), viewPos.getY(), width * zoom, height * zoom);
 		
 		this.map = map;
 		
@@ -40,9 +40,9 @@ public class Camera {
 		float mapHeight = (map.getMapHeight() + 1) * TILE_HEIGHT;
 		
 		boolean safeLeft = (viewPos.getX() + xDir > 0);
-		boolean safeRight = (viewPos.getX() + cameraRect.getWidth() + xDir <= mapWidth);
+		boolean safeRight = (viewPos.getX() + cameraRect.getWidth() + xDir <= mapWidth * zoom);
 		boolean safeUp = (viewPos.getY() + yDir > 0);
-		boolean safeDown = (viewPos.getY() + cameraRect.getHeight() + yDir <= mapHeight);
+		boolean safeDown = (viewPos.getY() + cameraRect.getHeight() + yDir <= mapHeight * zoom);
 		
 		if(safeLeft && safeRight)
 			viewPos.setX(viewPos.getX() + xDir);
@@ -50,7 +50,7 @@ public class Camera {
 			if(!safeLeft)
 				viewPos.setX(0);
 			if(!safeRight)
-				viewPos.setX(mapWidth - cameraRect.getWidth());
+				viewPos.setX(mapWidth * zoom - cameraRect.getWidth());
 		}
 		
 		if(safeDown && safeUp)
@@ -59,7 +59,7 @@ public class Camera {
 			if(!safeUp)
 				viewPos.setY(0);
 			if(!safeDown)
-				viewPos.setY(mapHeight - cameraRect.getHeight());
+				viewPos.setY(mapHeight * zoom - cameraRect.getHeight());
 		}
 	}
 	
@@ -103,11 +103,11 @@ public class Camera {
 		return viewRect;
 	}
 	
-	public double getZoom() {
+	public float getZoom() {
 		return zoom;
 	}
 	
-	public void setZoom(double z) {
+	public void setZoom(float z) {
 		zoom = z;
 	}
 }

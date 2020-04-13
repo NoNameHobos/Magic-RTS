@@ -20,6 +20,7 @@ import org.newdawn.slick.TrueTypeFont;
 
 import main.engine.Engine;
 import main.game.map.Map;
+import main.game.map.MapLoader;
 import main.game.map.TileSet;
 
 public class ResourceLoader {
@@ -75,7 +76,7 @@ public class ResourceLoader {
 	}
 	
 	public static void loadMaps() {
-		MAPS.put("map1", loadMap("maps\\map1")); // Arguments currently do nothing but in future will be based on map data
+		MAPS.put("map1", MapLoader.loadMap("maps\\map1")); // Arguments currently do nothing but in future will be based on map data
 	}
 	
 	public static void initResources() {
@@ -156,27 +157,6 @@ public class ResourceLoader {
 			System.err.println("Failed to load Sprite Sheet at: " + dir + " (RuntimeException)");
 			return missingSS;
 		}
-	}
-
-	public static Map loadMap(String dir) {
-		File file = new File(ABS_PATH + dir);
-		BufferedReader br;
-		ArrayList<String> mapData = new ArrayList<String>();
-		
-		try {
-			br = new BufferedReader(new FileReader(file));
-			String st;
-			while ((st = br.readLine()) != null) {
-				mapData.add(st);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		loaded++;
-		return new Map("grass", mapData);
 	}
 
 	private static void report() {

@@ -55,9 +55,6 @@ public abstract class Entity {
 
 
 	public void tick() {
-		collider.setX(pos.getX() - origin.getX());
-		collider.setY(pos.getY() - origin.getY());
-		
 		for(int i = 0; i < alarm.length; i++) {
 			if(alarm[i] != -1) {
 				alarm[i] -= 1;

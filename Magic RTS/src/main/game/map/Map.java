@@ -31,7 +31,7 @@ public class Map {
 
 	private Player controlledPlayer;
 	private Player[] players;
-	private int maxPlayers = 8;
+	private int maxPlayers = 1;
 	private int mapWidth, mapHeight;
 
 	private String mapName = "Grass Map";
@@ -40,8 +40,8 @@ public class Map {
 
 	private ArrayList<String> mapData;
 	
-	public Map(String tileSet, ArrayList<String> mapData) {
-
+	public Map(String title, String tileSet, ArrayList<String> mapData) {
+		mapName = title;
 		tileset = TILE_SETS.get(tileSet);
 		players = new Player[maxPlayers];
 
@@ -67,12 +67,12 @@ public class Map {
 	
 	public void loadPlayers() {
 		System.out.println("Loading player 0 with default attribs");
-		controlledPlayer = Player.createPlayer("Bryn", 0, this, new Color(0, 255, 0), new Viking(), new Point(100, 300));
+		controlledPlayer = Player.createPlayer("Bryn", 0, this, new Color(0, 255, 0), new Viking(), new Point(3000, 300));
 		players[0] = controlledPlayer;
 		Random r = new Random();
 		for(int i = 1; i < players.length; i++) {
 			String n = PLAYER_NAMES[Math.round(r.nextInt(PLAYER_NAMES.length))];
-			players[i] = Player.createPlayer(n, i, this, new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)), new Viking(), new Point(300+r.nextInt(3000), r.nextInt(1000)));
+			players[i] = Player.createPlayer(n, i, this, new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)), new Viking(), new Point(30000, 3000));
 		}
 	}
 	
@@ -108,15 +108,15 @@ public class Map {
 			for (int j = 0; j < tiles[i].length; j++) {
 				Point tilePos = tiles[i][j].getPos();
 				
-				float rendX = tilePos.getX() * (float)currentCamera.getZoom();
-				float rendY = tilePos.getY() * (float)currentCamera.getZoom();
+				float rendX = tilePos.getX();
+				float rendY = tilePos.getY();
 
-				boolean inCam = currentCamera.getRenderRect().contains(rendX, rendY);
+				boolean inCam = currentCamera.getRenderRect().contains(rendX * currentCamera.getZoom(), rendY * currentCamera.getZoom());
 				if (inCam) {
 					Image image = tiles[i][j].getImage();
 					
-					float width = (float)(image.getWidth() * currentCamera.getZoom());
-					float height = (float)(image.getHeight() * currentCamera.getZoom());
+					float width = image.getWidth();
+					float height = image.getHeight();
 					
 					image.draw(rendX, rendY, width, height);
 				}
@@ -146,6 +146,10 @@ public class Map {
 
 	public void setControlledPlayer(Player controlledPlayer) {
 		this.controlledPlayer = controlledPlayer;
+	}
+
+	public ArrayList<String> getMapData() {
+		return mapData;
 	}
 
 }

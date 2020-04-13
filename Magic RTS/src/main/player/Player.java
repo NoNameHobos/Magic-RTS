@@ -68,7 +68,7 @@ public class Player {
 			ui = new UI(this);
 			playerCamera.setUI(ui);
 		}
-		units.add(new Axeman(this, spawn.getY() + 30, spawn.getX() + 30));
+		units.add(new Axeman(this, spawn.getX() + 30, spawn.getY() + 30));
 		buildings.add(new House(this, spawn));
 	}
 	

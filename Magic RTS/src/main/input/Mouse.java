@@ -93,7 +93,7 @@ public class Mouse implements MouseListener {
 
 	@Override
 	public void mouseReleased(int button, int x, int y) {
-		this.button[button] = false;		
+		this.button[button] = false;
 	}
 
 	@Override

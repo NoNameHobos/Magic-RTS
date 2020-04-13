@@ -39,7 +39,9 @@ public abstract class Unit extends SelectableEntity {
 	@Override
 	public void render(Graphics g) {
 		super.render(g);
-		sprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY());
+		float width = sprite.getWidth();
+		float height = sprite.getHeight();
+		sprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY(), width, height);
 		draw(g);
 	}
 
