@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
+import main.engine.Engine;
 import main.entities.Unit;
 import main.player.Player;
 
@@ -35,7 +36,7 @@ public class Golem extends Unit {
 	}
 	//Render/Draw event for the Golem
 	@Override
-	public void draw(Graphics g, float xOffset, float yOffset) {
+	public void draw(Graphics g) {
 		if(speed != 0) {
 			walk.draw(pos.getX(), pos.getY());
 			walk.getCurrentFrame().setRotation(direction);
@@ -45,7 +46,7 @@ public class Golem extends Unit {
 	//Tick/Step event for the Golem
 	public void tick() {
 		super.tick();
-		moveTo(ENGINE.getMouse().getPos());
+		moveTo(Engine.getMouse().getPos());
 		move(speed, direction);
 	}
 }

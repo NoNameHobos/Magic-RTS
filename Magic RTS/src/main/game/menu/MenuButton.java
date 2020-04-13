@@ -3,7 +3,6 @@ package main.game.menu;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import main.game.states.MenuState;

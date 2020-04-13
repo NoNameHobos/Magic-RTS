@@ -1,12 +1,8 @@
 package main.game;
 
-import static main.engine.Engine.ENGINE;
-
 import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
-
-import main.engine.Engine;
 
 public abstract class State {
 	

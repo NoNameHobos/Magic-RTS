@@ -7,6 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
+import main.engine.Engine;
 import main.game.map.Map;
 import main.input.Mouse;
 import main.player.Player;
@@ -36,13 +37,13 @@ public abstract class SelectableEntity extends Entity {
 	}
 	
 	public boolean mouseOver() {
-		Point mousePos = ENGINE.getMouse().getPos();
+		Point mousePos = Engine.getMouse().getPos();
 		return collider.contains(mousePos.getX(), mousePos.getY());
 	}
 	
 	public void tick() {
 		super.tick();
-		Mouse m = ENGINE.getMouse();
+		Mouse m = Engine.getMouse();
 		if(m.getButton()[0]) {
 			if(mouseOver()) {
 				player.setSelected(this);
@@ -51,8 +52,8 @@ public abstract class SelectableEntity extends Entity {
 		}
 	}
 	
-	public void render(Graphics g, float xOffset, float yOffset) {
-		super.render(g, xOffset, yOffset);
+	public void render(Graphics g) {
+		super.render(g);
 		if(map.getControlledPlayer() == player) {
 			if(!mouseOver()) g.setColor(Color.red);
 			else g.setColor(Color.blue);

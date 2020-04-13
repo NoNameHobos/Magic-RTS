@@ -9,8 +9,6 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
-import main.game.states.GameState;
-import main.player.Camera;
 
 public abstract class Entity {
 	
@@ -57,11 +55,8 @@ public abstract class Entity {
 
 
 	public void tick() {
-		Camera curCamera = ((GameState) Engine.getCurrentState()).getGame().getMap().getPlayers()[0].getCamera();
-		float xOffset = curCamera.getPos().getX();
-		float yOffset = curCamera.getPos().getY();
-		collider.setX(pos.getX() - origin.getX() - xOffset);
-		collider.setY(pos.getY() - origin.getY() - yOffset);
+		collider.setX(pos.getX() - origin.getX());
+		collider.setY(pos.getY() - origin.getY());
 		
 		for(int i = 0; i < alarm.length; i++) {
 			if(alarm[i] != -1) {
@@ -70,7 +65,7 @@ public abstract class Entity {
 		}
 	}
 	
-	public void render(Graphics g, float xOffset, float yOffset) {
+	public void render(Graphics g) {
 	}
 	
 	private void initAlarms() {

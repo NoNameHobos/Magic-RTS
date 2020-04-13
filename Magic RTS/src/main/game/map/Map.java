@@ -9,6 +9,7 @@ import java.util.Random;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import main.player.Camera;
@@ -100,16 +101,28 @@ public class Map {
 	}
 
 	public void renderTiles(Graphics g) {
+		
 		Camera currentCamera = controlledPlayer.getCamera();
-		float xOffset = currentCamera.getPos().getX();
-		float yOffset = currentCamera.getPos().getY();
 		
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[i].length; j++) {
 				Point tilePos = tiles[i][j].getPos();
-				boolean inCam = currentCamera.getRenderRect().contains(tilePos.getX(), tilePos.getY());
-				if (inCam)
-					tiles[i][j].getImage().draw(tilePos.getX() - xOffset, tilePos.getY() - yOffset);
+				
+				float rendX = tilePos.getX() * (float)currentCamera.getZoom();
+				float rendY = tilePos.getY() * (float)currentCamera.getZoom();
+
+				boolean inCam = currentCamera.getRenderRect().contains(rendX, rendY);
+				if (inCam) {
+					Image image = tiles[i][j].getImage();
+					
+					float x = rendX;
+					float y = rendY;
+					
+					float width = (float)(image.getWidth() * currentCamera.getZoom());
+					float height = (float)(image.getHeight() * currentCamera.getZoom());
+					
+					image.draw(x, y, width, height);
+				}
 			}
 		}
 	}

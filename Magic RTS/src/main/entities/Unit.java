@@ -37,13 +37,13 @@ public abstract class Unit extends SelectableEntity {
 	}
 	
 	@Override
-	public void render(Graphics g, float xOffset, float yOffset) {
-		super.render(g, xOffset, yOffset);
-		sprite.draw(pos.getX() - origin.getX() - xOffset, pos.getY() - origin.getY() - yOffset);
-		draw(g, xOffset, yOffset);
+	public void render(Graphics g) {
+		super.render(g);
+		sprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY());
+		draw(g);
 	}
 
-	public abstract void draw(Graphics g, float xOffset, float yOffset);
+	public abstract void draw(Graphics g);
 	
 	public int getFacing() {
 		float dir = Math.abs(360 - direction);

@@ -17,6 +17,7 @@ public class Camera {
 	private Rectangle cameraRect, viewRect;
 
 	private Input input;
+	private double zoom = 1;
 	
 	private Map map;
 	
@@ -102,4 +103,11 @@ public class Camera {
 		return viewRect;
 	}
 	
+	public double getZoom() {
+		return zoom;
+	}
+	
+	public void setZoom(double z) {
+		zoom = z;
+	}
 }

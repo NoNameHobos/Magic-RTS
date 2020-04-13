@@ -13,9 +13,9 @@ public class House extends Building {
 	}
 
 	@Override
-	public void render(Graphics g, float xOffset, float yOffset) {
-		super.render(g, xOffset, yOffset);
-		sprite.draw(pos.getX() - origin.getX() - xOffset, pos.getY() - origin.getY() - yOffset);
+	public void render(Graphics g) {
+		super.render(g);
+		sprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY());
 	}
 
 	@Override

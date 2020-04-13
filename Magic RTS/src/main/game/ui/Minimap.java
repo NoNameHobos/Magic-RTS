@@ -6,7 +6,6 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.game.map.Map;
-import main.player.Camera;
 import main.player.Player;
 
 public class Minimap extends UIElement {
@@ -15,16 +14,12 @@ public class Minimap extends UIElement {
 	
 	private Player player;
 	
-	private Camera camera;
-	
 	private Rectangle rectMinimap;
 	
 	public Minimap(UI ui, Point pos) {
 		super(ui, pos);
 		this.player = ui.getPlayer();
 		this.map = player.getMap();
-		
-		this.camera = player.getCamera();
 
 		float width = 300;
 		float height = 300;

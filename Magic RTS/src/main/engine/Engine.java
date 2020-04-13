@@ -30,7 +30,7 @@ public class Engine implements Game {
 	
 	
 	//Initialize States
-	public static State menuState = new MenuState();
+	public static final State menuState = new MenuState();
 	public static final State loadState = new LoadState();
 	public static final State gameState = new GameState();
 	
@@ -54,12 +54,10 @@ public class Engine implements Game {
 	}
 
 	public void update(GameContainer gc, int i) throws SlickException {
-		mouse.update();
-		if(Engine.currentState == loadState) {
-			
-		}
-		if(Engine.currentState != null)
+		if(Engine.currentState != null) {
+			mouse.update();
 			Engine.currentState.tick();
+		}
 	}
 
 	public void render(GameContainer gc, Graphics g) throws SlickException{

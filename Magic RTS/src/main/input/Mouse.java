@@ -6,8 +6,10 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.MouseListener;
 import org.newdawn.slick.geom.Point;
 
+import main.engine.Engine;
 import main.entities.Entity;
-import main.entities.SelectableEntity;
+import main.game.states.GameState;
+import main.player.Camera;
 
 public class Mouse implements MouseListener {
 	
@@ -21,10 +23,17 @@ public class Mouse implements MouseListener {
 		input.addMouseListener(this);
 		pos = new Point(input.getMouseX(), input.getMouseY());
 	}
-	
+
 	public void update() {
-		pos.setX(input.getMouseX());
-		pos.setY(input.getMouseY());
+		float xOffset = 0;
+		float yOffset = 0;
+		if(Engine.getCurrentState() == Engine.gameState) {
+			Camera c = ((GameState) Engine.gameState).getGame().getMap().getControlledPlayer().getCamera();
+			xOffset = c.getPos().getX();
+			yOffset = c.getPos().getY();
+		}
+		pos.setX(input.getMouseX() + xOffset);
+		pos.setY(input.getMouseY() + yOffset);
 	}
 	
 	public boolean overEntity() {

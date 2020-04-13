@@ -41,9 +41,9 @@ public class Axeman extends Unit {
 	}
 
 	@Override
-	public void draw(Graphics g, float xOffset, float yOffset) {
+	public void draw(Graphics g) {
 		if(speed != 0 && getFacing() == 0)
-			walk.draw(pos.getX() - origin.getX() - xOffset, pos.getY() - origin.getY() - yOffset);
+			walk.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY());
 	}
 
 	@Override
@@ -52,8 +52,8 @@ public class Axeman extends Unit {
 		Point camPos = ((GameState) (Engine.getCurrentState())).getGame().getMap().getControlledPlayer().getCamera().getPos();
 		if(map.getControlledPlayer() == player) {
 			if(player.getSelected() == this) {
-				float desX = ENGINE.getMouse().getPos().getX() + camPos.getX();
-				float desY = ENGINE.getMouse().getPos().getY() + camPos.getY();
+				float desX = Engine.getMouse().getPos().getX() + camPos.getX();
+				float desY = Engine.getMouse().getPos().getY() + camPos.getY();
 				moveTo(new Point(desX, desY));
 			} else speed = 0;
 			move(speed, direction);

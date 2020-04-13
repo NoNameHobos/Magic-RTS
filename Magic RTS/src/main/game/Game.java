@@ -36,17 +36,18 @@ public class Game {
 	
 	public void render(Graphics g) {
 
-		map.renderTiles(g);
-		
 		Camera curCamera = map.getControlledPlayer().getCamera();
 		Point offset = curCamera.getPos();
 		float xOffset = offset.getX();
 		float yOffset = offset.getY();
+
+		g.translate(-xOffset, -yOffset);
+		map.renderTiles(g);
 		
 		//Render Entities
 		ArrayList<Entity> entities = Entity.getEntities();
 		for(int i = 0; i < entities.size(); i++) {
-			entities.get(i).render(g, xOffset, yOffset);
+			entities.get(i).render(g);
 		}
 		
 		g.setColor(Color.white);
@@ -56,6 +57,7 @@ public class Game {
 				
 			}
 		}
+		g.translate(xOffset, yOffset);
 		if(map.getControlledPlayer() != null)
 			map.getControlledPlayer().getUI().render(g);
 	}
