@@ -1,8 +1,6 @@
 package main.game;
 
 import static main.util.ResourceLoader.MAPS;
-import static main.GameConstants.TW_RENDER;
-import static main.GameConstants.TH_RENDER;
 
 import java.util.ArrayList;
 
@@ -15,7 +13,6 @@ import main.entities.Entity;
 import main.entities.ai.pathfinding.NodeMap;
 import main.game.map.Map;
 import main.input.Mouse;
-import main.input.Selector;
 import main.player.Camera;
 
 public class Game {
@@ -24,7 +21,7 @@ public class Game {
 	 * A game class to handle the rendering and updating of entities and such within a given game
 	 */
 	
-	private boolean renderPathing = true;
+	private boolean renderPathing = false;
 	
 	private Map map;
 	private NodeMap nm;
@@ -66,27 +63,28 @@ public class Game {
 		for(int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(g);
 		}
-		
-		g.setColor(Color.white);
-		for(int i = 0; i < map.getPlayers().length; i++) {
-			if(map.getPlayers()[i] != null) {
-				map.getPlayers()[i].render(g);
-				
-			}
-		}
-		if(map.getControlledPlayer() != null)
-			map.getControlledPlayer().render(g);
-		
+		map.getControlledPlayer().render(g);
 		//Revert Camera transformations
 		g.scale((float)(1/curCamera.getZoom()), (float)(1/curCamera.getZoom()));
 		g.translate(xOffset, yOffset);
+
+		/*
+		 * for(int i = 0; i < map.getPlayers().length; i++) { if(map.getPlayers()[i] !=
+		 * null) { map.getPlayers()[i].render(g); } }
+		 */
 		
-		if(map.getControlledPlayer() != null)
-			map.getControlledPlayer().renderUI(g);
+		renderUI(g);
+		
+	}
+	
+	public void renderUI(Graphics ui) {
+		
+		//if(map.getControlledPlayer() != null)
+			//map.getControlledPlayer().renderUI(ui);
 
 		Mouse m = Engine.getMouse();
-		g.drawString(Float.toString(m.getPos().getX()), 30, 60);
-		g.drawString(Float.toString(m.getPos().getY()), 30, 75);
+		ui.drawString(Float.toString(m.getPos().getX()), 30, 60);
+		ui.drawString(Float.toString(m.getPos().getY()), 30, 75);
 	}
 	
 	public void tick() {

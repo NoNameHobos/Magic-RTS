@@ -1,11 +1,15 @@
 package main.player;
 
+import static main.GameConstants.TH_RENDER;
+import static main.GameConstants.TW_RENDER;
+
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Point;
+import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
 import main.entities.Building;
@@ -16,10 +20,6 @@ import main.entities.unit.Axeman;
 import main.game.Game;
 import main.game.map.Map;
 import main.game.ui.UI;
-import main.input.Selector;
-
-import static main.GameConstants.TW_RENDER;
-import static main.GameConstants.TH_RENDER;
 
 public class Player {
 	
@@ -56,7 +56,6 @@ public class Player {
 		this.game = map.getGame();
 		this.name = name;
 
-		selector = new Selector(this, Engine.getInput());
 		
 		buildings = new ArrayList<Building>();
 		units = new ArrayList<Unit>();
@@ -79,13 +78,16 @@ public class Player {
 			ui = new UI(this);
 			playerCamera.setUI(ui);
 		}
-		units.add(new Axeman(this, spawn.getX() + 30, spawn.getY() + 30));
+		units.add(new Axeman(this, spawn.getX() + TW_RENDER * 2, spawn.getY() + TH_RENDER * 2));
 		buildings.add(new House(this, spawn));
+
+		selector = new Selector(this, Engine.getInput());
 	}
 	
 	public void tick() {
 		if(map.getControlledPlayer().getPlayerID() == playerID) {
 			playerCamera.update();
+			selector.update();
 		}
 		if(Engine.getInput().isKeyPressed(Input.KEY_P)) {
 			if(game.isRenderPathing())
@@ -96,12 +98,11 @@ public class Player {
 	
 	public void render(Graphics g) {
 		g.setColor(Color.red);
-		if(selector.getStartDrag() != null && selector.getEndDrag() != null) {
-			Point p1 = selector.getStartDrag();
-			Point p2 = selector.getEndDrag();
-			float width = p2.getX() - p1.getX();
-			float height = p2.getY() - p1.getY();
-			g.drawRect(p1.getX(), p1.getY(), width, height);
+		if(selector != null) {
+			if(selector.getStartDrag() != null && selector.getEndDrag() != null) {
+				Rectangle selectBox = selector.getSelectBox();
+				g.draw(selectBox);
+			}
 		}
 	}
 	

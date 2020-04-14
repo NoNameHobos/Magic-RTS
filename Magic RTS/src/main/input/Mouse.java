@@ -32,9 +32,12 @@ public class Mouse implements MouseListener {
 			Camera c = ((GameState) Engine.gameState).getGame().getMap().getControlledPlayer().getCamera();
 			xOffset = c.getPos().getX();
 			yOffset = c.getPos().getY();
+			pos.setX((input.getMouseX() + xOffset) / c.getZoom());
+			pos.setY((input.getMouseY() + yOffset) / c.getZoom());
+		} else {
+			pos.setX((input.getMouseX() + xOffset));
+			pos.setY((input.getMouseY() + yOffset));
 		}
-		pos.setX(input.getMouseX() + xOffset);
-		pos.setY(input.getMouseY() + yOffset);
 		screenPos.setX(input.getMouseX());
 		screenPos.setY(input.getMouseY());
 	}

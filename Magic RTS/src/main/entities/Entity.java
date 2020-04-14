@@ -13,6 +13,8 @@ public abstract class Entity {
 	protected Point pos;
 	protected Point origin; //Set an origin for sprite relative to position
 	
+	protected String type = "Entity";
+	
 	protected Image sprite;
 	protected SpriteSheet ss;
 
@@ -100,5 +102,10 @@ public abstract class Entity {
 
 	public boolean isSelectable() {
 		return selectable;
+	}
+
+
+	public String getType() {
+		return type;
 	}
 }

@@ -11,6 +11,7 @@ public abstract class Building extends SelectableEntity {
 	
 	public Building(Player player, Point _pos, Image sprite) {
 		super(player, _pos, sprite);
+		type = "Building";
 	}
 
 }

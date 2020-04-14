@@ -26,6 +26,7 @@ public class Engine implements Game {
 
 	private static Mouse mouse;
 	
+	private static String TITLE;
 	
 	//Initialize States
 	public static final State menuState = new MenuState();
@@ -37,6 +38,8 @@ public class Engine implements Game {
 		System.out.println("Initializing Engine..");
 		Engine.WIDTH = WIDTH;
 		Engine.HEIGHT = HEIGHT;
+		Engine.TITLE = TITLE;
+		
 		new Display(this, WIDTH, HEIGHT);
 		
 	}
@@ -71,7 +74,7 @@ public class Engine implements Game {
 	}
 
 	public String getTitle() {
-		return null;
+		return TITLE;
 	}
 	
 	public static Mouse getMouse() {

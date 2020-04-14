@@ -97,7 +97,6 @@ public class Camera {
 		///Zoom code
 		int mouseWheel = (int)Math.signum(Mouse.getDWheel());
 		zoom += mouseWheel * 0.0625f;
-		System.out.println(minZoom + " " + zoom + " " + maxZoom);
 		
 		if(zoom < minZoom) zoom = minZoom;
 		if(zoom > maxZoom) zoom = maxZoom;

@@ -20,6 +20,7 @@ public abstract class Unit extends SelectableEntity {
 	
 	public Unit(Player player, float x, float y, Image sprite) {
 		super(player, new Point(x, y), sprite);
+		type = "Unit";
 	}
 	
 	public void move(float spd, float angle) {

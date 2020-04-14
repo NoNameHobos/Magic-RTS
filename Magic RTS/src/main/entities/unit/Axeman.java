@@ -7,11 +7,8 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.geom.Point;
 
-import main.engine.Engine;
 import main.entities.Unit;
-import main.game.states.GameState;
 import main.player.Player;
 
 public class Axeman extends Unit {
@@ -24,9 +21,7 @@ public class Axeman extends Unit {
 	private static Animation walk;
 	
 	public Axeman(Player player, float x, float y) {
-		super(player
-				, x, y,
-					SPRITE);
+		super(player, x, y, SPRITE);
 		
 		//Init Stats
 		health = 80;
