@@ -16,8 +16,6 @@ import main.graphics.Display;
 import main.input.Mouse;
 
 public class Engine implements Game {
-
-	public static Engine ENGINE;
 	
 	private static State currentState;
 	public static String ABS_PATH = (new File("").getAbsolutePath() + "\\");
@@ -37,7 +35,6 @@ public class Engine implements Game {
 	
 	public Engine(int WIDTH, int HEIGHT, String TITLE) {
 		System.out.println("Initializing Engine..");
-		ENGINE = this;
 		Engine.WIDTH = WIDTH;
 		Engine.HEIGHT = HEIGHT;
 		new Display(this, WIDTH, HEIGHT);
@@ -51,6 +48,8 @@ public class Engine implements Game {
 		//Start game here once everything is loaded
 		Engine.currentState = loadState;
 		Engine.currentState.init();
+		
+		System.err.println(Engine.WIDTH + " " + Engine.HEIGHT);
 	}
 
 	public void update(GameContainer gc, int i) throws SlickException {
@@ -80,11 +79,11 @@ public class Engine implements Game {
 	}
 
 	public static int getWIDTH() {
-		return WIDTH;
+		return Engine.WIDTH;
 	}
 
 	public static int getHEIGHT() {
-		return HEIGHT;
+		return Engine.HEIGHT;
 	}
 
 	public static State getCurrentState() {

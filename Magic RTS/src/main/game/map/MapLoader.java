@@ -100,9 +100,9 @@ public class MapLoader {
 					step++;
 				}
 				outputData.add(tempString.trim());
-				m = new Map(title, "grass", outputData);
-				m.setSpawns(spawnLocations);
 			}
+			m = new Map(title, "grass", outputData);
+			m.setSpawns(spawnLocations);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

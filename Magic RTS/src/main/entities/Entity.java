@@ -8,11 +8,7 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
-import main.engine.Engine;
-
 public abstract class Entity {
-	
-	protected static final Engine ENGINE = Engine.ENGINE;
 	
 	protected Point pos;
 	protected Point origin; //Set an origin for sprite relative to position

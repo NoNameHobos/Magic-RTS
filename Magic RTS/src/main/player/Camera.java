@@ -1,8 +1,9 @@
 package main.player;
 
-import static main.GameConstants.TW_RENDER;
 import static main.GameConstants.TH_RENDER;
+import static main.GameConstants.TW_RENDER;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
@@ -17,6 +18,7 @@ public class Camera {
 	private Rectangle cameraRect, viewRect;
 
 	private Input input;
+	private float minZoom, maxZoom;
 	private float zoom = 1f;
 	
 	private Map map;
@@ -26,12 +28,20 @@ public class Camera {
 	public Camera(Map map, Point pos, float width, float height) {
 		if(pos.getX() < 0) pos.setX(0);
 		if(pos.getY() < 0) pos.setY(0);
+		
+		if(map.getMapWidth() < map.getMapHeight()) {
+			minZoom  = 2 * (float)Engine.getWIDTH() / (float)(map.getMapWidth() * TW_RENDER);
+		} else 
+			minZoom = 2 * (float)Engine.getHEIGHT() / (float)(map.getMapHeight() * TH_RENDER);
+		System.err.println(map.getMapWidth() + " " + map.getMapHeight());
+		maxZoom = 1.5f;
+		
 		viewPos = pos;
+		
 		cameraRect = new Rectangle(viewPos.getX(), viewPos.getY(), width + TW_RENDER + 1, height + TH_RENDER + 1);
 		viewRect = new Rectangle(viewPos.getX(), viewPos.getY(), width * zoom, height * zoom);
 		
 		this.map = map;
-		
 		this.input = Engine.getInput();
 	}
 	
@@ -69,6 +79,7 @@ public class Camera {
 			ui.tick();
 		int xDir = 0;
 		int yDir = 0;
+		
 		if(input.isKeyDown(Input.KEY_S))
 			yDir = mspeed;
 		else if(input.isKeyDown(Input.KEY_W))
@@ -81,6 +92,16 @@ public class Camera {
 		move(xDir, yDir);
 		cameraRect.setX(viewPos.getX() - TW_RENDER - 1);
 		cameraRect.setY(viewPos.getY() - TH_RENDER - 1);
+
+		
+		///Zoom code
+		int mouseWheel = (int)Math.signum(Mouse.getDWheel());
+		zoom += mouseWheel * 0.0625f;
+		System.out.println(minZoom + " " + zoom + " " + maxZoom);
+		
+		if(zoom < minZoom) zoom = minZoom;
+		if(zoom > maxZoom) zoom = maxZoom;
+		
 	}
 	
 	public void setUI(UI ui) {
