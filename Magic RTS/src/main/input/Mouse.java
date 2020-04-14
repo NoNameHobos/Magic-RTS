@@ -13,7 +13,7 @@ import main.player.Camera;
 
 public class Mouse implements MouseListener {
 	
-	private Point pos;
+	private Point pos, screenPos;
 	private Input input;
 
 	private final boolean[] button = new boolean[30];
@@ -22,6 +22,7 @@ public class Mouse implements MouseListener {
 		this.input = input;
 		input.addMouseListener(this);
 		pos = new Point(input.getMouseX(), input.getMouseY());
+		screenPos = new Point(input.getMouseX(), input.getMouseY());
 	}
 
 	public void update() {
@@ -34,6 +35,8 @@ public class Mouse implements MouseListener {
 		}
 		pos.setX(input.getMouseX() + xOffset);
 		pos.setY(input.getMouseY() + yOffset);
+		screenPos.setX(input.getMouseX());
+		screenPos.setY(input.getMouseY());
 	}
 	
 	public boolean overEntity() {
@@ -108,6 +111,10 @@ public class Mouse implements MouseListener {
 	
 	public Point getPos() {
 		return pos;
+	}
+
+	public Point getScreenPos() {
+		return screenPos;
 	}
 
 }

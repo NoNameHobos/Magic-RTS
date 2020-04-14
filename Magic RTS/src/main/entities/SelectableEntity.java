@@ -24,6 +24,7 @@ public abstract class SelectableEntity extends Entity {
 	
 	public SelectableEntity(Player player, Point pos, Image sprite) {
 		super(pos, sprite);
+		selectable = true;
 		this.player = player;
 		map = player.getMap();
 		width = sprite.getWidth();

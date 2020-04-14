@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
@@ -12,8 +13,10 @@ import main.entities.Entity;
 import main.entities.Unit;
 import main.entities.buildings.House;
 import main.entities.unit.Axeman;
+import main.game.Game;
 import main.game.map.Map;
 import main.game.ui.UI;
+import main.input.Selector;
 
 public class Player {
 	
@@ -31,11 +34,14 @@ public class Player {
 	//private Point spawn;
 	private Camera playerCamera;
 	private UI ui;
+	private Game game;
 	
 	private int playerID;
 	private Map map;
 	
 	private Faction faction;
+	
+	private Selector selector;
 	
 	public Player(String name, int playerID, Map map, boolean AI, Color playerColor, Faction faction, Point spawn) {
 		this.playerColor = playerColor;
@@ -44,8 +50,10 @@ public class Player {
 		this.playerID = playerID;
 		//this.spawn = spawn;
 		this.map = map;
+		this.game = map.getGame();
 		this.name = name;
-		
+
+		selector = new Selector(this, Engine.getInput());
 		
 		buildings = new ArrayList<Building>();
 		units = new ArrayList<Unit>();
@@ -73,11 +81,29 @@ public class Player {
 	}
 	
 	public void tick() {
-		if(map.getControlledPlayer().getPlayerID() == playerID)
+		if(map.getControlledPlayer().getPlayerID() == playerID) {
 			playerCamera.update();
+		}
+		if(Engine.getInput().isKeyPressed(Input.KEY_P)) {
+			if(game.isRenderPathing())
+				game.setRenderPathing(false);
+			else game.setRenderPathing(true);
+		}
 	}
 	
 	public void render(Graphics g) {
+		g.setColor(Color.red);
+		if(selector.getStartDrag() != null && selector.getEndDrag() != null) {
+			Point p1 = selector.getStartDrag();
+			Point p2 = selector.getEndDrag();
+			float width = p2.getX() - p1.getX();
+			float height = p2.getY() - p1.getY();
+			g.drawRect(p1.getX(), p1.getY(), width, height);
+		}
+	}
+	
+	public void renderUI(Graphics g) {
+		ui.render(g);
 	}
 
 	public static Player createPlayer(String name, int id, Map m, boolean ai, Color color, Faction f, Point spawn) {

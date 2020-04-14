@@ -1,7 +1,7 @@
 package main.player;
 
-import static main.util.ResourceLoader.TILE_HEIGHT;
-import static main.util.ResourceLoader.TILE_WIDTH;
+import static main.GameConstants.TW_RENDER;
+import static main.GameConstants.TH_RENDER;
 
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Point;
@@ -17,7 +17,7 @@ public class Camera {
 	private Rectangle cameraRect, viewRect;
 
 	private Input input;
-	private float zoom = 0.8f;
+	private float zoom = 1f;
 	
 	private Map map;
 	
@@ -27,7 +27,7 @@ public class Camera {
 		if(pos.getX() < 0) pos.setX(0);
 		if(pos.getY() < 0) pos.setY(0);
 		viewPos = pos;
-		cameraRect = new Rectangle(viewPos.getX(), viewPos.getY(), width + TILE_WIDTH + 1, height + TILE_HEIGHT + 1);
+		cameraRect = new Rectangle(viewPos.getX(), viewPos.getY(), width + TW_RENDER + 1, height + TH_RENDER + 1);
 		viewRect = new Rectangle(viewPos.getX(), viewPos.getY(), width * zoom, height * zoom);
 		
 		this.map = map;
@@ -36,8 +36,8 @@ public class Camera {
 	}
 	
 	public void move(float xDir, float yDir) {
-		float mapWidth = (map.getMapWidth() + 1) * TILE_WIDTH;
-		float mapHeight = (map.getMapHeight() + 1) * TILE_HEIGHT;
+		float mapWidth = (map.getMapWidth() + 1) * TW_RENDER;
+		float mapHeight = (map.getMapHeight() + 1) * TH_RENDER;
 		
 		boolean safeLeft = (viewPos.getX() + xDir > 0);
 		boolean safeRight = (viewPos.getX() + cameraRect.getWidth() + xDir <= mapWidth * zoom);
@@ -79,8 +79,8 @@ public class Camera {
 		else if(input.isKeyDown(Input.KEY_A))
 			xDir = -mspeed;
 		move(xDir, yDir);
-		cameraRect.setX(viewPos.getX() - TILE_WIDTH - 1);
-		cameraRect.setY(viewPos.getY() - TILE_HEIGHT - 1);
+		cameraRect.setX(viewPos.getX() - TW_RENDER - 1);
+		cameraRect.setY(viewPos.getY() - TH_RENDER - 1);
 	}
 	
 	public void setUI(UI ui) {

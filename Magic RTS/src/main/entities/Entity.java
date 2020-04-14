@@ -20,6 +20,8 @@ public abstract class Entity {
 	protected Image sprite;
 	protected SpriteSheet ss;
 
+	protected boolean selectable = false;
+	
 	protected int[] alarm = new int[10];
 	
 	public final static ArrayList<Entity> ENTITIES = new ArrayList<Entity>();
@@ -97,5 +99,10 @@ public abstract class Entity {
 	
 	public Rectangle getCollider() {
 		return collider;
+	}
+
+
+	public boolean isSelectable() {
+		return selectable;
 	}
 }

@@ -1,6 +1,8 @@
 package main.game;
 
 import static main.util.ResourceLoader.MAPS;
+import static main.GameConstants.TW_RENDER;
+import static main.GameConstants.TH_RENDER;
 
 import java.util.ArrayList;
 
@@ -22,15 +24,12 @@ public class Game {
 	 * A game class to handle the rendering and updating of entities and such within a given game
 	 */
 	
-	private boolean renderPathing = false;
+	private boolean renderPathing = true;
 	
 	private Map map;
 	private NodeMap nm;
 	
 	private String mapName;
-	
-	private Selector dragListener;
-	
 	private boolean started = false;
 	
 	public Game(String mapName) {
@@ -39,12 +38,10 @@ public class Game {
 	
 	public void init() {
 		map = MAPS.get(mapName);
-		map.init();
+		map.init(this);
 		nm = NodeMap.createNodeMap(map.getMapData());
 		System.out.println("Loaded map: Grass Map");
 		started = true;
-		dragListener = new Selector(Engine.getInput());
-		
 	}
 	
 	public void render(Graphics g) {
@@ -54,11 +51,15 @@ public class Game {
 		float xOffset = offset.getX();
 		float yOffset = offset.getY();
 
+		//Apply Camera transformations
 		g.translate(-xOffset, -yOffset);
 		g.scale((float)curCamera.getZoom(), (float)curCamera.getZoom());
+		
+		//Render all the tiles
 		map.renderTiles(g);
-		if(renderPathing)
+		if(renderPathing) {
 			nm.render(g);
+		}
 		
 		//Render Entities
 		ArrayList<Entity> entities = Entity.getEntities();
@@ -73,21 +74,17 @@ public class Game {
 				
 			}
 		}
+		if(map.getControlledPlayer() != null)
+			map.getControlledPlayer().render(g);
+		
+		//Revert Camera transformations
 		g.scale((float)(1/curCamera.getZoom()), (float)(1/curCamera.getZoom()));
 		g.translate(xOffset, yOffset);
+		
 		if(map.getControlledPlayer() != null)
-			map.getControlledPlayer().getUI().render(g);
-		g.setColor(Color.red);
-		if(dragListener.getStartDrag() != null && dragListener.getEndDrag() != null) {
-			Point p1 = dragListener.getStartDrag();
-			Point p2 = dragListener.getEndDrag();
-			float width = p2.getX() - p1.getX();
-			float height = p2.getY() - p1.getY();
-			g.drawRect(p1.getX(), p1.getY(), width, height);
-		}
-		
+			map.getControlledPlayer().renderUI(g);
+
 		Mouse m = Engine.getMouse();
-		
 		g.drawString(Float.toString(m.getPos().getX()), 30, 60);
 		g.drawString(Float.toString(m.getPos().getY()), 30, 75);
 	}
@@ -112,6 +109,14 @@ public class Game {
 	
 	public Map getMap() {
 		return map;
+	}
+
+	public boolean isRenderPathing() {
+		return renderPathing;
+	}
+
+	public void setRenderPathing(boolean renderPathing) {
+		this.renderPathing = renderPathing;
 	}
 	
 }

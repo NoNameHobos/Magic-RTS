@@ -4,13 +4,8 @@ import static main.engine.Engine.ABS_PATH;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.newdawn.slick.Image;
@@ -25,8 +20,7 @@ import main.game.map.TileSet;
 
 public class ResourceLoader {
 
-	public static final int TILE_WIDTH = 128;
-	public static final int TILE_HEIGHT = 128;
+	
 	public static final int FONT_SIZE = 60;
 
 	public static final HashMap<String, Image> SPRITES = new HashMap<String, Image>();

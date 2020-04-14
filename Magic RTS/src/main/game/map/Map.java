@@ -1,8 +1,8 @@
 package main.game.map;
 
-import static main.util.ResourceLoader.TILE_HEIGHT;
+import static main.GameConstants.TH_RENDER;
+import static main.GameConstants.TW_RENDER;
 import static main.util.ResourceLoader.TILE_SETS;
-import static main.util.ResourceLoader.TILE_WIDTH;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -12,6 +12,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
+import main.game.Game;
 import main.player.Camera;
 import main.player.Player;
 import main.player.factions.Viking;
@@ -31,7 +32,9 @@ public class Map {
 
 	private Player controlledPlayer;
 	private Player[] players;
-	private int maxPlayers = 1;
+	private Point[] spawns;
+	private int maxPlayers;
+	
 	private int mapWidth, mapHeight;
 
 	private String mapName = "Grass Map";
@@ -39,6 +42,8 @@ public class Map {
 	private TileSet tileset;
 
 	private ArrayList<String> mapData;
+	
+	private Game game;
 	
 	public Map(String title, String tileSet, ArrayList<String> mapData) {
 		mapName = title;
@@ -51,28 +56,37 @@ public class Map {
 		System.out.print("Loaded map with size: ");
 		System.out.print(mapWidth);
 		System.out.print(" x ");
-		System.out.print(mapHeight);
+		System.out.println(mapHeight);
 		this.mapData = mapData;
 	}
 	
-	public void init() {
-		String[][] tileData = new String[mapHeight][mapWidth];
-
-		for(int i = 0; i < mapHeight; i++) {
-			tileData[i] = mapData.get(i).split(" ");
+	public void init(Game game) {
+		if(tiles == null) {
+			String[][] tileData = new String[mapHeight][mapWidth];
+	
+			for(int i = 0; i < mapHeight; i++) {
+				tileData[i] = mapData.get(i).split(" ");
+			}
+			
+			this.game = game;
+			
+			loadPlayers();
+			loadTiles(tileData);
 		}
-		loadPlayers();
-		loadTiles(tileData);
 	}
 	
 	public void loadPlayers() {
-		System.out.println("Loading player 0 with default attribs");
-		controlledPlayer = Player.createPlayer("Bryn", 0, this, new Color(0, 255, 0), new Viking(), new Point(3000, 300));
+		players = new Player[spawns.length];
+		
+		controlledPlayer = Player.createPlayer("Bryn", 0, this, new Color(0, 255, 0), new Viking(), spawns[0]);
+		System.out.println("Spawned player at: (" + spawns[0].getX() + ", " + spawns[0].getY() + ")");
 		players[0] = controlledPlayer;
-		Random r = new Random();
+		
 		for(int i = 1; i < players.length; i++) {
+			Random r = new Random();
 			String n = PLAYER_NAMES[Math.round(r.nextInt(PLAYER_NAMES.length))];
-			players[i] = Player.createPlayer(n, i, this, new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)), new Viking(), new Point(30000, 3000));
+			System.out.println("Spawned player at: (" + spawns[i].getX() + ", " + spawns[i].getY() + ")");
+			players[i] = Player.createPlayer(n, i, this, new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)), new Viking(), spawns[i]);
 		}
 	}
 	
@@ -91,7 +105,7 @@ public class Map {
                     tileType = "darkWater";
                     break;
                 }
-                tiles[j][i] = new Tile(tileset.getTile(tileType), j * TILE_WIDTH, i * TILE_HEIGHT);
+                tiles[j][i] = new Tile(tileset.getTile(tileType), j * TW_RENDER, i * TH_RENDER);
 			}
 		}
 	}
@@ -115,8 +129,8 @@ public class Map {
 				if (inCam) {
 					Image image = tiles[i][j].getImage();
 					
-					float width = image.getWidth();
-					float height = image.getHeight();
+					float width = TW_RENDER;
+					float height = TH_RENDER;
 					
 					image.draw(rendX, rendY, width, height);
 				}
@@ -150,6 +164,14 @@ public class Map {
 
 	public ArrayList<String> getMapData() {
 		return mapData;
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setSpawns(Point[] spawns) {
+		this.spawns = spawns;
 	}
 
 }

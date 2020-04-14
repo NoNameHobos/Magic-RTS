@@ -14,8 +14,8 @@ import org.newdawn.slick.SpriteSheet;
 import main.engine.Engine;
 import main.util.ResourceLoader;
 
-import static main.util.ResourceLoader.TILE_WIDTH;
-import static main.util.ResourceLoader.TILE_HEIGHT;
+import static main.GameConstants.TILE_WIDTH;
+import static main.GameConstants.TILE_HEIGHT;
 
 public class TileSet {
 
