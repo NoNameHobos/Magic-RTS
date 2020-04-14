@@ -18,6 +18,9 @@ import main.game.map.Map;
 import main.game.ui.UI;
 import main.input.Selector;
 
+import static main.GameConstants.TW_RENDER;
+import static main.GameConstants.TH_RENDER;
+
 public class Player {
 	
 	private Color playerColor;
@@ -107,11 +110,13 @@ public class Player {
 	}
 
 	public static Player createPlayer(String name, int id, Map m, boolean ai, Color color, Faction f, Point spawn) {
-		return new Player(name, id, m, ai, color, f, spawn);
+		Point tSpawn = new Point(spawn.getX() * TW_RENDER, spawn.getY() * TH_RENDER);
+		return new Player(name, id, m, ai, color, f, tSpawn);
 	}
 	
 	public static Player createPlayer(String name, int id, Map m, Color color, Faction f, Point spawn) {
-		return new Player(name, id, m, false, color, f, spawn);
+		Point tSpawn = new Point(spawn.getX() * TW_RENDER, spawn.getY() * TH_RENDER);
+		return new Player(name, id, m, false, color, f, tSpawn);
 	}
 	
 	public Color getPlayerColor() {
