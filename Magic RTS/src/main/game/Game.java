@@ -23,22 +23,21 @@ public class Game {
 	
 	private boolean renderPathing = false;
 	
+	public static String MAP_TO_LOAD = "";
+	
 	private Map map;
 	private NodeMap nm;
 	
-	private String mapName;
 	private boolean started = false;
 	
 	private Player controllingPlayer;
 	
 	private static Camera currentView;
 	
-	public Game(String mapName) {
-		this.mapName = mapName;
-	}
-	
 	public void init() {
-		map = MAPS.get(mapName);
+		System.err.println(MAP_TO_LOAD);
+		System.err.println(MAPS.keySet().toString());
+		map = MAPS.get(MAP_TO_LOAD);
 		map.init(this);
 		
 		controllingPlayer = map.getControlledPlayer();

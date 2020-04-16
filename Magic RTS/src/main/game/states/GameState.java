@@ -31,7 +31,7 @@ public class GameState extends State {
 	
 	@Override
 	public void init() {
-		game = new Game("map1");
+		game = new Game();
 		System.out.println("Starting new game on map1"); //Place holder
 		game.init();
 	}

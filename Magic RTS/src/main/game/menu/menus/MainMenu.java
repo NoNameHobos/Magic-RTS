@@ -41,7 +41,6 @@ public class MainMenu extends Menu {
 
 					case "Skirmish":
 						menuState.setCurrentMenu(MenuState.MENUS.get(1));
-						//Engine.setCurrentState(Engine.gameState);
 						break;
 
 					case "Quit":

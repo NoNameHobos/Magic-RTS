@@ -6,6 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
+import main.game.Game;
 import main.game.map.Map;
 import main.game.menu.Menu;
 import main.game.menu.MenuButton;
@@ -14,23 +15,23 @@ import main.util.ResourceLoader;
 
 public class MapSelectMenu extends Menu {
 
+	private HashMap<String, Map> mapList;
+	
 	public MapSelectMenu(MenuState state) {
 		super(state);
 		// TODO Auto-generated constructor stub
 	}
 
-	private HashMap<String, Map> maps;
-
 	@Override
 	public void init() {
-		if(initialized)
+		if (initialized)
 			return;
 		initialized = true;
-		
-		maps = ResourceLoader.MAPS;
-		String str = maps.keySet().toString().replaceAll("\\[", "");
+
+		mapList = ResourceLoader.MAPS;
+		String str = mapList.keySet().toString().replaceAll("\\[", "");
 		str = str.replaceAll("\\]", "");
-		String[] vals = str.split(",");
+		String[] vals = str.split(", ");
 
 		float y = 200;
 		float marginY = 55;
@@ -54,16 +55,9 @@ public class MapSelectMenu extends Menu {
 			button.tick();
 			if (button.mouseOver()) {
 				if (Engine.getMouse().getButton()[0]) {
-
-					switch (((MenuButton) button).getText()) {
-					case "Back":
-						menuState.setCurrentMenu(MenuState.MENUS.get(0));
-						break;
-					default:
-						alarm[0] = 120;
-						break;
-
-					}
+					//TODO: Make button checking more feasible
+					Game.MAP_TO_LOAD = button.getText();
+					Engine.setCurrentState(Engine.gameState);
 				}
 			}
 		}
