@@ -126,6 +126,10 @@ public class Selector implements MouseListener {
 				if (((SelectableEntity) e).mouseOver() && ((SelectableEntity) e).getPlayer() == player) {
 					player.setSelected(e);
 				} else
+					for(Entity entity : player.getSelectedGroup()) {
+						((SelectableEntity) entity).select(false);
+					
+					}
 					player.setSelected(null);
 			}
 		}
@@ -141,6 +145,8 @@ public class Selector implements MouseListener {
 					if (entity.isSelectable()) {
 						if (((SelectableEntity) entity).getPlayer() == player) {
 							Point p = Game.UIToObject(startPoint, camera);
+							
+							
 	
 							float width = (endPoint.getX() - startPoint.getX()) / camera.getZoom();
 							float height = (endPoint.getY() - startPoint.getY()) / camera.getZoom();
@@ -148,8 +154,8 @@ public class Selector implements MouseListener {
 							float centX = p.getX() + width / 2;
 							float centY = p.getY() + height / 2;
 	
-							boolean safeX = Math.abs(entity.getPos().getX() - centX) < width / 2;
-							boolean safeY = Math.abs(entity.getPos().getY() - centY) < height / 2;
+							boolean safeX = Math.abs(entity.getPos().getX() - centX) < Math.abs(width) / 2;
+							boolean safeY = Math.abs(entity.getPos().getY() - centY) < Math.abs(height) / 2;
 	
 							if (safeX && safeY) {
 	
@@ -157,6 +163,7 @@ public class Selector implements MouseListener {
 	
 								if (!selected.contains(entity))
 									selected.add(entity);
+									((SelectableEntity) entity).select();
 							}
 						}
 					}

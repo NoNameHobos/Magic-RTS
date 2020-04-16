@@ -2,6 +2,7 @@ package main.entities;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
@@ -17,6 +18,7 @@ public abstract class SelectableEntity extends Entity {
 	protected int width, height;
 	protected Map map;
 	protected Player player;
+	protected Boolean selected;
 	
 	public SelectableEntity(Player player, Point pos, Image sprite) {
 		super(player.getMap(), pos, sprite);
@@ -24,6 +26,7 @@ public abstract class SelectableEntity extends Entity {
 		this.player = player;
 		width = sprite.getWidth();
 		height = sprite.getHeight();
+		selected = false;
 	}
 	
 	public int getWidth() {
@@ -45,9 +48,24 @@ public abstract class SelectableEntity extends Entity {
 	
 	public void render(Graphics g) {
 		super.render(g);
+		if (selected) {
+			g.setColor(Color.green);
+			g.draw(collider);
+		}
 	}
 
 	public Player getPlayer() {
 		return player;
 	}
+	
+	public void select(boolean s) {
+		selected = s;
+		
+	}
+	
+	public void select() {
+		selected = true;
+		
+	}
+	
 }
