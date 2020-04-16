@@ -17,6 +17,7 @@ public class MainMenu extends Menu {
 	@Override
 	public void init() {
 		buttons.add(new MenuButton(this, new Point(0, 400), "Play"));
+		buttons.add(new MenuButton(this, new Point(0, 400), "Play"));
 		buttons.add(new MenuButton(this, new Point(0, 450), "Options"));
 		buttons.add(new MenuButton(this, new Point(0, 500), "Quit"));
 	}
