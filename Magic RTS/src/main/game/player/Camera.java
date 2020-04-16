@@ -40,7 +40,7 @@ public class Camera {
 		
 		viewPos = pos;
 		
-		cameraRect = new Rectangle(viewPos.getX(), viewPos.getY(), width + TW_RENDER + 1, height + TH_RENDER + 1);
+		cameraRect = new Rectangle(viewPos.getX(), viewPos.getY(), width + (TW_RENDER * 2) + 1, height + (TH_RENDER * 2) + 1);
 		viewRect = new Rectangle(viewPos.getX(), viewPos.getY(), width * zoom, height * zoom);
 		
 		this.map = map;
@@ -92,8 +92,8 @@ public class Camera {
 		else if(input.isKeyDown(Input.KEY_A))
 			xDir = -mspeed;
 		move(xDir, yDir);
-		cameraRect.setX(viewPos.getX() - TW_RENDER - 1);
-		cameraRect.setY(viewPos.getY() - TH_RENDER - 1);
+		cameraRect.setX(viewPos.getX() - (TW_RENDER * 2) - 1);
+		cameraRect.setY(viewPos.getY() - (TH_RENDER * 2) - 1);
 
 		
 		///Zoom code
