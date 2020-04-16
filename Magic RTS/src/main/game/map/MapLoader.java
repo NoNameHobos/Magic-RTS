@@ -101,7 +101,7 @@ public class MapLoader {
 				}
 				outputData.add(tempString.trim());
 			}
-			m = new Map(title, "grass", outputData);
+			m = new Map(title, "setons", outputData);
 			m.setSpawns(spawnLocations);
 		} catch (IOException e) {
 			e.printStackTrace();

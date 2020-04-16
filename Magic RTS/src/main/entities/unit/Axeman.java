@@ -9,6 +9,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
 import main.entities.Unit;
+import main.game.Game;
 import main.player.Player;
 
 public class Axeman extends Unit {
@@ -38,15 +39,14 @@ public class Axeman extends Unit {
 	@Override
 	public void draw(Graphics g) {
 		if(speed != 0 && getFacing() == 0) {
-			
-			walk.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY(), width, height);
+			g.drawAnimation(walk, pos.getX() - origin.getX(), pos.getY() - origin.getY());
 		}
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		if(map.getControlledPlayer() == player) {
+		if(Game.getCurrentView() == player.getCamera()) {
 			move(speed, direction);
 		}
 	}

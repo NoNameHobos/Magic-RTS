@@ -10,6 +10,7 @@ import org.newdawn.slick.geom.Rectangle;
 import main.engine.Engine;
 import main.entities.Entity;
 import main.entities.SelectableEntity;
+import main.game.Game;
 import main.input.Mouse;
 
 public class Selector implements MouseListener {
@@ -32,9 +33,9 @@ public class Selector implements MouseListener {
 	public void update() {
 		if (startDrag != null) {
 			if (endDrag != null) {
-				Point p = camera.getPos();
-				selectBox.setX((startDrag.getX() + p.getX()) / camera.getZoom());
-				selectBox.setY((startDrag.getY() + p.getY()) / camera.getZoom());
+				Point p = Game.UIToObject(startDrag, camera);
+				selectBox.setX(p.getX());
+				selectBox.setY(p.getY());
 				float width = (endDrag.getX() - startDrag.getX()) / camera.getZoom();
 				float height = (endDrag.getY() - startDrag.getY()) / camera.getZoom();
 				selectBox.setWidth(width);
@@ -48,10 +49,13 @@ public class Selector implements MouseListener {
 		Entity curEnt = entities.get(0);
 
 		Mouse m = Engine.getMouse();
+		
 		float disCur = getDist(m.getPos(), curEnt.getPos());
 
 		for (int i = 0; i < entities.size(); i++) {
+			
 			float disI = getDist(m.getPos(), entities.get(i).getPos());
+			
 			if (disI < disCur) {
 				if (onlySelectable) {
 					if (curEnt.isSelectable()) {

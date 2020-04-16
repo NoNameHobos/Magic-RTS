@@ -46,6 +46,7 @@ public class ResourceLoader {
 
 		// Load grassLand tile set
 		TILE_SETS.put("grass", TileSet.loadTileSet("plains"));
+		TILE_SETS.put("setons", TileSet.loadTileSet("setons"));
 	}
 
 	public static void loadSprites() {
@@ -70,7 +71,7 @@ public class ResourceLoader {
 	}
 	
 	public static void loadMaps() {
-		MAPS.put("map1", MapLoader.loadMap("maps\\map1")); // Arguments currently do nothing but in future will be based on map data
+		MAPS.put("map1", MapLoader.loadMap("maps\\setons")); // Arguments currently do nothing but in future will be based on map data
 	}
 	
 	public static void initResources() {

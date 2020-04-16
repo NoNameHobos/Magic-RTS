@@ -13,6 +13,7 @@ import main.entities.ai.pathfinding.NodeMap;
 import main.game.map.Map;
 import main.input.Mouse;
 import main.player.Camera;
+import main.player.Player;
 
 public class Game {
 
@@ -28,6 +29,10 @@ public class Game {
 	private String mapName;
 	private boolean started = false;
 	
+	private Player controllingPlayer;
+	
+	private static Camera currentView;
+	
 	public Game(String mapName) {
 		this.mapName = mapName;
 	}
@@ -35,6 +40,11 @@ public class Game {
 	public void init() {
 		map = MAPS.get(mapName);
 		map.init(this);
+		
+		controllingPlayer = map.getControlledPlayer();
+		
+		currentView = controllingPlayer.getCamera();
+		
 		nm = NodeMap.createNodeMap(map.getMapData());
 		System.out.println("Loaded map: Grass Map");
 		started = true;
@@ -66,6 +76,7 @@ public class Game {
 		//Render player stuff
 		map.getControlledPlayer().render(g);
 		
+		
 		//Revert Camera transformations to draw the UI
 		g.scale((float)(1/curCamera.getZoom()), (float)(1/curCamera.getZoom()));
 		g.translate(xOffset, yOffset);
@@ -74,26 +85,20 @@ public class Game {
 		
 	}
 	
-	public static Point gameToUI(Point point, Camera c) {
-		//Divide by zoom factor
-		//Then translate by offset
-		float zoom = c.getZoom();
+	public static Point UIToObject(Point point, Camera c) {
+		//(ui + offset)/zoom
 		Point offset = c.getPos();
 
-		float newx = (point.getX() / zoom) + offset.getX();
-		float newy = (point.getY() / zoom) + offset.getY();
+		float newx = (point.getX() + offset.getX()) / c.getZoom();
+		float newy = (point.getY() + offset.getY()) / c.getZoom();
 		
 		return new Point(newx, newy);
 	}
 	
-	public static Point UIToGame(Point point, Camera c) {
-		//translate by -offset
-		//Multiply by zoom factor
-		float zoom = c.getZoom();
-		Point offset = c.getPos();
-
-		float newx = (point.getX() - offset.getX()) * zoom;
-		float newy = (point.getX() - offset.getY()) * zoom;
+	public static Point objectToUI(Point point, Camera c) {
+		//UI to Game -> ui * zoom - offset
+		float newx = point.getX() * c.getZoom() - c.getPos().getX();
+		float newy = point.getY() * c.getZoom() - c.getPos().getY();
 		
 		return new Point(newx, newy);
 	}
@@ -104,8 +109,14 @@ public class Game {
 			map.getControlledPlayer().renderUI(ui);
 
 		Mouse m = Engine.getMouse();
+		
+		ui.drawString("Game", 30, 45);
 		ui.drawString(Float.toString(m.getPos().getX()), 30, 60);
 		ui.drawString(Float.toString(m.getPos().getY()), 30, 75);
+		
+		ui.drawString("UI", 120, 45);
+		ui.drawString(Float.toString(m.getScreenPos().getX()), 120, 60);
+		ui.drawString(Float.toString(m.getScreenPos().getY()), 120, 75);
 	}
 	
 	public void tick() {
@@ -122,6 +133,8 @@ public class Game {
 		}
 	}
 
+	
+	// Getters and Setters
 	public boolean isStarted() {
 		return started;
 	}
@@ -136,6 +149,18 @@ public class Game {
 
 	public void setRenderPathing(boolean renderPathing) {
 		this.renderPathing = renderPathing;
+	}
+
+	public static Camera getCurrentView() {
+		return currentView;
+	}
+
+	public static void setCurrentView(Camera c) {
+		currentView = c;
+	}
+
+	public Player getControllingPlayer() {
+		return controllingPlayer;
 	}
 	
 }

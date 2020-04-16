@@ -14,9 +14,6 @@ import org.newdawn.slick.SpriteSheet;
 import main.engine.Engine;
 import main.util.ResourceLoader;
 
-import static main.GameConstants.TILE_WIDTH;
-import static main.GameConstants.TILE_HEIGHT;
-
 public class TileSet {
 
 	private SpriteSheet spritesheet;
@@ -49,7 +46,7 @@ public class TileSet {
 		}
 		
 		//Load tiles
-		SpriteSheet tiles = ResourceLoader.loadSpriteSheet(path + "\\tiles", TILE_WIDTH, TILE_HEIGHT);
+		SpriteSheet tiles = ResourceLoader.loadSpriteSheet(path + "\\tiles", 32, 32);
 		
 		//Create a new TileSet
 		TileSet ts = new TileSet(tiles);
@@ -61,7 +58,7 @@ public class TileSet {
 		for(int i = 0; i < height; i++) {
 			for(int j = 0; j < width; j++) {
 				try {
-					ts.addKey(tileData.get(i * height + j), j, i);
+					ts.addKey(tileData.get(i * width + j), j, i);
 				} catch(IndexOutOfBoundsException e) {
 					System.err.println("Missing point in inf: " + Integer.toString(j) + "," + Integer.toString(i));
 					ts.addKey("blank", j, i);

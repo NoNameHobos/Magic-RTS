@@ -19,10 +19,9 @@ public abstract class SelectableEntity extends Entity {
 	protected Player player;
 	
 	public SelectableEntity(Player player, Point pos, Image sprite) {
-		super(pos, sprite);
+		super(player.getMap(), pos, sprite);
 		selectable = true;
 		this.player = player;
-		map = player.getMap();
 		width = sprite.getWidth();
 		height = sprite.getHeight();
 	}
@@ -42,9 +41,6 @@ public abstract class SelectableEntity extends Entity {
 	
 	public void tick() {
 		super.tick();
-		
-		collider.setX(pos.getX() - origin.getX());
-		collider.setY(pos.getY() - origin.getY());
 	}
 	
 	public void render(Graphics g) {

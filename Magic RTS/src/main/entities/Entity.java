@@ -2,110 +2,130 @@ package main.entities;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
+import main.game.map.Map;
+import main.player.Camera;
+
 public abstract class Entity {
-	
-	protected Point pos;
-	protected Point origin; //Set an origin for sprite relative to position
-	
+
 	protected String type = "Entity";
-	
+
 	protected Image sprite;
 	protected SpriteSheet ss;
 
+	protected Point pos; // A Point as defined *IN THE GAME* NOT THE UI! use Game.pGameToUI() for its UI
+							// Counterpart
+	protected Point origin; //Origin of the sprite
+	
 	protected boolean selectable = false;
-	
+
 	protected int[] alarm = new int[10];
-	
+
 	public final static ArrayList<Entity> ENTITIES = new ArrayList<Entity>();
-	
+
 	protected Rectangle collider;
+
+	protected Map map;
 	
-	public Entity(Point _pos, Image sprite) {
-		this.pos = _pos;
+	public Entity(Map map, Point pos, Image sprite) {
 		this.sprite = sprite;
-		origin = new Point(sprite.getWidth() / 2, sprite.getHeight() / 2); //Set origin to centre of image
+		this.pos = pos;
+		this.map = map;
+		origin = new Point(sprite.getWidth() / 2, sprite.getHeight() / 2); 
+		//Set origin to centre of image
+
+		//Create a collider based off "off-screen" coordinates
+		collider = new Rectangle(pos.getX() - origin.getX(), pos.getY() -
+				origin.getY(), sprite.getWidth(), sprite.getHeight());
 		
-		collider = new Rectangle(pos.getX() - origin.getX(), pos.getY() - origin.getY(), sprite.getWidth(), sprite.getHeight());
+		//Initialize the alarms and finally add this to the list of entities
 		initAlarms();
 		ENTITIES.add(this);
 	}
 
-	
 	public float getPointDirection(Point target) {
 		float deltaX = target.getX() - pos.getX();
 		float deltaY = target.getY() - pos.getY();
 		float disTo = getDistanceTo(target);
-		float angle = (float) Math.toDegrees(Math.acos(deltaX/disTo));
-		if(deltaY > 0) {
+		float angle = (float) Math.toDegrees(Math.acos(deltaX / disTo));
+		if (deltaY > 0) {
 			return angle;
-		} else return 360 - angle;
-	}
-	
-	public float getDistanceTo(Point target) {
-		float delta2X = (float)Math.pow(target.getX() - pos.getX(), 2);
-		float delta2Y = (float)Math.pow(target.getY() - pos.getY(), 2);
-		return (float)Math.pow(delta2X + delta2Y, 0.5);
+		} else
+			return 360 - angle;
 	}
 
+	public float getDistanceTo(Point target) {
+		float x1 = pos.getX();
+		float y1 = pos.getY();
+
+		float x2 = target.getX();
+		float y2 = target.getY();
+
+		float dX = (float)Math.pow(x1 - x2, 2);
+		float dY = (float)Math.pow(y1 - y2, 2);
+		
+		return (float)Math.pow(dX + dY, 0.5);
+	}
 
 	public void tick() {
-		for(int i = 0; i < alarm.length; i++) {
-			if(alarm[i] != -1) {
+		float x = pos.getX() - origin.getX();
+		float y = pos.getY() - origin.getY();
+		
+		Camera c = map.getControlledPlayer().getCamera();
+		
+		float zoom = c.getZoom();
+		
+		Point p = new Point(x, y);
+		collider.setX(p.getX());
+		collider.setY(p.getY());
+		
+		//Tick down the alarms once per tick
+		for (int i = 0; i < alarm.length; i++) {
+			if (alarm[i] != -1) {
 				alarm[i] -= 1;
 			}
 		}
 	}
-	
+
 	public void render(Graphics g) {
+		g.setColor(Color.green);
+		g.draw(collider);
 	}
-	
+
 	private void initAlarms() {
-		for(int i = 0; i < alarm.length; i++) {
+		for (int i = 0; i < alarm.length; i++) {
 			alarm[i] = -1;
 		}
 	}
-	
-	public Point getPos() {
-		return pos;
-	}
-	
-	public void setPos(Point pos) {
-		this.pos = pos;
-	}
-	
+
+	// Getters and Setters
 	public Image getSprite() {
 		return sprite;
 	}
-	
+
 	public static ArrayList<Entity> getEntities() {
 		return ENTITIES;
 	}
 
-	public Point getOrigin() {
-		return origin;
-	}
-
-	public void setOrigin(Point origin) {
-		this.origin = origin;
-	}
-	
 	public Rectangle getCollider() {
 		return collider;
 	}
-
 
 	public boolean isSelectable() {
 		return selectable;
 	}
 
-
 	public String getType() {
 		return type;
+	}
+
+	public Point getPos() {
+		return pos;
 	}
 }
