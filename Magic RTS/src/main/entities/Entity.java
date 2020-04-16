@@ -94,8 +94,7 @@ public abstract class Entity {
 	}
 
 	public void render(Graphics g) {
-		g.setColor(Color.green);
-		g.draw(collider);
+		
 	}
 
 	private void initAlarms() {

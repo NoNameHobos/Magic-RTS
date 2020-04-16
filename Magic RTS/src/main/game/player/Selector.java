@@ -126,6 +126,10 @@ public class Selector implements MouseListener {
 				if (((SelectableEntity) e).mouseOver() && ((SelectableEntity) e).getPlayer() == player) {
 					player.setSelected(e);
 				} else
+					for(Entity entity : player.getSelectedGroup()) {
+						((SelectableEntity) entity).select(false);
+					
+					}
 					player.setSelected(null);
 			}
 		}
@@ -159,6 +163,7 @@ public class Selector implements MouseListener {
 	
 								if (!selected.contains(entity))
 									selected.add(entity);
+									((SelectableEntity) entity).select();
 							}
 						}
 					}
