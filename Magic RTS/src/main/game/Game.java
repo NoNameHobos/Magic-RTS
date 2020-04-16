@@ -11,9 +11,9 @@ import main.engine.Engine;
 import main.entities.Entity;
 import main.entities.ai.pathfinding.NodeMap;
 import main.game.map.Map;
+import main.game.player.Camera;
+import main.game.player.Player;
 import main.input.Mouse;
-import main.player.Camera;
-import main.player.Player;
 
 public class Game {
 

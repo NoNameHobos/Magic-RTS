@@ -10,7 +10,7 @@ import org.newdawn.slick.SpriteSheet;
 
 import main.entities.Unit;
 import main.game.Game;
-import main.player.Player;
+import main.game.player.Player;
 
 public class Axeman extends Unit {
 

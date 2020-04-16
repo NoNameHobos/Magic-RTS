@@ -9,8 +9,8 @@ import org.newdawn.slick.geom.Point;
 import main.engine.Engine;
 import main.entities.Entity;
 import main.game.Game;
+import main.game.player.Camera;
 import main.game.states.GameState;
-import main.player.Camera;
 
 public class Mouse implements MouseListener {
 
@@ -35,8 +35,8 @@ public class Mouse implements MouseListener {
 
 			Point targetPoint = Game.UIToObject(raw, c);
 
-			pos.setX(targetPoint.getX());
-			pos.setY(targetPoint.getY());
+			pos.setX(targetPoint.getX() * c.getZoom());
+			pos.setY(targetPoint.getY() * c.getZoom());
 		} else {
 			pos.setX(raw.getX());
 			pos.setY(raw.getY());

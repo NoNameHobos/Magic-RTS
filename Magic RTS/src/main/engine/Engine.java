@@ -14,7 +14,6 @@ import main.game.states.LoadState;
 import main.game.states.MenuState;
 import main.graphics.Display;
 import main.input.Mouse;
-import main.util.ResourceLoader;
 
 public class Engine implements Game {
 

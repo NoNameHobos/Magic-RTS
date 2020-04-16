@@ -10,7 +10,7 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.game.map.Map;
-import main.player.Camera;
+import main.game.player.Camera;
 
 public abstract class Entity {
 

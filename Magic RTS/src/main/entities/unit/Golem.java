@@ -10,7 +10,7 @@ import org.newdawn.slick.SpriteSheet;
 
 import main.engine.Engine;
 import main.entities.Unit;
-import main.player.Player;
+import main.game.player.Player;
 
 public class Golem extends Unit {
 	

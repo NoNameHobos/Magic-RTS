@@ -4,7 +4,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
-import main.player.Player;
+import main.game.player.Player;
 
 public abstract class Unit extends SelectableEntity {
 

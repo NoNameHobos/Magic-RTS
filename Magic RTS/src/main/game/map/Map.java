@@ -13,8 +13,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import main.game.Game;
-import main.player.Camera;
-import main.player.Player;
+import main.game.player.Camera;
+import main.game.player.Player;
 import main.player.factions.Viking;
 
 public class Map {

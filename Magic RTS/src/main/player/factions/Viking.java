@@ -1,7 +1,8 @@
 package main.player.factions;
 
-import main.player.Faction;
 import static main.util.ResourceLoader.*;
+
+import main.game.player.Faction;
 
 public class Viking extends Faction {
 	

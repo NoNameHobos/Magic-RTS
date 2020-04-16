@@ -1,4 +1,4 @@
-package main.player;
+package main.game.player;
 
 import static main.GameConstants.TH_RENDER;
 import static main.GameConstants.TW_RENDER;

@@ -5,7 +5,7 @@ import org.newdawn.slick.geom.Point;
 
 import main.entities.Entity;
 import main.entities.SelectableEntity;
-import main.player.Player;
+import main.game.player.Player;
 
 public class UnitInfo extends UIElement {
 

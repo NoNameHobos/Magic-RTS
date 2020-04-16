@@ -8,7 +8,7 @@ import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
 import main.game.map.Map;
-import main.player.Player;
+import main.game.player.Player;
 
 public abstract class SelectableEntity extends Entity {
 

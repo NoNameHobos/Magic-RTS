@@ -23,6 +23,7 @@ public class MenuState extends State {
 	public MenuState() {
 		super("Menu");
 		menus.put("Main Menu", new MainMenu());
+		currentMenu = menus.get("Main Menu");
 	}
 
 	@Override
