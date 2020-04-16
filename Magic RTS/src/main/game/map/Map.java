@@ -104,6 +104,15 @@ public class Map {
                 case "1":
                     tileType = "darkWater";
                     break;
+                case "2":
+                	tileType = "lightWater";
+                    break;
+                case "3":
+                	tileType = "lightGrass";
+                    break;
+                case "4":
+                	tileType = "stone";
+                    break;
                 }
                 tiles[j][i] = new Tile(tileset.getTile(tileType), j * TW_RENDER, i * TH_RENDER);
 			}
