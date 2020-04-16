@@ -11,6 +11,7 @@ import org.newdawn.slick.geom.Rectangle;
 import main.engine.Engine;
 import main.game.map.Map;
 import main.game.ui.UI;
+import main.util.Utils;
 
 public class Camera {
 
@@ -20,6 +21,7 @@ public class Camera {
 	private Input input;
 	private float minZoom, maxZoom;
 	private float zoom = 1f;
+	private float targetZoom = 1f;
 	
 	private Map map;
 	
@@ -96,10 +98,12 @@ public class Camera {
 		
 		///Zoom code
 		int mouseWheel = (int)Math.signum(Mouse.getDWheel());
-		zoom += mouseWheel * 0.0625f;
+		targetZoom += mouseWheel * 0.0625f;
 		
-		if(zoom < minZoom) zoom = minZoom;
-		if(zoom > maxZoom) zoom = maxZoom;
+		if(targetZoom < minZoom) targetZoom = minZoom;
+		if(targetZoom > maxZoom) targetZoom = maxZoom;
+		
+		zoom = Utils.lerp(zoom, targetZoom, 0.1f);
 		
 	}
 	
