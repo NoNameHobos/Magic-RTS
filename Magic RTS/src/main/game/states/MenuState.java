@@ -1,8 +1,6 @@
 package main.game.states;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -10,20 +8,21 @@ import org.newdawn.slick.Graphics;
 import main.game.State;
 import main.game.menu.Menu;
 import main.game.menu.MenuElement;
-import main.game.menu.menus.MainMenu;
+import main.game.menu.menus.*;
 
 public class MenuState extends State {
 
 	public final ArrayList<MenuElement> elements = new ArrayList<MenuElement>();
 
-	protected Map<String, Menu> menus = new HashMap<String, Menu>();
-	
-	protected Menu currentMenu;
-	
+	public static ArrayList<Menu> MENUS = new ArrayList<Menu>();
+
+	private Menu currentMenu;
+
 	public MenuState() {
 		super("Menu");
-		menus.put("Main Menu", new MainMenu());
-		currentMenu = menus.get("Main Menu");
+		MENUS.add(new MainMenu(this));
+		MENUS.add(new MapSelectMenu(this));
+		currentMenu = MENUS.get(0);
 	}
 
 	@Override
@@ -44,6 +43,15 @@ public class MenuState extends State {
 
 	public ArrayList<MenuElement> getElements() {
 		return elements;
+	}
+
+	public void setCurrentMenu(Menu menu) {
+		menu.init();
+		currentMenu = menu;
+	}
+	
+	public Menu getCurrentMenu() {
+		return currentMenu;
 	}
 
 }

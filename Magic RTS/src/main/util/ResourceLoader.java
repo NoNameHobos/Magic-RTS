@@ -67,11 +67,14 @@ public class ResourceLoader {
 	}
 
 	public static void loadFonts() {
-		FONTS.put("Menu", loadFont("FantaisieArtistique.ttf"));
+		FONTS.put("Menu", loadFont("FantaisieArtistique.ttf", 45));
 	}
 	
 	public static void loadMaps() {
-		MAPS.put("map1", MapLoader.loadMap("maps\\setons")); // Arguments currently do nothing but in future will be based on map data
+		MAPS.put("Seton's Clutch", MapLoader.loadMap("maps\\setons"));
+		MAPS.put("Test Map 1", MapLoader.loadMap("maps\\m"));
+		MAPS.put("Test Map 2", MapLoader.loadMap("maps\\map1"));
+		MAPS.put("Test Map 3", MapLoader.loadMap("maps\\map2"));
 	}
 	
 	public static void initResources() {
@@ -97,12 +100,12 @@ public class ResourceLoader {
 		Engine.setCurrentState(Engine.menuState);
 	}
 	
-	public static TrueTypeFont loadFont(String font) {
+	public static TrueTypeFont loadFont(String font, int size) {
 		InputStream is = org.newdawn.slick.util.ResourceLoader.getResourceAsStream("res\\font\\" + font);
 	    TrueTypeFont ttf = null;
 		try {
 			Font f = Font.createFont(Font.TRUETYPE_FONT, is);
-			f = f.deriveFont(FONT_SIZE * 1f);
+			f = f.deriveFont(size * 1f);
 			ttf = new TrueTypeFont(f, false);
 		} catch (FontFormatException | IOException e) {
 			// TODO Auto-generated catch block
