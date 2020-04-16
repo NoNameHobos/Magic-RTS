@@ -67,7 +67,7 @@ public class Engine implements Game {
 			Engine.currentState.render(g);
 		}
 	}
-
+	
 	public boolean closeRequested() {
 		System.exit(0);
 		return false;

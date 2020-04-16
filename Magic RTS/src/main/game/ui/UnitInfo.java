@@ -31,7 +31,6 @@ public class UnitInfo extends UIElement {
 			float y = pos.getY() + marginY;
 			g.drawImage(selected.getSprite(), x, y);
 		} else if(groupSelected) {
-			
 		}
 	}
 

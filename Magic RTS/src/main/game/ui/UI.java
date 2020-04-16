@@ -60,8 +60,8 @@ public class UI {
 				float marginX = 12;
 				float marginY = 12;
 				
-				float x1 = 30;
-				float y1 = 30 + (height+marginY)* i;
+				float x1 = Engine.getWIDTH() - 120;
+				float y1 = Engine.getHEIGHT() - 200 + (height+marginY)* i;
 				
 				g.setColor(Color.darkGray);
 				g.drawRect(x1, y1, width, height);

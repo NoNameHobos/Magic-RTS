@@ -112,7 +112,6 @@ public class Selector implements MouseListener {
 	@Override
 	public void mousePressed(int button, int x, int y) {
 		if (button == 0) {
-			Mouse m = Engine.getMouse();
 			if (camera != null) {
 				startDrag = new Point(x, y);
 
@@ -122,13 +121,28 @@ public class Selector implements MouseListener {
 				} else
 					player.setSelected(null);
 			}
-			System.out.println("Pressed");
 		}
 	}
 
 	@Override
 	public void mouseReleased(int button, int x, int y) {
 		if (button == 0) {
+			ArrayList<Entity> entities = Entity.ENTITIES;
+			ArrayList<Entity> selected = new ArrayList<Entity>();
+			for(Entity entity : entities) {
+				if(entity.isSelectable()) {
+					if(((SelectableEntity) entity).getPlayer() == player) {
+						if(selectBox.contains(entity.getPos())) {
+							System.out.println("Found entity");
+							if(!selected.contains(entity)) {
+								selected.add(entity);
+							}
+						}
+					}
+				}
+			}
+			
+			player.setSelectedGroup(selected);
 			endDrag = null;
 			startDrag = null;
 		}

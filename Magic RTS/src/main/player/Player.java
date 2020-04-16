@@ -171,4 +171,8 @@ public class Player {
 	public String getName() {
 		return name;
 	}
+
+	public void setSelectedGroup(ArrayList<Entity> selectedGroup) {
+		this.selectedGroup = selectedGroup;
+	}
 }

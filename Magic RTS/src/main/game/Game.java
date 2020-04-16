@@ -4,7 +4,6 @@ import static main.util.ResourceLoader.MAPS;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
@@ -63,24 +62,46 @@ public class Game {
 		for(int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(g);
 		}
+		
+		//Render player stuff
 		map.getControlledPlayer().render(g);
-		//Revert Camera transformations
+		
+		//Revert Camera transformations to draw the UI
 		g.scale((float)(1/curCamera.getZoom()), (float)(1/curCamera.getZoom()));
 		g.translate(xOffset, yOffset);
-
-		/*
-		 * for(int i = 0; i < map.getPlayers().length; i++) { if(map.getPlayers()[i] !=
-		 * null) { map.getPlayers()[i].render(g); } }
-		 */
 		
 		renderUI(g);
 		
 	}
 	
+	public static Point gameToUI(Point point, Camera c) {
+		//Divide by zoom factor
+		//Then translate by offset
+		float zoom = c.getZoom();
+		Point offset = c.getPos();
+
+		float newx = (point.getX() / zoom) + offset.getX();
+		float newy = (point.getY() / zoom) + offset.getY();
+		
+		return new Point(newx, newy);
+	}
+	
+	public static Point UIToGame(Point point, Camera c) {
+		//translate by -offset
+		//Multiply by zoom factor
+		float zoom = c.getZoom();
+		Point offset = c.getPos();
+
+		float newx = (point.getX() - offset.getX()) * zoom;
+		float newy = (point.getX() - offset.getY()) * zoom;
+		
+		return new Point(newx, newy);
+	}
+	
 	public void renderUI(Graphics ui) {
 		
-		//if(map.getControlledPlayer() != null)
-			//map.getControlledPlayer().renderUI(ui);
+		if(map.getControlledPlayer() != null)
+			map.getControlledPlayer().renderUI(ui);
 
 		Mouse m = Engine.getMouse();
 		ui.drawString(Float.toString(m.getPos().getX()), 30, 60);
