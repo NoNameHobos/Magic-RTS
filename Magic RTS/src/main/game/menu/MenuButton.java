@@ -5,7 +5,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
-import main.game.states.MenuState;
 import main.util.ResourceLoader;
 
 public class MenuButton extends MenuElement {
@@ -14,8 +13,8 @@ public class MenuButton extends MenuElement {
 	private Animation backAnim;
 	private String text;
 
-	public MenuButton(MenuState menuState, Point pos, String text) {
-		super(menuState, text,  pos, new Point(190, 48));
+	public MenuButton(Menu menu, Point pos, String text) {
+		super(menu, text,  pos, new Point(190, 48));
 		this.text = text;
 		animation = new Animation(ResourceLoader.SPRITE_SHEETS.get("menu_button"), 5);
 		animation.setLooping(false);

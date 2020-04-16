@@ -15,7 +15,7 @@ import main.input.Mouse;
 
 public class Selector implements MouseListener {
 
-	private Point startDrag = null, endDrag = null;
+	private Point startPoint = null, endPoint = null;
 
 	private Player player;
 	private Camera camera;
@@ -31,13 +31,16 @@ public class Selector implements MouseListener {
 	}
 
 	public void update() {
-		if (startDrag != null) {
-			if (endDrag != null) {
-				Point p = Game.UIToObject(startDrag, camera);
+		if (startPoint != null) {
+			if (endPoint != null) {
+				Point p = Game.UIToObject(startPoint, camera);
+
 				selectBox.setX(p.getX());
 				selectBox.setY(p.getY());
-				float width = (endDrag.getX() - startDrag.getX()) / camera.getZoom();
-				float height = (endDrag.getY() - startDrag.getY()) / camera.getZoom();
+
+				float width = (endPoint.getX() - startPoint.getX()) / camera.getZoom();
+				float height = (endPoint.getY() - startPoint.getY()) / camera.getZoom();
+
 				selectBox.setWidth(width);
 				selectBox.setHeight(height);
 			}
@@ -49,13 +52,13 @@ public class Selector implements MouseListener {
 		Entity curEnt = entities.get(0);
 
 		Mouse m = Engine.getMouse();
-		
+
 		float disCur = getDist(m.getPos(), curEnt.getPos());
 
 		for (int i = 0; i < entities.size(); i++) {
-			
+
 			float disI = getDist(m.getPos(), entities.get(i).getPos());
-			
+
 			if (disI < disCur) {
 				if (onlySelectable) {
 					if (curEnt.isSelectable()) {
@@ -102,9 +105,9 @@ public class Selector implements MouseListener {
 
 	@Override
 	public void mouseDragged(int oldx, int oldy, int newx, int newy) {
-		if (startDrag != null) {
+		if (startPoint != null) {
 			if (camera != null) {
-				endDrag = new Point(newx, newy);
+				endPoint = new Point(newx, newy);
 			}
 		}
 	}
@@ -117,7 +120,7 @@ public class Selector implements MouseListener {
 	public void mousePressed(int button, int x, int y) {
 		if (button == 0) {
 			if (camera != null) {
-				startDrag = new Point(x, y);
+				startPoint = new Point(x, y);
 
 				Entity e = getNearestEntity(true);
 				if (((SelectableEntity) e).mouseOver() && ((SelectableEntity) e).getPlayer() == player) {
@@ -133,22 +136,36 @@ public class Selector implements MouseListener {
 		if (button == 0) {
 			ArrayList<Entity> entities = Entity.ENTITIES;
 			ArrayList<Entity> selected = new ArrayList<Entity>();
-			for(Entity entity : entities) {
-				if(entity.isSelectable()) {
-					if(((SelectableEntity) entity).getPlayer() == player) {
-						if(selectBox.contains(entity.getPos())) {
-							System.out.println("Found entity");
-							if(!selected.contains(entity)) {
-								selected.add(entity);
+			if(startPoint != null && endPoint != null) {
+				for (Entity entity : entities) {
+					if (entity.isSelectable()) {
+						if (((SelectableEntity) entity).getPlayer() == player) {
+							Point p = Game.UIToObject(startPoint, camera);
+	
+							float width = (endPoint.getX() - startPoint.getX()) / camera.getZoom();
+							float height = (endPoint.getY() - startPoint.getY()) / camera.getZoom();
+	
+							float centX = p.getX() + width / 2;
+							float centY = p.getY() + height / 2;
+	
+							boolean safeX = Math.abs(entity.getPos().getX() - centX) < width / 2;
+							boolean safeY = Math.abs(entity.getPos().getY() - centY) < height / 2;
+	
+							if (safeX && safeY) {
+	
+								System.out.println("Found entity");
+	
+								if (!selected.contains(entity))
+									selected.add(entity);
 							}
 						}
 					}
 				}
 			}
-			
+
 			player.setSelectedGroup(selected);
-			endDrag = null;
-			startDrag = null;
+			endPoint = null;
+			startPoint = null;
 		}
 	}
 
@@ -157,11 +174,11 @@ public class Selector implements MouseListener {
 	}
 
 	public Point getStartDrag() {
-		return startDrag;
+		return startPoint;
 	}
 
 	public Point getEndDrag() {
-		return endDrag;
+		return endPoint;
 	}
 
 	public Rectangle getSelectBox() {
