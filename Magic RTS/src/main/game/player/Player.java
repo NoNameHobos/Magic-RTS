@@ -130,6 +130,10 @@ public class Player {
 		return selected;
 	}
 	
+	public void setSelected(ArrayList<Entity> sel) {
+		selected = sel;
+	}
+	
 	public boolean isAI() {
 		return isAI;
 	}

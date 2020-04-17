@@ -18,7 +18,6 @@ public abstract class SelectableEntity extends Entity {
 	public static final ArrayList<SelectableEntity> SE = new ArrayList<SelectableEntity>();
 
 	protected int width, height;
-	protected Map map;
 	protected Player player;
 	protected Boolean selected;
 
@@ -39,26 +38,30 @@ public abstract class SelectableEntity extends Entity {
 		return height;
 	}
 
-	public boolean mouseOver() {
-		Camera c = player.getCamera();
-		if (c != null) {
-			Point mousePos = Game.UIToObject(Engine.getMouse().getPos(), c);
-
-			boolean safe = collider.contains(mousePos.getX(), mousePos.getY());
-			return (safe);
-		} else
-			return false;
-	}
-
 	public void tick() {
 		super.tick();
 	}
 
 	public void render(Graphics g) {
 		super.render(g);
-		if (selected) {
-			g.setColor(Color.green);
+		if (map.getControlledPlayer() == player) {
+			if (mouseOver())
+				g.setColor(Color.green);
+			else
+				g.setColor(Color.red);
 			g.draw(collider);
+		}
+	}
+
+	public boolean mouseOver() {
+		Camera c = player.getCamera();
+		if (c != null) {
+			Point mousePos = Game.UIToObject(Engine.getMouse().getScreenPos(), c);
+
+			boolean safe = collider.contains(mousePos.getX(), mousePos.getY());
+			return (safe);
+		} else {
+			return false;
 		}
 	}
 

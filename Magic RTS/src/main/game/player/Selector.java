@@ -122,13 +122,14 @@ public class Selector implements MouseListener {
 			if (camera != null) {
 				startPoint = new Point(x, y);
 
-				Entity e = getNearestEntity(true);
-				if (!((SelectableEntity) e).mouseOver() && ((SelectableEntity) e).getPlayer() == player) {
-					for (Entity entity : player.getSelected()) {
-						((SelectableEntity) entity).select(false);
-					}
-					player.getSelected().clear();
-				}
+				// Clear the selected units
+				player.getSelected().clear();
+
+				// Handle single selection
+				SelectableEntity nearest = (SelectableEntity) getNearestEntity(true);
+
+				if (nearest.mouseOver())
+					player.getSelected().add(nearest);
 			}
 		}
 	}
@@ -160,18 +161,17 @@ public class Selector implements MouseListener {
 
 								if (!selected.contains(entity))
 									selected.add(entity);
-								((SelectableEntity) entity).select();
 							}
 						}
 					}
 				}
-			} else {
+			} else if (startPoint != null){
 				if (camera != null) {
 					SelectableEntity e = (SelectableEntity) getNearestEntity(true);
 					float centX = e.getCollider().getWidth() / 2 + e.getCollider().getX();
 					float centY = e.getCollider().getHeight() / 2 + e.getCollider().getY();
 
-					Point toGame = Game.objectToUI(new Point(x, y), camera);
+					Point toGame = Game.UIToObject(new Point(x, y), camera);
 
 					boolean safeX = Math.abs(toGame.getX() - centX) < e.getCollider().getWidth() / 2;
 					boolean safeY = Math.abs(toGame.getY() - centY) < e.getCollider().getHeight() / 2;
@@ -180,15 +180,11 @@ public class Selector implements MouseListener {
 				}
 			}
 
-			player.getSelected().clear();
+			player.setSelected(selected);
 
-			for (Entity sel : selected) {
-				player.getSelected().add(sel);
-			}
 			endPoint = null;
 			startPoint = null;
 		}
-		System.err.println("Clicked: " + x + " " + y);
 	}
 
 	@Override

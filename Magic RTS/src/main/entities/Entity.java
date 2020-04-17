@@ -8,7 +8,10 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
+import main.engine.Engine;
+import main.game.Game;
 import main.game.map.Map;
+import main.game.player.Camera;
 
 public abstract class Entity {
 
@@ -88,7 +91,6 @@ public abstract class Entity {
 	}
 
 	public void render(Graphics g) {
-		
 	}
 
 	private void initAlarms() {
@@ -96,7 +98,8 @@ public abstract class Entity {
 			alarm[i] = -1;
 		}
 	}
-
+	
+	
 	// Getters and Setters
 	public Image getSprite() {
 		return sprite;
