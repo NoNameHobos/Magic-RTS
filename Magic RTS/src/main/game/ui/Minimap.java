@@ -7,6 +7,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 import main.game.map.Map;
 import main.game.player.Player;
+import main.util.ResourceLoader;
 
 public class Minimap extends UIElement {
 
@@ -17,7 +18,7 @@ public class Minimap extends UIElement {
 	private Rectangle rectMinimap;
 	
 	public Minimap(UI ui, Point pos) {
-		super(ui, pos);
+		super(ui, pos, ResourceLoader.missing);
 		this.player = ui.getPlayer();
 		this.map = player.getMap();
 

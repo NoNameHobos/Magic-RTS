@@ -61,6 +61,15 @@ public class ResourceLoader {
 
 		// Houses
 		SPRITES.put("vikehut", loadImage(path + "buildings\\vikehut"));
+		
+		// Resources Icons
+		SPRITES.put("manaIcon", loadImage(path + "UI\\icons\\manaIcon"));
+		SPRITES.put("mithrilIcon", loadImage(path + "UI\\icons\\mithrilIcon"));
+		SPRITES.put("stoneIcon", loadImage(path + "UI\\icons\\stoneIcon"));
+		
+		//Frames
+		SPRITES.put("UIBottomBar", loadImage(path + "UI\\frames\\UIBottomBar"));
+		
 		// Report loaded resources
 		int resourceCount = SPRITES.size() + SPRITE_SHEETS.size();
 		System.out.println("Loaded " + resourceCount + " Resources!");

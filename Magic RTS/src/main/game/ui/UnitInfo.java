@@ -6,6 +6,7 @@ import org.newdawn.slick.geom.Point;
 import main.entities.Entity;
 import main.entities.SelectableEntity;
 import main.game.player.Player;
+import main.util.ResourceLoader;
 
 public class UnitInfo extends UIElement {
 
@@ -13,7 +14,7 @@ public class UnitInfo extends UIElement {
 	
 	
 	public UnitInfo(UI ui, Point pos) {
-		super(ui, pos);
+		super(ui, pos, ResourceLoader.missing);
 		this.player = ui.getPlayer();
 	}
 
