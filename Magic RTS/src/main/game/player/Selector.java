@@ -123,14 +123,12 @@ public class Selector implements MouseListener {
 				startPoint = new Point(x, y);
 
 				Entity e = getNearestEntity(true);
-				if (((SelectableEntity) e).mouseOver() && ((SelectableEntity) e).getPlayer() == player) {
-					player.setSelected(e);
-				} else
-					for (Entity entity : player.getSelectedGroup()) {
+				if (!((SelectableEntity) e).mouseOver() && ((SelectableEntity) e).getPlayer() == player) {
+					for (Entity entity : player.getSelected()) {
 						((SelectableEntity) entity).select(false);
-
 					}
-				player.setSelected(null);
+					player.getSelected().clear();
+				}
 			}
 		}
 	}
@@ -140,8 +138,11 @@ public class Selector implements MouseListener {
 		if (button == 0) {
 			ArrayList<Entity> entities = Entity.ENTITIES;
 			ArrayList<Entity> selected = new ArrayList<Entity>();
+			
 			if (startPoint != null && endPoint != null) {
+				
 				for (Entity entity : entities) {
+					
 					if (entity.isSelectable()) {
 						if (((SelectableEntity) entity).getPlayer() == player) {
 							Point p = Game.UIToObject(startPoint, camera);
@@ -164,9 +165,19 @@ public class Selector implements MouseListener {
 						}
 					}
 				}
+			} else {
+				SelectableEntity e = (SelectableEntity)getNearestEntity(true);
+				if(e.mouseOver()) {
+					System.err.println("SELECTED");
+					selected.add(e);
+				}
 			}
-
-			player.setSelectedGroup(selected);
+			
+			player.getSelected().clear();
+			
+			for(Entity sel : selected) {
+				player.getSelected().add(sel);
+			}
 			endPoint = null;
 			startPoint = null;
 		}

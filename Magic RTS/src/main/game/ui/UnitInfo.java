@@ -4,7 +4,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
 import main.entities.Entity;
-import main.entities.SelectableEntity;
 import main.game.player.Player;
 import main.util.ResourceLoader;
 
@@ -17,24 +16,22 @@ public class UnitInfo extends UIElement {
 		super(ui, pos, ResourceLoader.missing);
 		this.player = ui.getPlayer();
 	}
+	
+	@Override
+	public void tick() {
+		
+	}
 
 	@Override
-	public void render(Graphics g) {
-		boolean singleSelected = (player.getSelected() != null);
-		boolean groupSelected = (player.getSelectedGroup().size() != 0);
+	public void draw(Graphics g) {
+		boolean hasSelected = player.getSelected().size() > 0;
 		
 		float marginX = 24;
 		float marginY = 24;
 		
-		if(singleSelected) {
-			SelectableEntity selected = (SelectableEntity)player.getSelected();
-			
-			float x = pos.getX() + marginX;
-			float y = pos.getY() + marginY;
-			g.drawImage(selected.getSprite(), x, y);
-		} else if(groupSelected) {
-			for(int i = 0; i < player.getSelectedGroup().size(); i++) {
-				Entity e = player.getSelectedGroup().get(i);
+		if(hasSelected) {
+			for(int i = 0; i < player.getSelected().size(); i++) {
+				Entity e = player.getSelected().get(i);
 				
 				float x = pos.getX() + (e.getSprite().getWidth() + marginX) * i;
 				float y = pos.getY() + marginY;
@@ -42,11 +39,6 @@ public class UnitInfo extends UIElement {
 				g.drawImage(e.getSprite(), x, y);
 			}
 		}
-	}
-
-	@Override
-	public void tick() {
-		
 	}
 
 	

@@ -19,98 +19,154 @@ public class Camera {
 	private Rectangle cameraRect, viewRect;
 
 	private Input input;
+	
 	private float minZoom, maxZoom;
 	private float zoom = 1f;
 	private float targetZoom = 1f;
+
+	private float width, height;
 	
 	private Map map;
-	
+
 	private UI ui;
-	
+
 	public Camera(Map map, Point pos, float width, float height) {
-		if(pos.getX() < 0) pos.setX(0);
-		if(pos.getY() < 0) pos.setY(0);
+		float mapWidth = map.getMapWidth() * TW_RENDER;
+		float mapHeight = map.getMapHeight() * TH_RENDER;
 		
-		if(map.getMapWidth() < map.getMapHeight()) {
-			minZoom  = 2 * (float)Engine.getWIDTH() / (float)(map.getMapWidth() * TW_RENDER);
-		} else 
-			minZoom = 2 * (float)Engine.getHEIGHT() / (float)(map.getMapHeight() * TH_RENDER);
-		System.err.println(map.getMapWidth() + " " + map.getMapHeight());
-		maxZoom = 1.5f;
+		this.width = width;
+		this.height = height;
 		
+		// Check boundaries
+		if (pos.getX() < 0)
+			pos.setX(0);
+		if (pos.getY() < 0)
+			pos.setY(0);
+
+		if (pos.getX() + width > mapWidth * zoom) {
+			pos.setX(mapWidth * zoom - width);
+		}
+		if (pos.getY() + height > mapHeight * zoom) {
+			pos.setY(mapHeight * zoom - height);
+		}
+
 		viewPos = pos;
-		
-		cameraRect = new Rectangle(viewPos.getX(), viewPos.getY(), width + (TW_RENDER * 2) + 1, height + (TH_RENDER * 2) + 1);
-		viewRect = new Rectangle(viewPos.getX(), viewPos.getY(), width * zoom, height * zoom);
-		
+		viewRect = new Rectangle(viewPos.getX(), viewPos.getY(), width, height);
+
+		cameraRect = new Rectangle(viewPos.getX() - TW_RENDER, viewPos.getY() - TH_RENDER, width + 2 * TW_RENDER,
+				height + 2 * TH_RENDER);
+
+		if (mapWidth < mapHeight) {
+			minZoom = 2 * (float) Engine.getWIDTH() / mapWidth;
+		} else
+			minZoom = 2 * (float) Engine.getHEIGHT() / mapHeight;
+		maxZoom = 1.5f;
+
+		viewPos = pos;
+
 		this.map = map;
 		this.input = Engine.getInput();
 	}
-	
-	public void move(float xDir, float yDir) {
-		float mapWidth = (map.getMapWidth() + 1) * TW_RENDER;
-		float mapHeight = (map.getMapHeight() + 1) * TH_RENDER;
+
+	public void move(float xDir, float yDir, boolean useBounds) {
+		float mapWidth = map.getMapWidth() * TW_RENDER;
+		float mapHeight = map.getMapHeight() * TH_RENDER;
+
+		boolean safeLeft = true, safeRight = true, safeUp = true, safeDown = true;
+
+		float[] safeBounds = {
+				0, //TOP
+				0, //LEFT
+				mapWidth + TW_RENDER * 5, //Right
+				mapHeight + TH_RENDER * 5 //Down
+		};
 		
-		boolean safeLeft = (viewPos.getX() + xDir > 0);
-		boolean safeRight = (viewPos.getX() + cameraRect.getWidth() + xDir <= mapWidth * zoom);
-		boolean safeUp = (viewPos.getY() + yDir > 0);
-		boolean safeDown = (viewPos.getY() + cameraRect.getHeight() + yDir <= mapHeight * zoom);
-		
-		if(safeLeft && safeRight)
+		if (useBounds) {
+			safeUp = (viewPos.getY() + yDir > safeBounds[0]);
+			safeLeft = (viewPos.getX() + xDir > safeBounds[1]);
+			safeRight = (viewPos.getX() + viewRect.getWidth() + xDir <= safeBounds[2]);
+			safeDown = (viewPos.getY() + viewRect.getHeight() + yDir <= safeBounds[3]);
+		}
+
+		if (safeLeft && safeRight)
 			viewPos.setX(viewPos.getX() + xDir);
 		else {
-			if(!safeLeft)
-				viewPos.setX(0);
-			if(!safeRight)
-				viewPos.setX(mapWidth * zoom - cameraRect.getWidth());
+			if (!safeLeft)
+				viewPos.setX(safeBounds[1]);
+			if (!safeRight)
+				viewPos.setX(safeBounds[2] - viewRect.getWidth());
 		}
-		
-		if(safeDown && safeUp)
+
+		if (safeDown && safeUp)
 			viewPos.setY(viewPos.getY() + yDir);
 		else {
-			if(!safeUp)
-				viewPos.setY(0);
-			if(!safeDown)
-				viewPos.setY(mapHeight * zoom - cameraRect.getHeight());
+			if (!safeUp)
+				viewPos.setY(safeBounds[0]);
+			if (!safeDown)
+				viewPos.setY(safeBounds[3] - viewRect.getHeight());
 		}
 	}
-	
-	public void update() {
-		int mspeed = 10;
-		if(ui != null)
-			ui.tick();
-		int xDir = 0;
-		int yDir = 0;
-		
-		if(input.isKeyDown(Input.KEY_S))
-			yDir = mspeed;
-		else if(input.isKeyDown(Input.KEY_W))
-			yDir = -mspeed;
-		
-		if(input.isKeyDown(Input.KEY_D))
-			xDir = mspeed;
-		else if(input.isKeyDown(Input.KEY_A))
-			xDir = -mspeed;
-		move(xDir, yDir);
-		cameraRect.setX(viewPos.getX() - (TW_RENDER * 2) - 1);
-		cameraRect.setY(viewPos.getY() - (TH_RENDER * 2) - 1);
 
+	public void update() {
+		//Update Rectangles
+		updateRectangles();
+		//Update the UI
+		if (ui != null)
+			ui.tick();
 		
-		///Zoom code
-		int mouseWheel = (int)Math.signum(Mouse.getDWheel());
+		//Move code
+		int mspeed = 10;
+
+		int dir = 0;
+		if (input.isKeyDown(Input.KEY_D))
+			dir |= 1;
+		if (input.isKeyDown(Input.KEY_A))
+			dir |= 2;
+		if (input.isKeyDown(Input.KEY_W))
+			dir |= 4;
+		if (input.isKeyDown(Input.KEY_S))
+			dir |= 8;
+
+		float xDir = 0, yDir = 0;
+
+		if ((dir & 1) != 0)
+			xDir = mspeed;
+		else if ((dir & 2) != 0)
+			xDir = -mspeed;
+		if ((dir & 4) != 0)
+			yDir = -mspeed;
+		else if ((dir & 8) != 0)
+			yDir = mspeed;
+
+		move(xDir, yDir, true);
+
+		/// Zoom code
+		int mouseWheel = (int) Math.signum(Mouse.getDWheel());
+		
 		targetZoom += mouseWheel * 0.0625f;
-		
-		if(targetZoom < minZoom) targetZoom = minZoom;
-		if(targetZoom > maxZoom) targetZoom = maxZoom;
-		
+
+		if (targetZoom < minZoom)
+			targetZoom = minZoom;
+		if (targetZoom > maxZoom)
+			targetZoom = maxZoom;
+
 		zoom = Utils.lerp(zoom, targetZoom, 0.1f);
-		
+
+	}
+
+	public void updateRectangles() {
+		//Render rectangle
+		cameraRect.setX(viewPos.getX() - 2 * TW_RENDER);
+		cameraRect.setY(viewPos.getY() - 2 * TH_RENDER);
+		cameraRect.setWidth(width + 3 * TW_RENDER);
+		cameraRect.setHeight(height + 3 * TH_RENDER);
 	}
 	
+	// Getters and Setters
 	public void setUI(UI ui) {
 		this.ui = ui;
 	}
-	
+
 	public UI getUI() {
 		return ui;
 	}
@@ -118,19 +174,19 @@ public class Camera {
 	public Point getPos() {
 		return viewPos;
 	}
-	
+
 	public Rectangle getRenderRect() {
 		return cameraRect;
 	}
-	
+
 	public Rectangle getCamView() {
 		return viewRect;
 	}
-	
+
 	public float getZoom() {
 		return zoom;
 	}
-	
+
 	public void setZoom(float z) {
 		zoom = z;
 	}

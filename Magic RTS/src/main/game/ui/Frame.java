@@ -21,5 +21,11 @@ public class Frame extends UIElement{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void draw(Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

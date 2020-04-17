@@ -25,4 +25,10 @@ public class Widget extends UIElement {
 	
 	}
 
+	@Override
+	public void draw(Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

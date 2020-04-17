@@ -15,7 +15,7 @@ import org.newdawn.slick.geom.Point;
 import main.game.Game;
 import main.game.player.Camera;
 import main.game.player.Player;
-import main.player.factions.Viking;
+import main.game.player.factions.Viking;
 
 public class Map {
 

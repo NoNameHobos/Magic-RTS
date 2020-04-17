@@ -35,8 +35,8 @@ public class Mouse implements MouseListener {
 
 			Point targetPoint = Game.UIToObject(raw, c);
 
-			pos.setX(targetPoint.getX() * c.getZoom());
-			pos.setY(targetPoint.getY() * c.getZoom());
+			pos.setX(targetPoint.getX());
+			pos.setY(targetPoint.getY());
 		} else {
 			pos.setX(raw.getX());
 			pos.setY(raw.getY());

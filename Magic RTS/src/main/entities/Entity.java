@@ -2,7 +2,6 @@ package main.entities;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
@@ -10,7 +9,6 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.game.map.Map;
-import main.game.player.Camera;
 
 public abstract class Entity {
 
@@ -76,10 +74,6 @@ public abstract class Entity {
 	public void tick() {
 		float x = pos.getX() - origin.getX();
 		float y = pos.getY() - origin.getY();
-		
-		Camera c = map.getControlledPlayer().getCamera();
-		
-		float zoom = c.getZoom();
 		
 		Point p = new Point(x, y);
 		collider.setX(p.getX());

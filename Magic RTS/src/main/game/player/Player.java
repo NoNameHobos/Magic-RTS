@@ -26,8 +26,7 @@ public class Player {
 	private Color playerColor;
 	private String name;
 	
-	private ArrayList<Entity> selectedGroup;
-	private Entity selected;
+	private ArrayList<Entity> selected;
 	
 	private ArrayList<Building> buildings;
 	private ArrayList<Unit> units;
@@ -59,7 +58,7 @@ public class Player {
 		
 		buildings = new ArrayList<Building>();
 		units = new ArrayList<Unit>();
-		selectedGroup = new ArrayList<Entity>();
+		selected = new ArrayList<Entity>();
 		
 		if(map.getControlledPlayer() != null) {
 			if(map.getControlledPlayer().getPlayerID() == playerID) {
@@ -120,20 +119,15 @@ public class Player {
 		return new Player(name, id, m, false, color, f, tSpawn);
 	}
 	
+	
+	
+	// Getters and Setters
 	public Color getPlayerColor() {
 		return playerColor;
 	}
 
-	public Entity getSelected() {
+	public ArrayList<Entity> getSelected() {
 		return selected;
-	}
-
-	public void setSelected(Entity selected) {
-		this.selected = selected;
-	}
-
-	public ArrayList<Entity> getSelectedGroup() {
-		return selectedGroup;
 	}
 	
 	public boolean isAI() {
@@ -170,9 +164,5 @@ public class Player {
 	
 	public String getName() {
 		return name;
-	}
-
-	public void setSelectedGroup(ArrayList<Entity> selectedGroup) {
-		this.selectedGroup = selectedGroup;
 	}
 }

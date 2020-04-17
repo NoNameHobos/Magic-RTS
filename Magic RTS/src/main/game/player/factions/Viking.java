@@ -1,4 +1,4 @@
-package main.player.factions;
+package main.game.player.factions;
 
 import static main.util.ResourceLoader.*;
 

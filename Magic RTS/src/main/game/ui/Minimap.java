@@ -28,20 +28,23 @@ public class Minimap extends UIElement {
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void draw(Graphics g) {
 		g.setColor(Color.darkGray);
 		g.fill(rectMinimap);
 		g.setColor(Color.white);
 		g.drawString(player.getName(), rectMinimap.getX(), rectMinimap.getY()+10);
 	}
-
+	
 	@Override
 	public void tick() {
 		
 	}
 	
+	
+	// Getters and Setters
 	public Map getMap() {
 		return map;
 	}
+
 
 }
