@@ -138,11 +138,11 @@ public class Selector implements MouseListener {
 		if (button == 0) {
 			ArrayList<Entity> entities = Entity.ENTITIES;
 			ArrayList<Entity> selected = new ArrayList<Entity>();
-			
+
 			if (startPoint != null && endPoint != null) {
-				
+
 				for (Entity entity : entities) {
-					
+
 					if (entity.isSelectable()) {
 						if (((SelectableEntity) entity).getPlayer() == player) {
 							Point p = Game.UIToObject(startPoint, camera);
@@ -166,21 +166,29 @@ public class Selector implements MouseListener {
 					}
 				}
 			} else {
-				SelectableEntity e = (SelectableEntity)getNearestEntity(true);
-				if(e.mouseOver()) {
-					System.err.println("SELECTED");
-					selected.add(e);
+				if (camera != null) {
+					SelectableEntity e = (SelectableEntity) getNearestEntity(true);
+					float centX = e.getCollider().getWidth() / 2 + e.getCollider().getX();
+					float centY = e.getCollider().getHeight() / 2 + e.getCollider().getY();
+
+					Point toGame = Game.objectToUI(new Point(x, y), camera);
+
+					boolean safeX = Math.abs(toGame.getX() - centX) < e.getCollider().getWidth() / 2;
+					boolean safeY = Math.abs(toGame.getY() - centY) < e.getCollider().getHeight() / 2;
+					if (safeX && safeY)
+						selected.add(e);
 				}
 			}
-			
+
 			player.getSelected().clear();
-			
-			for(Entity sel : selected) {
+
+			for (Entity sel : selected) {
 				player.getSelected().add(sel);
 			}
 			endPoint = null;
 			startPoint = null;
 		}
+		System.err.println("Clicked: " + x + " " + y);
 	}
 
 	@Override

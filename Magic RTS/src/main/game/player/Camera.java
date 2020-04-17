@@ -19,13 +19,11 @@ public class Camera {
 	private Rectangle cameraRect, viewRect;
 
 	private Input input;
-	
+
 	private float minZoom, maxZoom;
 	private float zoom = 1f;
 	private float targetZoom = 1f;
 
-	private float width, height;
-	
 	private Map map;
 
 	private UI ui;
@@ -33,10 +31,7 @@ public class Camera {
 	public Camera(Map map, Point pos, float width, float height) {
 		float mapWidth = map.getMapWidth() * TW_RENDER;
 		float mapHeight = map.getMapHeight() * TH_RENDER;
-		
-		this.width = width;
-		this.height = height;
-		
+
 		// Check boundaries
 		if (pos.getX() < 0)
 			pos.setX(0);
@@ -74,13 +69,13 @@ public class Camera {
 
 		boolean safeLeft = true, safeRight = true, safeUp = true, safeDown = true;
 
-		float[] safeBounds = {
-				0, //TOP
-				0, //LEFT
-				mapWidth + TW_RENDER * 5, //Right
-				mapHeight + TH_RENDER * 5 //Down
+		float[] safeBounds = { 
+				0, // TOP
+				0, // LEFT
+				(mapWidth + TW_RENDER * 5), // Right
+				mapHeight + TH_RENDER * 5 + 32 // Down + 32 to cater for border of UI
 		};
-		
+
 		if (useBounds) {
 			safeUp = (viewPos.getY() + yDir > safeBounds[0]);
 			safeLeft = (viewPos.getX() + xDir > safeBounds[1]);
@@ -108,13 +103,13 @@ public class Camera {
 	}
 
 	public void update() {
-		//Update Rectangles
+		// Update Rectangles
 		updateRectangles();
-		//Update the UI
+		// Update the UI
 		if (ui != null)
 			ui.tick();
-		
-		//Move code
+
+		// Move code
 		int mspeed = 10;
 
 		int dir = 0;
@@ -142,7 +137,7 @@ public class Camera {
 
 		/// Zoom code
 		int mouseWheel = (int) Math.signum(Mouse.getDWheel());
-		
+
 		targetZoom += mouseWheel * 0.0625f;
 
 		if (targetZoom < minZoom)
@@ -155,13 +150,14 @@ public class Camera {
 	}
 
 	public void updateRectangles() {
-		//Render rectangle
+
+		// Render rectangle
 		cameraRect.setX(viewPos.getX() - 2 * TW_RENDER);
 		cameraRect.setY(viewPos.getY() - 2 * TH_RENDER);
-		cameraRect.setWidth(width + 3 * TW_RENDER);
-		cameraRect.setHeight(height + 3 * TH_RENDER);
+		cameraRect.setWidth(viewRect.getWidth() + 3 * TW_RENDER);
+		cameraRect.setHeight(viewRect.getHeight() + 3 * TH_RENDER);
 	}
-	
+
 	// Getters and Setters
 	public void setUI(UI ui) {
 		this.ui = ui;
