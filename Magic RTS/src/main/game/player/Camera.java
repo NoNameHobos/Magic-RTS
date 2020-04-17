@@ -38,9 +38,14 @@ public class Camera {
 				viewRect.getWidth() + tile_buffer * 2 * TW_RENDER,
 				viewRect.getHeight() + tile_buffer *2 * TH_RENDER
 		);
+	
+		if (map.getMapWidth() < map.getMapHeight()) {
+			minZoom = viewRect.getWidth()/(TW_RENDER * map.getMapWidth());
+		} else {
+			minZoom = viewRect.getHeight()/(TW_RENDER * map.getMapHeight());
+		}
 		
 		
-		minZoom = viewRect.getWidth()/(TW_RENDER * map.getMapWidth());
 		maxZoom = 10f;
 		
 		zoom = minZoom;
