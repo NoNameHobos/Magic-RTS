@@ -76,16 +76,13 @@ public class Camera {
 		float mX = m.getPos().getX();
 		float mY = m.getPos().getY();
 
-		System.out.println(zoom);
+		float diffX = viewRect.getWidth() * zoom - viewRect.getWidth() * previousZoom;
+		float diffY = viewRect.getHeight() * zoom - viewRect.getHeight() * previousZoom;
+		float curPerX = mX/viewRect.getWidth();
+		float curPerY = mY/viewRect.getHeight();
 
-		float diffX = viewRect.getWidth() / zoom - viewRect.getWidth() / previousZoom;
-		float diffY = viewRect.getHeight() / zoom - viewRect.getHeight() / previousZoom;
-		float curPerX = 0.5f; // mX/viewRect.getWidth();
-		float curPerY = 0.5f; // mY/viewRect.getHeight();
-
-		targetPos.setX(targetPos.getX() - diffX * curPerX);
-
-		targetPos.setY(targetPos.getY() - diffY * curPerY);
+		targetPos.setX(targetPos.getX() + diffX * curPerX );
+		targetPos.setY(targetPos.getY() + diffY * curPerY );
 
 		// Movement Code
 		Point dir = pollInput();
