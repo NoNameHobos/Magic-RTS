@@ -23,7 +23,8 @@ public class Camera {
 	private int tile_buffer = 2;
 
 	private float minZoom, zoom, maxZoom, targetZoom, previousZoom;
-
+	private Point zoomPoint;
+	
 	private float bounds[];
 	
 	private UI ui;
@@ -56,7 +57,7 @@ public class Camera {
 		zoom = minZoom;
 		targetZoom = zoom;
 		
-		
+		zoomPoint = new Point(0,0);
 		
 	}
 
@@ -66,8 +67,10 @@ public class Camera {
 			ui.tick();
 
 		/// Zoom code
+		Point mouse = Engine.getMouse().getScreenPos();
 		int mouseWheel = (int) Math.signum(Mouse.getDWheel());
 		targetZoom += mouseWheel * 0.1f * targetZoom;
+		if (mouseWheel != 0) zoomPoint.setX(mouse.getX());zoomPoint.setY(mouse.getY());
 
 		if (targetZoom < minZoom) targetZoom = Utils.lerp(targetZoom, minZoom, 0.1f);
 		if (targetZoom > maxZoom) targetZoom = Utils.lerp(targetZoom, maxZoom, 0.1f);
@@ -77,12 +80,8 @@ public class Camera {
 		
 		float diffX = viewRect.getWidth() * zoom - viewRect.getWidth() * previousZoom;
 		float diffY = viewRect.getHeight() * zoom - viewRect.getHeight() * previousZoom;
-		
-		float curPerX, curPerY;
-		
-
-		curPerX = 0.5f;
-		curPerY = 0.5f;
+		float curPerX = 2f - ((Engine.getWIDTH()-zoomPoint.getX())/(Engine.getWIDTH()/2));
+		float curPerY = 2f - ((Engine.getHEIGHT()-zoomPoint.getY())/(Engine.getHEIGHT()/2));
 		
 		bounds = new float[]{0f, 0f, zoom * TW_RENDER * map.getMapWidth() - viewRect.getWidth(),
 			      zoom * TH_RENDER * map.getMapHeight() - viewRect.getHeight() + 32 };
@@ -93,8 +92,10 @@ public class Camera {
 		if (targetPos.getX() + diffX * curPerX > bounds[2]) curPerX = 1;
 		if (targetPos.getY() + diffY * curPerY > bounds[3]) curPerY = 1;
 		
-		targetPos.setX(targetPos.getX() + diffX * curPerX );
-		targetPos.setY(targetPos.getY() + diffY * curPerY );
+		System.out.println(diffX * curPerX);
+		
+		targetPos.setX(targetPos.getX() + diffX * curPerX);
+		targetPos.setY(targetPos.getY() + diffY * curPerY);
 		
 		// Movement Code
 		Point dir = pollInput();
