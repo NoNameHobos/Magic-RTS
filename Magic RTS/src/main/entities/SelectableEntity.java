@@ -9,7 +9,6 @@ import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
 import main.game.Game;
-import main.game.map.Map;
 import main.game.player.Camera;
 import main.game.player.Player;
 
@@ -45,7 +44,10 @@ public abstract class SelectableEntity extends Entity {
 	public void render(Graphics g) {
 		super.render(g);
 		if (map.getControlledPlayer() == player) {
-			if (mouseOver())
+			
+			boolean selected = player.getSelected().contains(this);
+			
+			if (mouseOver() || selected)
 				g.setColor(Color.green);
 			else
 				g.setColor(Color.red);
