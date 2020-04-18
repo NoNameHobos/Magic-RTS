@@ -45,7 +45,7 @@ public abstract class SelectableEntity extends Entity {
 		super.render(g);
 		if (map.getControlledPlayer() == player) {
 			
-			boolean selected = player.getSelected().contains(this);
+			selected = player.getSelected().contains(this);
 			
 			if (mouseOver() || selected)
 				g.setColor(Color.green);
@@ -70,15 +70,4 @@ public abstract class SelectableEntity extends Entity {
 	public Player getPlayer() {
 		return player;
 	}
-
-	public void select(boolean s) {
-		selected = s;
-
-	}
-
-	public void select() {
-		selected = true;
-
-	}
-
 }
