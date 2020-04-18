@@ -71,13 +71,20 @@ public class Camera {
 		previousZoom = zoom;
 		zoom = Utils.lerp(zoom, targetZoom, 0.1f);
 
-		
+		Point mouse = Engine.getMouse().getScreenPos();
 
 		float diffX = viewRect.getWidth() * zoom - viewRect.getWidth() * previousZoom;
 		float diffY = viewRect.getHeight() * zoom - viewRect.getHeight() * previousZoom;
 		
-		float curPerX = 0.5f;
-		float curPerY = 0.5f;
+		float curPerX, curPerY;
+		
+		if (zoom > previousZoom) {
+			curPerX = mouse.getX()/viewRect.getWidth();
+			curPerY = mouse.getY()/viewRect.getHeight();
+		} else {
+			curPerX = 0.5f;
+			curPerY = 0.5f;
+		}
 		
 		targetPos.setX(targetPos.getX() + diffX * curPerX );
 		targetPos.setY(targetPos.getY() + diffY * curPerY );
