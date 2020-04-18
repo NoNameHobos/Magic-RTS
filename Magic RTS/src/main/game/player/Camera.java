@@ -9,6 +9,7 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
+import main.game.Game;
 import main.game.map.Map;
 import main.game.ui.UI;
 import main.util.Utils;
@@ -21,18 +22,20 @@ public class Camera {
 	
 	private int tile_buffer = 2;
 	
-	private float minZoom, zoom, maxZoom, targetZoom;
+	private float minZoom, zoom, maxZoom, targetZoom, previousZoom;
 	
 	private UI ui;
+	
+	private Point targetPos;
 	
 	public Camera(Map m, Point pos, float width, float height) {
 		
 		map = m;
 		
 		viewRect = new Rectangle(pos.getX(), pos.getY(), width, height);
-		
-		viewRect.setX(0);
-		viewRect.setY(0);
+		targetPos = new Point(0,0);
+		viewRect.setX(targetPos.getX());
+		viewRect.setY(targetPos.getY());
 		
 		// Create the rendering rectangle based off the view rectangle plus a tile buffer
 		renderRect = new Rectangle(
@@ -60,11 +63,17 @@ public class Camera {
 		if(ui != null)
 			ui.tick();
 		
-		/// Zoom code
+		/// Zoom code	
 		int mouseWheel = (int) Math.signum(Mouse.getDWheel());
-
+		
+		previousZoom = targetZoom;
 		targetZoom += mouseWheel * 0.0625f;
-
+		
+		
+		if (mouseWheel != 0) {
+			float diff = ((viewRect.getWidth())/targetZoom) - ( (viewRect.getWidth())/previousZoom);
+			targetPos.setX(targetPos.getX()-diff/2);
+		}
 		if (targetZoom < minZoom)
 			targetZoom = minZoom;
 		if (targetZoom > maxZoom)
@@ -77,6 +86,21 @@ public class Camera {
 		
 		move(dir.getX(), dir.getY());
 		
+		main.input.Mouse m = Engine.getMouse();
+		
+		float mX = Game.UIToObject(m.getPos(), this).getX();
+		float mY = Game.UIToObject(m.getPos(), this).getY();
+		
+		
+		
+		
+		while (targetPos.getX() != viewRect.getX()) {
+			viewRect.setX(Utils.lerp(viewRect.getX(), targetPos.getX(), 0.1f));
+
+		}
+		while (targetPos.getY() != viewRect.getY()) {
+			viewRect.setY(Utils.lerp(viewRect.getY(), targetPos.getY(), 0.1f));
+		}
 
 		renderRect.setX(viewRect.getX() - tile_buffer * zoom * TW_RENDER);
 		renderRect.setY(viewRect.getY() - tile_buffer * zoom * TH_RENDER);
@@ -129,13 +153,31 @@ public class Camera {
 		                  zoom*TH_RENDER*map.getMapHeight() - viewRect.getHeight() + 32}; 
 		//TODO: Replace 32 with a constant to represent bottom bar height    ---------^
 		
-		if (viewRect.getX() < bounds[0]) viewRect.setX(Utils.lerp(viewRect.getX(),bounds[0],boundSpeed));
-		if (viewRect.getY() < bounds[1]) viewRect.setY(Utils.lerp(viewRect.getY(),bounds[1],boundSpeed));
-		if (viewRect.getX() > bounds[2]) viewRect.setX(Utils.lerp(viewRect.getX(),bounds[2],boundSpeed));
-		if (viewRect.getY() > bounds[3]) viewRect.setY(Utils.lerp(viewRect.getY(),bounds[3],boundSpeed));
+		if (targetPos.getX() < bounds[0]) targetPos.setX(Utils.lerp(targetPos.getX(),bounds[0],boundSpeed));
+		if (targetPos.getY() < bounds[1]) targetPos.setY(Utils.lerp(targetPos.getY(),bounds[1],boundSpeed));
+		if (targetPos.getX() > bounds[2]) targetPos.setX(Utils.lerp(targetPos.getX(),bounds[2],boundSpeed));
+		if (targetPos.getY() > bounds[3]) targetPos.setY(Utils.lerp(targetPos.getY(),bounds[3],boundSpeed));
 
-		viewRect.setX(viewRect.getX() + xDir);
-		viewRect.setY(viewRect.getY() + yDir);
+		targetPos.setX(targetPos.getX() + xDir);
+		targetPos.setY(targetPos.getY() + yDir);
+	}
+	
+	public void moveToPoint(Point pos, float speed) {
+		
+		float[] bounds = {0f,
+                		  0f,
+                		  zoom*TW_RENDER*map.getMapWidth() - viewRect.getWidth(),
+                		  zoom*TH_RENDER*map.getMapHeight() - viewRect.getHeight() + 32}; 
+		//TODO: Replace 32 with a constant to represent bottom bar height    ---------^
+		
+		if (pos.getX() < bounds[0]) pos.setX(bounds[0]);
+		if (pos.getY() < bounds[1]) pos.setY(bounds[1]);
+		if (pos.getX() < bounds[2]) pos.setX(bounds[2]);
+		if (pos.getY() < bounds[3]) pos.setY(bounds[3]);
+		
+		targetPos.setX(Utils.lerp(targetPos.getX(), pos.getX(), speed));
+		targetPos.setY(Utils.lerp(targetPos.getY(), pos.getY(), speed));
+		
 	}
 	
 	// Getters and Setters
