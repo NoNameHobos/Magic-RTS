@@ -65,21 +65,22 @@ public class Camera {
 		
 		/// Zoom code	
 		int mouseWheel = (int) Math.signum(Mouse.getDWheel());
-		
-		previousZoom = targetZoom;
 		targetZoom += mouseWheel * 0.0625f;
 		
 		
-		if (mouseWheel != 0) {
-			float diff = ((viewRect.getWidth())/targetZoom) - ( (viewRect.getWidth())/previousZoom);
-			targetPos.setX(targetPos.getX()-diff/2);
-		}
+		
 		if (targetZoom < minZoom)
 			targetZoom = minZoom;
 		if (targetZoom > maxZoom)
 			targetZoom = maxZoom;
 
+		previousZoom = zoom;
 		zoom = Utils.lerp(zoom, targetZoom, 0.1f);
+		
+		float diff = viewRect.getWidth()/zoom - viewRect.getWidth()/previousZoom;
+		targetPos.setX(targetPos.getX()-diff/2);
+		
+
 		
 		//Movement Code
 		Point dir = pollInput();
