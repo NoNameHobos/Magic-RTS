@@ -71,10 +71,7 @@ public class Camera {
 		previousZoom = zoom;
 		zoom = Utils.lerp(zoom, targetZoom, 0.1f);
 
-		main.input.Mouse m = Engine.getMouse();
-
-		float mX = m.getPos().getX();
-		float mY = m.getPos().getY();
+		Point mouse = Game.UIToObject(Engine.getMouse().getScreenPos(), this);
 
 		float diffX = viewRect.getWidth() * zoom - viewRect.getWidth() * previousZoom;
 		float diffY = viewRect.getHeight() * zoom - viewRect.getHeight() * previousZoom;
@@ -83,11 +80,11 @@ public class Camera {
 		float curPerY;
 		
 		if (zoom > previousZoom) {
-			curPerX = mX/viewRect.getWidth();
-			curPerY = mY/viewRect.getHeight();
+			curPerX = mouse.getX()/viewRect.getWidth();
+			curPerY = mouse.getY()/viewRect.getHeight();
 		} else {
-			curPerX = 0.5f;
-			curPerY = 0.5f;
+			curPerX = (viewRect.getX() + viewRect.getWidth() / 2) / viewRect.getWidth();
+			curPerY = (viewRect.getY() + viewRect.getHeight() / 2) / viewRect.getHeight();
 		}
 
 		System.out.println(curPerX);
