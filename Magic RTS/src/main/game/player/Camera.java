@@ -77,20 +77,31 @@ public class Camera {
 		previousZoom = zoom;
 		zoom = Utils.lerp(zoom, targetZoom, 0.1f);
 		
-		float diff = viewRect.getWidth()/zoom - viewRect.getWidth()/previousZoom;
-		targetPos.setX(targetPos.getX()-diff/2);
+		main.input.Mouse m = Engine.getMouse();
 		
-
+		float mX = m.getPos().getX();
+		float mY =  m.getPos().getY();
+		
+		System.out.println(viewRect.getWidth()/zoom);
+		
+		float diffX = viewRect.getWidth()/zoom - viewRect.getWidth()/previousZoom;
+		float diffY = viewRect.getHeight()/zoom - viewRect.getHeight()/previousZoom;
+		float curPerX = 2; //mX/viewRect.getWidth();
+		float curPerY = 2; //mY/viewRect.getHeight();
+		
+		
+		targetPos.setX(targetPos.getX()-diffX/curPerX);
+		viewRect.setX(targetPos.getX()-diffX/curPerX);
+		
+		targetPos.setY(targetPos.getX()-diffY/curPerY);
+		viewRect.setY(targetPos.getX()-diffY/curPerY);
 		
 		//Movement Code
 		Point dir = pollInput();
 		
 		move(dir.getX(), dir.getY());
 		
-		main.input.Mouse m = Engine.getMouse();
 		
-		float mX = Game.UIToObject(m.getPos(), this).getX();
-		float mY = Game.UIToObject(m.getPos(), this).getY();
 		
 		
 		
