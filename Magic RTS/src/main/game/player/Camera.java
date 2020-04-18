@@ -86,15 +86,13 @@ public class Camera {
 		
 		float diffX = viewRect.getWidth()/zoom - viewRect.getWidth()/previousZoom;
 		float diffY = viewRect.getHeight()/zoom - viewRect.getHeight()/previousZoom;
-		float curPerX = 2; //mX/viewRect.getWidth();
-		float curPerY = 2; //mY/viewRect.getHeight();
+		float curPerX = 0.5f; //mX/viewRect.getWidth();
+		float curPerY = 0.5f; //mY/viewRect.getHeight();
 		
 		
-		targetPos.setX(targetPos.getX()-diffX/curPerX);
-		viewRect.setX(targetPos.getX()-diffX/curPerX);
+		targetPos.setX(targetPos.getX()-diffX*curPerX);
 		
-		targetPos.setY(targetPos.getX()-diffY/curPerY);
-		viewRect.setY(targetPos.getX()-diffY/curPerY);
+		targetPos.setY(targetPos.getY()-diffY*curPerY);
 		
 		//Movement Code
 		Point dir = pollInput();
@@ -107,11 +105,11 @@ public class Camera {
 		
 		
 		while (targetPos.getX() != viewRect.getX()) {
-			viewRect.setX(Utils.lerp(viewRect.getX(), targetPos.getX(), 0.1f));
+			viewRect.setX(targetPos.getX());
 
 		}
 		while (targetPos.getY() != viewRect.getY()) {
-			viewRect.setY(Utils.lerp(viewRect.getY(), targetPos.getY(), 0.1f));
+			viewRect.setY(targetPos.getY());
 		}
 
 		renderRect.setX(viewRect.getX() - tile_buffer * zoom * TW_RENDER);

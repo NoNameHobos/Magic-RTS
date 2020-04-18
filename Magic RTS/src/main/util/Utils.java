@@ -6,7 +6,7 @@ public class Utils {
 		
 		float result = ((a * (1.0f - f)) + (b * f));
 
-		if (Math.abs(a-b) < 0.01f) return b; else return result;
+		if (Math.abs(a-b) < 0.001f) return b; else return result;
 
 	}
 
