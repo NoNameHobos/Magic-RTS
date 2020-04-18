@@ -43,9 +43,9 @@ public class Camera {
 				viewRect.getWidth() + tile_buffer * 2 * TW_RENDER, viewRect.getHeight() + tile_buffer * 2 * TH_RENDER);
 
 		if (map.getMapWidth() <= map.getMapHeight()) {
-			minZoom = viewRect.getWidth() / (TW_RENDER * map.getMapWidth());
+			minZoom = viewRect.getWidth() / (TW_RENDER * map.getMapWidth()) / 2;
 		} else {
-			minZoom = viewRect.getHeight() / (TW_RENDER * map.getMapHeight());
+			minZoom = viewRect.getHeight() / (TW_RENDER * map.getMapHeight()) / 2;
 		}
 
 		maxZoom = 10f;
@@ -71,30 +71,21 @@ public class Camera {
 		previousZoom = zoom;
 		zoom = Utils.lerp(zoom, targetZoom, 0.1f);
 
-		Point mouse = Game.UIToObject(Engine.getMouse().getScreenPos(), this);
+		
 
 		float diffX = viewRect.getWidth() * zoom - viewRect.getWidth() * previousZoom;
 		float diffY = viewRect.getHeight() * zoom - viewRect.getHeight() * previousZoom;
 		
-		float curPerX;
-		float curPerY;
-		
-		if (zoom > previousZoom) {
-			curPerX = mouse.getX()/viewRect.getWidth();
-			curPerY = mouse.getY()/viewRect.getHeight();
-		} else {
-			curPerX = (viewRect.getX() + viewRect.getWidth() / 2) / viewRect.getWidth();
-			curPerY = (viewRect.getY() + viewRect.getHeight() / 2) / viewRect.getHeight();
-		}
-
-		System.out.println(curPerX);
+		float curPerX = 0.5f;
+		float curPerY = 0.5f;
 		
 		targetPos.setX(targetPos.getX() + diffX * curPerX );
 		targetPos.setY(targetPos.getY() + diffY * curPerY );
 
+		
 		// Movement Code
 		Point dir = pollInput();
-
+		
 		move(dir.getX()*zoom, dir.getY()*zoom);
 
 		while (targetPos.getX() != viewRect.getX()) {
