@@ -25,7 +25,10 @@ public class Camera {
 	
 	private UI ui;
 	
-	public Camera(Map map, Point pos, float width, float height) {
+	public Camera(Map m, Point pos, float width, float height) {
+		
+		map = m;
+		
 		viewRect = new Rectangle(pos.getX(), pos.getY(), width, height);
 		
 		viewRect.setX(0);
@@ -39,7 +42,7 @@ public class Camera {
 				viewRect.getHeight() + tile_buffer *2 * TH_RENDER
 		);
 	
-		if (map.getMapWidth() < map.getMapHeight()) {
+		if (map.getMapWidth() <= map.getMapHeight()) {
 			minZoom = viewRect.getWidth()/(TW_RENDER * map.getMapWidth());
 		} else {
 			minZoom = viewRect.getHeight()/(TW_RENDER * map.getMapHeight());
@@ -115,22 +118,22 @@ public class Camera {
 	}
 	
 	//Move Code (include boundaries)
+	
+	
 	public void move(float xDir, float yDir) {
 		
-		if (viewRect.getX() + xDir < 0) {
-			while (viewRect.getX() + Math.signum(xDir) > 0) {
-				viewRect.setX(viewRect.getX() + Math.signum(xDir));
-			}
-			xDir = 0;
-		}
+		float boundSpeed = 0.1f;
+		float[] bounds = {0f,
+		                  0f,
+		                  zoom*TW_RENDER*map.getMapWidth() - viewRect.getWidth(),
+		                  zoom*TH_RENDER*map.getMapHeight() - viewRect.getHeight() + 32}; 
+		//TODO: Replace 32 with a constant to represent bottom bar height    ---------^
 		
-		if (viewRect.getY() + yDir < 0) {
-			while (viewRect.getY() + Math.signum(yDir) > 0) {
-				viewRect.setY(viewRect.getY() + Math.signum(yDir));
-			}
-			yDir = 0;
-		}
-		
+		if (viewRect.getX() < bounds[0]) viewRect.setX(Utils.lerp(viewRect.getX(),bounds[0],boundSpeed));
+		if (viewRect.getY() < bounds[1]) viewRect.setY(Utils.lerp(viewRect.getY(),bounds[1],boundSpeed));
+		if (viewRect.getX() > bounds[2]) viewRect.setX(Utils.lerp(viewRect.getX(),bounds[2],boundSpeed));
+		if (viewRect.getY() > bounds[3]) viewRect.setY(Utils.lerp(viewRect.getY(),bounds[3],boundSpeed));
+
 		viewRect.setX(viewRect.getX() + xDir);
 		viewRect.setY(viewRect.getY() + yDir);
 	}
