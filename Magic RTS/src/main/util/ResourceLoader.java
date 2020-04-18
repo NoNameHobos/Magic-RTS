@@ -85,6 +85,7 @@ public class ResourceLoader {
 		MAPS.put("Test Map 2", MapLoader.loadMap("maps\\map1"));
 		MAPS.put("Test Map 3", MapLoader.loadMap("maps\\map2"));
 		MAPS.put("Zoom Test", MapLoader.loadMap("maps\\zoomTest"));
+		MAPS.put("Mountain Pass", MapLoader.loadMap("maps\\mountainpass"));
 	}
 	
 	public static void initResources() {

@@ -24,9 +24,12 @@ public class Camera {
 
 	private float minZoom, zoom, maxZoom, targetZoom, previousZoom;
 
+	private float bounds[];
+	
 	private UI ui;
 
 	private Point targetPos;
+	
 
 	public Camera(Map m, Point pos, float width, float height) {
 
@@ -43,15 +46,18 @@ public class Camera {
 				viewRect.getWidth() + tile_buffer * 2 * TW_RENDER, viewRect.getHeight() + tile_buffer * 2 * TH_RENDER);
 
 		if (map.getMapWidth() <= map.getMapHeight()) {
-			minZoom = viewRect.getWidth() / (TW_RENDER * map.getMapWidth()) / 2;
+			minZoom = viewRect.getWidth() / (TW_RENDER * map.getMapWidth());
 		} else {
-			minZoom = viewRect.getHeight() / (TW_RENDER * map.getMapHeight()) / 2;
+			minZoom = viewRect.getHeight() / (TW_RENDER * map.getMapHeight());
 		}
 
 		maxZoom = 10f;
 
 		zoom = minZoom;
 		targetZoom = zoom;
+		
+		
+		
 	}
 
 	public void update() {
@@ -63,32 +69,32 @@ public class Camera {
 		int mouseWheel = (int) Math.signum(Mouse.getDWheel());
 		targetZoom += mouseWheel * 0.1f * targetZoom;
 
-		if (targetZoom < minZoom)
-			targetZoom = minZoom;
-		if (targetZoom > maxZoom)
-			targetZoom = maxZoom;
+		if (targetZoom < minZoom) targetZoom = Utils.lerp(targetZoom, minZoom, 0.1f);
+		if (targetZoom > maxZoom) targetZoom = Utils.lerp(targetZoom, maxZoom, 0.1f);
 
 		previousZoom = zoom;
 		zoom = Utils.lerp(zoom, targetZoom, 0.1f);
-
-		Point mouse = Engine.getMouse().getScreenPos();
-
+		
 		float diffX = viewRect.getWidth() * zoom - viewRect.getWidth() * previousZoom;
 		float diffY = viewRect.getHeight() * zoom - viewRect.getHeight() * previousZoom;
 		
 		float curPerX, curPerY;
 		
-		if (zoom > previousZoom) {
-			curPerX = mouse.getX()/viewRect.getWidth();
-			curPerY = mouse.getY()/viewRect.getHeight();
-		} else {
-			curPerX = 0.5f;
-			curPerY = 0.5f;
-		}
+
+		curPerX = 0.5f;
+		curPerY = 0.5f;
+		
+		bounds = new float[]{0f, 0f, zoom * TW_RENDER * map.getMapWidth() - viewRect.getWidth(),
+			      zoom * TH_RENDER * map.getMapHeight() - viewRect.getHeight() + 32 };
+		// TODO: Replace 32 with a constant to represent bottom bar height ------^
+		
+		if (targetPos.getX() + diffX * curPerX < bounds[0]) curPerX = 0;
+		if (targetPos.getY() + diffY * curPerY < bounds[1]) curPerY = 0;
+		if (targetPos.getX() + diffX * curPerX > bounds[2]) curPerX = 1;
+		if (targetPos.getY() + diffY * curPerY > bounds[3]) curPerY = 1;
 		
 		targetPos.setX(targetPos.getX() + diffX * curPerX );
 		targetPos.setY(targetPos.getY() + diffY * curPerY );
-
 		
 		// Movement Code
 		Point dir = pollInput();
@@ -146,9 +152,7 @@ public class Camera {
 	public void move(float xDir, float yDir) {
 
 		float boundSpeed = 0.1f;
-		float[] bounds = { 0f, 0f, zoom * TW_RENDER * map.getMapWidth() - viewRect.getWidth(),
-				zoom * TH_RENDER * map.getMapHeight() - viewRect.getHeight() + 32 };
-		// TODO: Replace 32 with a constant to represent bottom bar height ---------^
+		
 
 		if (targetPos.getX() < bounds[0])
 			targetPos.setX(Utils.lerp(targetPos.getX(), bounds[0], boundSpeed));
@@ -164,10 +168,6 @@ public class Camera {
 	}
 
 	public void moveToPoint(Point pos, float speed) {
-
-		float[] bounds = { 0f, 0f, zoom * TW_RENDER * map.getMapWidth() - viewRect.getWidth(),
-				zoom * TH_RENDER * map.getMapHeight() - viewRect.getHeight() + 32 };
-		// TODO: Replace 32 with a constant to represent bottom bar height ---------^
 
 		if (pos.getX() < bounds[0])
 			pos.setX(bounds[0]);
