@@ -11,6 +11,8 @@ import org.newdawn.slick.geom.Rectangle;
 import main.engine.Engine;
 import main.game.map.Map;
 import main.game.ui.UI;
+import main.util.ResourceLoader;
+import main.util.Utils;
 
 public class Camera {
 
@@ -71,13 +73,13 @@ public class Camera {
 
 		/// Zoom code
 		int mouseWheel = (int) Math.signum(Mouse.getDWheel());
-		targetZoom += mouseWheel * 0.2f;
+		targetZoom += mouseWheel * 0.5f;
 
 		if (targetZoom < minZoom)
 			targetZoom = minZoom;
 
 		float previousZoom = zoom;
-		zoom = targetZoom;
+		zoom = Utils.lerp(zoom, targetZoom, 0.1f);
 
 		float diffX = baseWidth * (previousZoom - zoom);
 		float diffY = baseHeight * (previousZoom - zoom);
@@ -94,6 +96,17 @@ public class Camera {
 		Point dir = pollInput();
 		move(dir.getX(), dir.getY());
 
+		//Keep camera in bounds
+		float[] bounds = {0f,
+				0f,
+				map.getMapWidth()*TW_RENDER-viewRect.getWidth(),
+				map.getMapHeight()*TH_RENDER-ResourceLoader.UI.get("UIBottomBar").getHeight()};
+		
+		if (viewRect.getX() < bounds[0]) viewRect.setX(Utils.lerp(viewRect.getX(), bounds[0], 0.1f));
+		if (viewRect.getY() < bounds[1]) viewRect.setY(Utils.lerp(viewRect.getY(), bounds[1], 0.1f));
+		if (viewRect.getX() > bounds[2]) viewRect.setX(Utils.lerp(viewRect.getX(), bounds[2], 0.1f));
+		if (viewRect.getY() > bounds[3]) viewRect.setY(Utils.lerp(viewRect.getY(), bounds[3], 0.1f));
+		
 		updateRectangles();
 	}
 
@@ -149,8 +162,9 @@ public class Camera {
 	// Move Code
 
 	public void move(float xDir, float yDir) {
-		viewRect.setX(viewRect.getX() + xDir / zoom);
-		viewRect.setY(viewRect.getY() + yDir / zoom);
+		
+		viewRect.setX(viewRect.getX() + xDir);
+		viewRect.setY(viewRect.getY() + yDir);
 	}
 
 	// Getters and Setters
