@@ -43,12 +43,14 @@ public class Minimap extends UIElement {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(sprite, pos.getX() - 50, pos.getY() - 50);
+		g.drawImage(sprite, pos.getX() - 50, pos.getY() - 50, new Color(255, 255, 255, 100));
 		g.setColor(Color.white);
-		g.drawString(player.getName(), rectMinimap.getX(), rectMinimap.getY() + 10);
+		g.drawString(player.getFaction().getName(), rectMinimap.getX(), rectMinimap.getY() + 10);
 
 		for (Entity entity : Entity.getEntities()) {
-			g.setColor(entity.getPlayer().getPlayerColor());
+			Color c = entity.getPlayer().getPlayerColor();
+			Color n = new Color(c.getRed(), c.getGreen(), c.getBlue(), 100);
+			g.setColor(n);
 
 			float width = entity.getSprite().getWidth() * scaleX;
 			float height = entity.getSprite().getHeight() * scaleY;
@@ -57,7 +59,7 @@ public class Minimap extends UIElement {
 
 			g.fillOval(miniPos.getX() - width / 2, miniPos.getY() - height / 2, width, height);
 		}
-		g.setColor(Color.white);
+		g.setColor(new Color(255,255,255,100));
 		for(Entity entity : player.getSelected()) {
 
 			int buffer = 3;

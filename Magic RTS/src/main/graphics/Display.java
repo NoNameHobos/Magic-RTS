@@ -17,7 +17,7 @@ public class Display {
 		try {
 			appgc = new AppGameContainer(engine);
 			appgc.setTargetFrameRate(60);
-			appgc.setShowFPS(true);
+			appgc.setShowFPS(false);
 			appgc.setDisplayMode(WIDTH, HEIGHT, false);
 			appgc.start();
 		} catch (SlickException ex) {
