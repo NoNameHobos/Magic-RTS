@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import main.engine.Engine;
 import main.game.State;
 import main.game.menu.Menu;
 import main.game.menu.MenuElement;
-import main.game.menu.menus.*;
+import main.game.menu.menus.MainMenu;
+import main.game.menu.menus.MapSelectMenu;
 
 public class MenuState extends State {
 
@@ -28,6 +30,10 @@ public class MenuState extends State {
 	@Override
 	public void init() {
 		currentMenu.init();
+		
+		for(Menu menu : MENUS) {
+			Engine.getInput().addMouseListener(menu);
+		}
 	}
 
 	@Override

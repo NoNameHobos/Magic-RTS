@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.MouseListener;
 
 import main.engine.Engine;
 import main.game.states.MenuState;
 
-public abstract class Menu {
+public abstract class Menu implements MouseListener {
 
 	protected ArrayList<MenuButton> buttons;
 
@@ -19,7 +21,6 @@ public abstract class Menu {
 	protected boolean initialized = false;
 	
 	public Menu(MenuState menuState, ArrayList<MenuButton> buttons) {
-		
 		this.menuState = menuState;
 		
 		this.buttons = buttons;
@@ -31,6 +32,10 @@ public abstract class Menu {
 	public Menu(MenuState menuState) {
 		this.menuState = menuState;
 		buttons = new ArrayList<MenuButton>();
+		
+		for(@SuppressWarnings("unused") int a : alarm) {
+			a = -1;
+		}
 	}
 	
 	public abstract void init();
@@ -70,5 +75,48 @@ public abstract class Menu {
 	
 	public ArrayList<MenuButton> getButtons() {
 		return buttons;
+	}
+
+	@Override
+	public void mouseWheelMoved(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void inputEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void inputStarted() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isAcceptingInput() {
+		// TODO Auto-generated method stub
+		System.out.println(menuState.getCurrentMenu() == this);
+		return menuState.getCurrentMenu() == this;
+	}
+
+	@Override
+	public void setInput(Input arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClicked(int arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseDragged(int arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
+		
 	}
 }

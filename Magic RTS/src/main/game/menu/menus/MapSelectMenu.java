@@ -16,7 +16,7 @@ import main.util.ResourceLoader;
 public class MapSelectMenu extends Menu {
 
 	private HashMap<String, Map> mapList;
-	
+
 	public MapSelectMenu(MenuState state) {
 		super(state);
 		// TODO Auto-generated constructor stub
@@ -51,17 +51,35 @@ public class MapSelectMenu extends Menu {
 
 	@Override
 	public void step() {
-		for (MenuButton button : buttons) {
+		for (MenuButton button : buttons)
 			button.tick();
-			if (button.mouseOver()) {
-				if (Engine.getMouse().getButton()[0]) {
-					//TODO: Make button checking more feasible
-					Game.MAP_TO_LOAD = button.getText();
-					Engine.setCurrentState(Engine.gameState);
+	}
+
+	@Override
+	public void mouseMoved(int arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(int b, int x, int y) {
+		// TODO Auto-generated method stub
+		if (b == 0) {
+			for (MenuButton button : buttons) {
+				if (button.mouseOver()) {
+					if (button.getText() != "Back") {
+						Game.MAP_TO_LOAD = button.getText();
+						Engine.setCurrentState(Engine.gameState);
+					} else {
+						menuState.setCurrentMenu(MenuState.MENUS.get(0));
+					}
 				}
 			}
 		}
+	}
 
+	@Override
+	public void mouseReleased(int b, int x, int y) {
 	}
 
 }
