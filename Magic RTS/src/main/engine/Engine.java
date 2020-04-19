@@ -48,8 +48,7 @@ public class Engine implements Game {
 		mouse = new Mouse(input);
 
 		// Start game here once everything is loaded
-		Engine.currentState = loadState;
-		Engine.currentState.init();
+		Engine.setCurrentState(loadState);
 
 		System.err.println(Engine.WIDTH + " " + Engine.HEIGHT);
 	}

@@ -3,7 +3,6 @@ package main.game.menu.menus;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
-import main.engine.Engine;
 import main.game.menu.Menu;
 import main.game.menu.MenuButton;
 import main.game.states.MenuState;
@@ -13,13 +12,13 @@ public class MainMenu extends Menu {
 	public MainMenu(MenuState state) {
 		super(state);
 	}
-	
+
 	@Override
 	public void init() {
-		if(initialized)
+		if (initialized)
 			return;
 		initialized = true;
-		
+
 		buttons.add(new MenuButton(this, new Point(0, 400), "Campaign"));
 		buttons.add(new MenuButton(this, new Point(0, 455), "Skirmish"));
 		buttons.add(new MenuButton(this, new Point(0, 510), "Options"));
@@ -29,14 +28,34 @@ public class MainMenu extends Menu {
 	@Override
 	public void draw(Graphics g) {
 	}
-	
+
 	@Override
 	public void step() {
 		for (MenuButton button : buttons) {
 			button.tick();
-			if (button.mouseOver()) {
-				if (Engine.getMouse().getButton()[0]) {
 
+		}
+		
+	}
+
+	@Override
+	public void mouseMoved(int arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(int arg0, int arg1, int arg2) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(int b, int x, int y) {
+		System.out.println(b);
+		if (b == 0) {
+			for (MenuButton button : buttons) {
+				if (button.mouseOver()) {
 					switch (((MenuButton) button).getText()) {
 
 					case "Skirmish":
