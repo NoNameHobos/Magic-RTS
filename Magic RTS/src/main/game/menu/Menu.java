@@ -98,7 +98,6 @@ public abstract class Menu implements MouseListener {
 	@Override
 	public boolean isAcceptingInput() {
 		// TODO Auto-generated method stub
-		System.out.println(menuState.getCurrentMenu() == this);
 		return menuState.getCurrentMenu() == this;
 	}
 

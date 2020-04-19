@@ -3,6 +3,7 @@ package main.game.menu.menus;
 import java.util.HashMap;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.InputListener;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
@@ -69,6 +70,7 @@ public class MapSelectMenu extends Menu {
 				if (button.mouseOver()) {
 					if (button.getText() != "Back") {
 						Game.MAP_TO_LOAD = button.getText();
+						Engine.getInput().removeAllListeners();
 						Engine.setCurrentState(Engine.gameState);
 					} else {
 						menuState.setCurrentMenu(MenuState.MENUS.get(0));
