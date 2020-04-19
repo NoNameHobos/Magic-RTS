@@ -10,6 +10,7 @@ import org.newdawn.slick.geom.Point;
 import main.engine.Engine;
 import main.game.map.Map;
 import main.game.player.Player;
+import main.game.ui.elements.Bar;
 import main.game.ui.elements.Frame;
 import main.game.ui.elements.Minimap;
 import main.game.ui.elements.UnitInfo;
@@ -28,8 +29,14 @@ public class UI {
 		new UnitInfo(this, new Point(0, Engine.getHEIGHT() / 3 * 2));
 
 		Image frameSprite = ResourceLoader.UI.get("UIBottomBar");
-
 		new Frame(this, new Point(0, Engine.getHEIGHT() - frameSprite.getHeight()));
+
+		Image barSprite = ResourceLoader.UI.get("UIManaBar");
+		new Bar(this, new Point(10, 10), barSprite, 100);
+		barSprite = ResourceLoader.UI.get("UIStoneBar");
+		new Bar(this, new Point(10, 20), barSprite, 100);
+		barSprite = ResourceLoader.UI.get("UIMithrilBar");
+		new Bar(this, new Point(10, 30), barSprite, 100);
 	}
 
 	public ArrayList<UIElement> getElements() {

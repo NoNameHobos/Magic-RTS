@@ -69,6 +69,11 @@ public class ResourceLoader {
 		SPRITES.put("mithrilIcon", loadImage(path + "UI\\icons\\mithrilIcon"));
 		SPRITES.put("stoneIcon", loadImage(path + "UI\\icons\\stoneIcon"));
 		
+		//Progress bars
+		UI.put("UIManaBar", loadImage(path + "UI\\bars\\manaBar"));
+		UI.put("UIStoneBar", loadImage(path + "UI\\bars\\stoneBar"));
+		UI.put("UIMithrilBar", loadImage(path + "UI\\bars\\mithrilBar"));
+		
 		//--Load UI Sprites--//
 		//Frames
 		UI.put("UIBottomBar", loadImage(path + "UI\\frames\\UIBottomBar"));

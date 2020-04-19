@@ -34,7 +34,6 @@ public class Frame extends UIElement {
 				float xx = pos.getX() + (x * sW);
 				float yy = pos.getY();
 				g.drawImage(sprite, xx, yy);
-				System.err.println("Rendering at: " + xx + " " + yy);
 		}
 	}
 
