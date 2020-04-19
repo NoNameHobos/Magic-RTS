@@ -11,7 +11,6 @@ import org.newdawn.slick.geom.Rectangle;
 import main.engine.Engine;
 import main.game.map.Map;
 import main.game.ui.UI;
-import main.util.ResourceLoader;
 
 public class Camera {
 
@@ -73,23 +72,24 @@ public class Camera {
 		/// Zoom code
 		int mouseWheel = (int) Math.signum(Mouse.getDWheel());
 		targetZoom += mouseWheel * 0.2f;
-		
-		if (targetZoom < minZoom) targetZoom = minZoom;
+
+		if (targetZoom < minZoom)
+			targetZoom = minZoom;
 
 		float previousZoom = zoom;
 		zoom = targetZoom;
 
 		float diffX = baseWidth * (previousZoom - zoom);
-        float diffY = baseHeight * (previousZoom - zoom);
-        
-		zoomOffset.setX((float) (diffX * 0.5f / Math.pow((previousZoom+zoom)/2, 2)));
-		zoomOffset.setY((float) (diffY * 0.5f / Math.pow((previousZoom+zoom)/2, 2)));
-		
+		float diffY = baseHeight * (previousZoom - zoom);
+
+		zoomOffset.setX((float) (diffX * 0.5f / Math.pow((previousZoom + zoom) / 2, 2)));
+		zoomOffset.setY((float) (diffY * 0.5f / Math.pow((previousZoom + zoom) / 2, 2)));
+
 		if (zoom != previousZoom) {
 			viewRect.setX(viewRect.getX() - zoomOffset.getX());
 			viewRect.setY(viewRect.getY() - zoomOffset.getY());
 		}
-		
+
 		// Movement Code
 		Point dir = pollInput();
 		move(dir.getX(), dir.getY());
@@ -99,14 +99,15 @@ public class Camera {
 
 	public void updateRectangles() {
 
-		rectOffsetX = (baseWidth / 2) / zoom;
-		rectOffsetY = (baseHeight / 2) / zoom;
 
 		viewRect.setWidth(baseWidth / zoom);
 		viewRect.setHeight(baseHeight / zoom);
+		
+		rectOffsetX = (viewRect.getWidth() / 2);
+		rectOffsetY = (viewRect.getHeight() / 2);
 
-		cameraPos.setX(viewRect.getX() - rectOffsetX);
-		cameraPos.setY(viewRect.getY() - rectOffsetY);
+		cameraPos.setX(viewRect.getX() + rectOffsetX);
+		cameraPos.setY(viewRect.getY() + rectOffsetY);
 
 		renderRect.setX(viewRect.getX() - tile_buffer * zoom * TW_RENDER);
 		renderRect.setY(viewRect.getY() - tile_buffer * zoom * TH_RENDER);
