@@ -17,31 +17,31 @@ public class Node {
 	private int cost;
 
 	private int id;
-	
+
 	private Node parent;
-	
+
 	private float FCost, GCost, HCost;
-	
+
 	public Node(NodeMap map, int x, int y, int cost) {
 		pos = new Point(x, y);
 		this.cost = cost;
-		id = x + map.getHeight() * y;
+		id = (int)(x / TW_RENDER) + map.getHeight() * (int)(y / TH_RENDER);
 		parent = null;
 	}
 
 	public void render(Graphics g) {
-		float red = (float)((cost / 100.0) * MAX_RED);
-		float green = (float)((1- cost / 100.0) * MAX_GREEN);
+		float red = (float) ((cost / 100.0) * MAX_RED);
+		float green = (float) ((1 - cost / 100.0) * MAX_GREEN);
 		float blue = 0;
 		Rectangle r = new Rectangle(pos.getX() * TW_RENDER, pos.getY() * TH_RENDER, TW_RENDER, TH_RENDER);
-		g.setColor(new Color(red/255, green/255, blue/255));
+		g.setColor(new Color(red / 255, green / 255, blue / 255));
 		g.fill(r);
 		g.setColor(Color.black);
 		g.draw(r);
 		g.drawString(Integer.toString(id), pos.getX() * TW_RENDER, pos.getY() * TH_RENDER);
-				
+
 	}
-	
+
 	public void update() {
 	}
 
@@ -53,7 +53,7 @@ public class Node {
 	public void setPos(Point pos) {
 		this.pos = pos;
 	}
-	
+
 	public Node getParent() {
 		return parent;
 	}
@@ -69,7 +69,7 @@ public class Node {
 	public void setFCost(float fCost) {
 		FCost = fCost;
 	}
-	
+
 	public void setFCost() {
 		FCost = GCost + HCost;
 	}

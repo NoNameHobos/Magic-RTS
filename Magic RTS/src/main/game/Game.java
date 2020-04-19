@@ -44,7 +44,8 @@ public class Game {
 		
 		currentView = controllingPlayer.getCamera();
 		
-		nm = NodeMap.createNodeMap(map.getMapData());
+		nm = NodeMap.createNodeMap(map);
+		
 		System.out.println("Loaded map: Grass Map");
 		started = true;
 	}

@@ -1,36 +1,60 @@
 package main.entities.ai.pathfinding;
 
+import static main.GameConstants.TH_RENDER;
+import static main.GameConstants.TW_RENDER;
+
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Point;
 
-import static main.GameConstants.TW_RENDER;
-import static main.GameConstants.TH_RENDER;
+import main.game.map.Map;
+import main.game.player.Camera;
 
 public class NodeMap {
 
-	public static NodeMap createNodeMap(ArrayList<String> mapData) {
+	public static final int RES = 2;
+
+	public static final int NODE_WIDTH = TW_RENDER / RES;
+	public static final int NODE_HEIGHT = TH_RENDER / RES;
+
+	public static final float XOFFSET = NODE_WIDTH / RES;
+	public static final float YOFFSET = NODE_HEIGHT / RES;
+
+	private Map map;
+
+	public NodeMap(Map m) {
+		map = m;
+	}
+
+	public static NodeMap createNodeMap(Map m) {
 		// TODO: Make a decent Node Map based off map data
+
+		ArrayList<String> mapData = m.getMapData();
+
 		int mapHeight = mapData.size();
 		int mapWidth = mapData.get(0).split(" ").length;
 
-		NodeMap nm = new NodeMap();
+		NodeMap nm = new NodeMap(m);
 
 		String[][] mD = new String[mapHeight][mapWidth];
 
-		Node[][] nodes = new Node[mapWidth][mapHeight];
+		Node[][] nodes = new Node[mapWidth * RES][mapHeight * RES];
 
-		for (int i = 0; i < mapHeight; i++) {
+		for (int i = 0; i < nodes[0].length; i++) {
 
-			mD[i] = mapData.get(i).split(" ");
-			for (int j = 0; j < mapWidth; j++) {
+			mD[i / RES] = mapData.get(i / RES).split(" ");
+			for (int j = 0; j < nodes.length; j++) {
 				int cost = 0;
-				if (Integer.parseInt(mD[i][j]) == 0)
+
+				int tileVal = Integer.parseInt(mD[i / RES][j / RES]);
+
+				if (tileVal == 0)
 					cost = 0;
-				else if (Integer.parseInt(mD[i][j]) == 1)
+				else if (tileVal == 1 || tileVal == 2)
 					cost = 100;
-				nodes[j][i] = new Node(nm, j, i, cost);
+				nodes[j][i] = new Node(nm, j * NODE_WIDTH + (int) XOFFSET, i * NODE_HEIGHT + (int) YOFFSET, cost);
 			}
 		}
 		nm.setNodes(nodes);
@@ -40,20 +64,33 @@ public class NodeMap {
 	public void render(Graphics g) {
 
 		for (int i = 0; i < nodes.length; i++) {
+
 			for (int j = 0; j < nodes[i].length; j++) {
 				Node n = nodes[i][j];
 
-				float red = (n.getCost() / 100);
-				float green = (1f - (n.getCost() / 100));
-				float blue = 0;
+				Camera c = map.getControlledPlayer().getCamera();
 
-				g.setColor(new Color(red, green, blue));
-				g.fillRect(n.getPos().getX() * TW_RENDER, n.getPos().getY() * TH_RENDER, TW_RENDER, TH_RENDER);
+				if (c.getViewRect().contains(n.getPos())) {
+
+					float red = (n.getCost() / 100);
+					float green = (1f - (n.getCost() / 100));
+					float blue = 0;
+
+					Point nodePos = n.getPos();
+
+					g.setColor(new Color(red, green, blue));
+					g.fillOval(nodePos.getX() - NODE_WIDTH / 4, nodePos.getY() - NODE_HEIGHT / 4, NODE_WIDTH / 2,
+							NODE_HEIGHT / 2);
+
+					g.drawString(Integer.toString(n.getCost()), nodePos.getX(), nodePos.getY());
+				}
+
 				g.setColor(Color.black);
-				g.drawRect(n.getPos().getX() * TW_RENDER, n.getPos().getY() * TH_RENDER, TW_RENDER, TH_RENDER);
-				g.drawString(Integer.toString(n.getCost()), n.getPos().getX() * TW_RENDER,
-						n.getPos().getY() * TH_RENDER);
+				g.drawLine(0, j * NODE_HEIGHT + YOFFSET, map.getMapWidth() * TW_RENDER, j * NODE_HEIGHT + YOFFSET);
 			}
+
+			g.setColor(Color.black);
+			g.drawLine(i * NODE_WIDTH + XOFFSET, 0, i * NODE_WIDTH + XOFFSET, map.getMapHeight() * TH_RENDER);
 		}
 	}
 
