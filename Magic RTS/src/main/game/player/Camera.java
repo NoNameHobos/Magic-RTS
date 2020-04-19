@@ -80,8 +80,8 @@ public class Camera {
 		Point dir = pollInput();
 		move(dir.getX(),dir.getY());
 		
-		rectOffsetX = (viewRect.getWidth()/zoom)/2;
-		rectOffsetY = (viewRect.getHeight()/zoom)/2;
+		rectOffsetX = (viewRect.getWidth())/2;
+		rectOffsetY = (viewRect.getHeight())/2;
 		
 		viewRect.setX(cameraPos.getX()-rectOffsetX);
 		viewRect.setY(cameraPos.getY()-rectOffsetY);

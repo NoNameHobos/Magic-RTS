@@ -63,7 +63,7 @@ public class Player {
 		if(map.getControlledPlayer() != null) {
 			if(map.getControlledPlayer().getPlayerID() == playerID) {
 				//Create the camera
-				Point cP = new Point(spawn.getX() - Engine.getWIDTH()/2, spawn.getY() - Engine.getHEIGHT()/2);
+				Point cP = new Point(spawn.getX(), spawn.getY());
 				
 				playerCamera = new Camera(map, cP, Engine.getWIDTH(), Engine.getHEIGHT());
 				ui = new UI(this);
