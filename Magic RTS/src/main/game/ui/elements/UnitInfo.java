@@ -7,7 +7,6 @@ import main.entities.Entity;
 import main.game.player.Player;
 import main.game.ui.UI;
 import main.game.ui.UIElement;
-import main.util.ResourceLoader;
 
 public class UnitInfo extends UIElement {
 
@@ -15,7 +14,7 @@ public class UnitInfo extends UIElement {
 	
 	
 	public UnitInfo(UI ui, Point pos) {
-		super(ui, pos, ResourceLoader.missing);
+		super(ui, pos);
 		this.player = ui.getPlayer();
 	}
 	@Override

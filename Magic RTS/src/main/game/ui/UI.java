@@ -29,8 +29,7 @@ public class UI {
 
 		Image frameSprite = ResourceLoader.UI.get("UIBottomBar");
 
-		new Frame(this, new Point(0, Engine.getHEIGHT() - frameSprite.getHeight()), frameSprite,
-				Engine.getWIDTH() / frameSprite.getWidth(), 1);
+		new Frame(this, new Point(0, Engine.getHEIGHT() - frameSprite.getHeight()));
 	}
 
 	public ArrayList<UIElement> getElements() {

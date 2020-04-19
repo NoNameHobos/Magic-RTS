@@ -11,7 +11,6 @@ import main.game.map.Map;
 import main.game.player.Player;
 import main.game.ui.UI;
 import main.game.ui.UIElement;
-import main.util.ResourceLoader;
 
 public class Minimap extends UIElement {
 
@@ -24,7 +23,7 @@ public class Minimap extends UIElement {
 	private float scaleX, scaleY;
 
 	public Minimap(UI ui, Point pos) {
-		super(ui, pos, ResourceLoader.missing);
+		super(ui, pos);
 		this.player = ui.getPlayer();
 		this.map = player.getMap();
 

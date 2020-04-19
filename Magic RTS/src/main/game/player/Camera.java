@@ -96,26 +96,30 @@ public class Camera {
 		Point dir = pollInput();
 		move(dir.getX(), dir.getY());
 
-		//Keep camera in bounds
-		float[] bounds = {0f,
-				0f,
-				map.getMapWidth()*TW_RENDER-viewRect.getWidth(),
-				map.getMapHeight()*TH_RENDER-ResourceLoader.UI.get("UIBottomBar").getHeight()};
-		
-		if (viewRect.getX() < bounds[0]) viewRect.setX(Utils.lerp(viewRect.getX(), bounds[0], 0.1f));
-		if (viewRect.getY() < bounds[1]) viewRect.setY(Utils.lerp(viewRect.getY(), bounds[1], 0.1f));
-		if (viewRect.getX() > bounds[2]) viewRect.setX(Utils.lerp(viewRect.getX(), bounds[2], 0.1f));
-		if (viewRect.getY() > bounds[3]) viewRect.setY(Utils.lerp(viewRect.getY(), bounds[3], 0.1f));
-		
+		// Keep camera in bounds
+		float[] bounds = { 
+				0f, 
+				0f, 
+				map.getMapWidth() * TW_RENDER - viewRect.getWidth(),
+				map.getMapHeight() * TH_RENDER + viewRect.getHeight() - ResourceLoader.UI.get("UIBottomBar").getHeight() };
+
+		if (viewRect.getX() < bounds[0])
+			viewRect.setX(Utils.lerp(viewRect.getX(), bounds[0], 0.1f));
+		if (viewRect.getY() < bounds[1])
+			viewRect.setY(Utils.lerp(viewRect.getY(), bounds[1], 0.1f));
+		if (viewRect.getX() > bounds[2])
+			viewRect.setX(Utils.lerp(viewRect.getX(), bounds[2], 0.1f));
+		if (viewRect.getY() > bounds[3])
+			viewRect.setY(Utils.lerp(viewRect.getY(), bounds[3], 0.1f));
+
 		updateRectangles();
 	}
 
 	public void updateRectangles() {
 
-
 		viewRect.setWidth(baseWidth / zoom);
 		viewRect.setHeight(baseHeight / zoom);
-		
+
 		rectOffsetX = (viewRect.getWidth() / 2);
 		rectOffsetY = (viewRect.getHeight() / 2);
 
@@ -162,7 +166,7 @@ public class Camera {
 	// Move Code
 
 	public void move(float xDir, float yDir) {
-		
+
 		viewRect.setX(viewRect.getX() + xDir);
 		viewRect.setY(viewRect.getY() + yDir);
 	}
