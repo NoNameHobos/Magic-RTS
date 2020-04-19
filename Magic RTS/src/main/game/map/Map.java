@@ -137,7 +137,7 @@ public class Map {
 				float rendX = tilePos.getX();
 				float rendY = tilePos.getY();
 
-				boolean inCam = currentCamera.getRenderRect().contains(rendX * currentCamera.getZoom(), rendY * currentCamera.getZoom());
+				boolean inCam = currentCamera.getRenderRect().contains(rendX, rendY);
 				if (inCam) {
 					Image image = tiles[i][j].getImage();
 					

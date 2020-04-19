@@ -4,6 +4,7 @@ import static main.util.ResourceLoader.MAPS;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
@@ -69,8 +70,18 @@ public class Game {
 		
 		//Render Entities
 		ArrayList<Entity> entities = Entity.getEntities();
-		for(int i = 0; i < entities.size(); i++) {
-			entities.get(i).render(g);
+		
+		Camera c = map.getControlledPlayer().getCamera();
+
+		g.setColor(Color.blue);
+		g.draw(c.getRenderRect());
+		
+		g.setColor(Color.red);
+		g.draw(c.getViewRect());
+		
+		for(Entity entity : entities) {
+			if(c.getRenderRect().contains(entity.getPos()))
+					entity.render(g);
 		}
 		
 		//Render player stuff

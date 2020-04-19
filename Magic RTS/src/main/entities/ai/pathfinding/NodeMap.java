@@ -70,19 +70,19 @@ public class NodeMap {
 
 				Camera c = map.getControlledPlayer().getCamera();
 
-				if (c.getViewRect().contains(n.getPos())) {
+				Point pos = new Point(n.getPos().getX() - NODE_WIDTH / 4, n.getPos().getY() - NODE_HEIGHT / 4);
+				
+				if (c.getRenderRect().contains(pos)) {
 
 					float red = (n.getCost() / 100);
 					float green = (1f - (n.getCost() / 100));
 					float blue = 0;
 
-					Point nodePos = n.getPos();
-
 					g.setColor(new Color(red, green, blue));
-					g.fillOval(nodePos.getX() - NODE_WIDTH / 4, nodePos.getY() - NODE_HEIGHT / 4, NODE_WIDTH / 2,
+					g.fillOval(pos.getX(), pos.getY(), NODE_WIDTH / 2,
 							NODE_HEIGHT / 2);
 
-					g.drawString(Integer.toString(n.getCost()), nodePos.getX(), nodePos.getY());
+					g.drawString(Integer.toString(n.getCost()), pos.getX(), pos.getY());
 				}
 
 				g.setColor(Color.black);
