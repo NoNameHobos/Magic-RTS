@@ -21,7 +21,11 @@ public class Camera {
 
 	private int tile_buffer = 2;
 
-	private float minZoom, zoom, maxZoom, targetZoom;
+	private float zoom = 1f, targetZoom = zoom;
+
+	private float minZoom = 0.5f, maxZoom = 1.5f;
+
+	private Point zoomOffset;
 
 	private UI ui;
 
@@ -40,28 +44,24 @@ public class Camera {
 		zoom = 1f;
 
 		cameraPos = pos;
+		zoomOffset = new Point(0, 0);
+
+		// Calculate offset for camera
 		rectOffsetX = (width / 2) / zoom;
 		rectOffsetY = (height / 2) / zoom;
 
+		// Create the view rectangle
 		viewRect = new Rectangle(cameraPos.getX() - rectOffsetX, cameraPos.getY() - rectOffsetY, width, height);
 
-		// Create the rendering rectangle based off the view rectangle plus a tile
-		// buffer
-		renderRect = new Rectangle(
-				viewRect.getX() - tile_buffer * TW_RENDER, 
-				viewRect.getY() - tile_buffer * TH_RENDER,
-				viewRect.getWidth() + tile_buffer * 2 * TW_RENDER, 
-				viewRect.getHeight() + tile_buffer * 2 * TH_RENDER);
+		// Create the rendering rectangle
+		renderRect = new Rectangle(viewRect.getX() - tile_buffer * TW_RENDER, viewRect.getY() - tile_buffer * TH_RENDER,
+				viewRect.getWidth() + tile_buffer * 2 * TW_RENDER, viewRect.getHeight() + tile_buffer * 2 * TH_RENDER);
 
 		if (map.getMapWidth() <= map.getMapHeight()) {
 			minZoom = viewRect.getWidth() / (TW_RENDER * map.getMapWidth());
 		} else {
 			minZoom = viewRect.getHeight() / (TW_RENDER * map.getMapHeight());
 		}
-
-		maxZoom = 10f;
-
-		targetZoom = zoom;
 
 	}
 
@@ -73,7 +73,23 @@ public class Camera {
 		/// Zoom code
 		int mouseWheel = (int) Math.signum(Mouse.getDWheel());
 		targetZoom += mouseWheel * 0.1f * targetZoom;
+
+		float previousZoom = zoom;
 		zoom = targetZoom;
+
+		float diffX = viewRect.getWidth() * zoom - viewRect.getWidth() * previousZoom;
+		float diffY = viewRect.getHeight() * zoom - viewRect.getHeight() * previousZoom;
+
+		if(diffX != 0 || diffY != 0) System.out.println(diffX + " " + diffY);
+		
+		zoomOffset.setX(diffX * 0.5f);
+		zoomOffset.setY(diffY * 0.5f);
+		
+		if (zoom != previousZoom) {
+			viewRect.setX(viewRect.getX() - zoomOffset.getX());
+			viewRect.setY(viewRect.getY() - zoomOffset.getY());
+		}
+		
 		// Movement Code
 		Point dir = pollInput();
 		move(dir.getX(), dir.getY());
@@ -98,13 +114,13 @@ public class Camera {
 		renderRect.setHeight(viewRect.getHeight() + 2 * tile_buffer / zoom * TH_RENDER);
 	}
 
-	// Poll movement code
+	// Poll Inputs for movement
 	public Point pollInput() {
 		int dir = 0;
 
 		float xDir = 0, yDir = 0;
 
-		float mspeed = 5;
+		float mspeed = 10;
 
 		Input input = Engine.getInput();
 
@@ -129,10 +145,9 @@ public class Camera {
 		return new Point(xDir, yDir);
 	}
 
-	// Move Code (include boundaries)
+	// Move Code
 
 	public void move(float xDir, float yDir) {
-
 		viewRect.setX(viewRect.getX() + xDir / zoom);
 		viewRect.setY(viewRect.getY() + yDir / zoom);
 	}
@@ -151,8 +166,10 @@ public class Camera {
 	}
 
 	public Point getPos(boolean center) {
-		if(center) return cameraPos;
-		else return new Point(viewRect.getX(), viewRect.getY());
+		if (center)
+			return cameraPos;
+		else
+			return new Point(viewRect.getX(), viewRect.getY());
 	}
 
 	public float getZoom() {
