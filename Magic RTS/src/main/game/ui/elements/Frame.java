@@ -1,8 +1,11 @@
-package main.game.ui;
+package main.game.ui.elements;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
+
+import main.game.ui.UI;
+import main.game.ui.UIElement;
 
 public class Frame extends UIElement{
 	
@@ -16,14 +19,15 @@ public class Frame extends UIElement{
 	
 	}
 
+
 	@Override
-	public void tick() {
+	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void step() {
 		// TODO Auto-generated method stub
 		
 	}

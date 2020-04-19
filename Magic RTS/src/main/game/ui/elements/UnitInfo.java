@@ -1,10 +1,12 @@
-package main.game.ui;
+package main.game.ui.elements;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
 import main.entities.Entity;
 import main.game.player.Player;
+import main.game.ui.UI;
+import main.game.ui.UIElement;
 import main.util.ResourceLoader;
 
 public class UnitInfo extends UIElement {
@@ -16,12 +18,6 @@ public class UnitInfo extends UIElement {
 		super(ui, pos, ResourceLoader.missing);
 		this.player = ui.getPlayer();
 	}
-	
-	@Override
-	public void tick() {
-		
-	}
-
 	@Override
 	public void draw(Graphics g) {
 		boolean hasSelected = player.getSelected().size() > 0;
@@ -39,6 +35,11 @@ public class UnitInfo extends UIElement {
 				g.drawImage(e.getSprite(), x, y);
 			}
 		}
+	}
+	@Override
+	public void step() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

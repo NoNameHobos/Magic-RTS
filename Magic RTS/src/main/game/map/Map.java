@@ -76,18 +76,17 @@ public class Map {
 	}
 	
 	public void loadPlayers() {
-		players = new Player[1];
-		
-		controlledPlayer = Player.createPlayer("Bryn", 0, this, new Color(0, 255, 0), new Viking(), spawns[0]);
+		players = new Player[spawns.length];
+		controlledPlayer = Player.createPlayer("Bryn", 0, this, new Color(0, 0, 255), new Viking(), spawns[0]);
 		System.out.println("Spawned player at: (" + spawns[0].getX() + ", " + spawns[0].getY() + ")");
 		players[0] = controlledPlayer;
 		
-		/*for(int i = 1; i < players.length; i++) {
+		for(int i = 1; i < players.length; i++) {
 			Random r = new Random();
 			String n = PLAYER_NAMES[Math.round(r.nextInt(PLAYER_NAMES.length))];
 			System.out.println("Spawned player at: (" + spawns[i].getX() + ", " + spawns[i].getY() + ")");
 			players[i] = Player.createPlayer(n, i, this, new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)), new Viking(), spawns[i]);
-		}*/
+		}
 	}
 	
 	public void loadTiles(String[][] tileData) {

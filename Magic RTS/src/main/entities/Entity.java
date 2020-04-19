@@ -8,14 +8,13 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
-import main.engine.Engine;
-import main.game.Game;
 import main.game.map.Map;
-import main.game.player.Camera;
+import main.game.player.Player;
 
 public abstract class Entity {
 
 	protected String type = "Entity";
+	protected Player player;
 
 	protected Image sprite;
 	protected SpriteSheet ss;
@@ -34,13 +33,15 @@ public abstract class Entity {
 
 	protected Map map;
 	
-	public Entity(Map map, Point pos, Image sprite) {
+	public Entity(Player p, Map map, Point pos, Image sprite) {
 		this.sprite = sprite;
 		this.pos = pos;
 		this.map = map;
-		origin = new Point(sprite.getWidth() / 2, sprite.getHeight() / 2); 
-		//Set origin to centre of image
+		this.player = p;
 
+		//Set origin to centre of image
+		origin = new Point(sprite.getWidth() / 2, sprite.getHeight() / 2); 
+		
 		//Create a collider based off "off-screen" coordinates
 		collider = new Rectangle(pos.getX() - origin.getX(), pos.getY() -
 				origin.getY(), sprite.getWidth(), sprite.getHeight());
@@ -123,5 +124,8 @@ public abstract class Entity {
 
 	public Point getPos() {
 		return pos;
+	}
+	public Player getPlayer() {
+		return player;
 	}
 }
