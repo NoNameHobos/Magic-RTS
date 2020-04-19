@@ -24,7 +24,7 @@ public class UI {
 	public UI(Player player) {
 		this.player = player;
 
-		new Minimap(this, new Point(Engine.getWIDTH() - 300, 0));
+		new Minimap(this, new Point(Engine.getWIDTH() - 250, 50));
 		new UnitInfo(this, new Point(0, Engine.getHEIGHT() / 3 * 2));
 
 		Image frameSprite = ResourceLoader.UI.get("UIBottomBar");

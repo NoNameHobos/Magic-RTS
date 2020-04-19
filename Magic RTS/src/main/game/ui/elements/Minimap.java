@@ -2,6 +2,7 @@ package main.game.ui.elements;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -11,6 +12,7 @@ import main.game.map.Map;
 import main.game.player.Player;
 import main.game.ui.UI;
 import main.game.ui.UIElement;
+import main.util.ResourceLoader;
 
 public class Minimap extends UIElement {
 
@@ -22,23 +24,26 @@ public class Minimap extends UIElement {
 
 	private float scaleX, scaleY;
 
+	private static Image sprite;
+	
 	public Minimap(UI ui, Point pos) {
 		super(ui, pos);
 		this.player = ui.getPlayer();
 		this.map = player.getMap();
 
-		float width = 300;
-		float height = 300;
+		float width = 200;
+		float height = 200;
 		scaleX = width / (map.getMapWidth() * GameConstants.TW_RENDER);
 		scaleY = height / (map.getMapHeight() * GameConstants.TH_RENDER);
 
+		sprite = ResourceLoader.UI.get("viking_minimap");
+		
 		rectMinimap = new Rectangle(pos.getX(), pos.getY(), width, height);
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.darkGray);
-		g.fill(rectMinimap);
+		g.drawImage(sprite, pos.getX() - 50, pos.getY() - 50);
 		g.setColor(Color.white);
 		g.drawString(player.getName(), rectMinimap.getX(), rectMinimap.getY() + 10);
 

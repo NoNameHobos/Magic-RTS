@@ -72,6 +72,7 @@ public class ResourceLoader {
 		//--Load UI Sprites--//
 		//Frames
 		UI.put("UIBottomBar", loadImage(path + "UI\\frames\\UIBottomBar"));
+		UI.put("viking_minimap", loadImage(path + "UI\\minimap\\minimap_vike"));
 		
 		// Report loaded resources
 		int resourceCount = SPRITES.size() + SPRITE_SHEETS.size();
