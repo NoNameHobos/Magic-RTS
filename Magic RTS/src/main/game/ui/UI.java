@@ -10,6 +10,9 @@ import org.newdawn.slick.geom.Point;
 import main.engine.Engine;
 import main.game.map.Map;
 import main.game.player.Player;
+import main.game.ui.elements.Frame;
+import main.game.ui.elements.Minimap;
+import main.game.ui.elements.UnitInfo;
 import main.util.ResourceLoader;
 
 public class UI {
@@ -21,8 +24,8 @@ public class UI {
 	public UI(Player player) {
 		this.player = player;
 
-		new Minimap(this, new Point(0, Engine.getHEIGHT() / 3 * 2));
-		new UnitInfo(this, new Point(300, Engine.getHEIGHT() / 3 * 2));
+		new Minimap(this, new Point(Engine.getWIDTH() - 300, 0));
+		new UnitInfo(this, new Point(0, Engine.getHEIGHT() / 3 * 2));
 
 		Image frameSprite = ResourceLoader.UI.get("UIBottomBar");
 

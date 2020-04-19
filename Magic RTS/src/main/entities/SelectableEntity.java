@@ -17,13 +17,11 @@ public abstract class SelectableEntity extends Entity {
 	public static final ArrayList<SelectableEntity> SE = new ArrayList<SelectableEntity>();
 
 	protected int width, height;
-	protected Player player;
 	protected Boolean selected;
 
 	public SelectableEntity(Player player, Point pos, Image sprite) {
-		super(player.getMap(), pos, sprite);
+		super(player, player.getMap(), pos, sprite);
 		selectable = true;
-		this.player = player;
 		width = sprite.getWidth();
 		height = sprite.getHeight();
 		selected = false;
@@ -65,9 +63,5 @@ public abstract class SelectableEntity extends Entity {
 		} else {
 			return false;
 		}
-	}
-
-	public Player getPlayer() {
-		return player;
 	}
 }

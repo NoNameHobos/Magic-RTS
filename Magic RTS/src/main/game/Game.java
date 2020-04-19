@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -32,14 +33,13 @@ public class Game {
 	private NodeMap nm;
 
 	private boolean started = false;
+	private boolean dispView = false;
 
 	private Player controllingPlayer;
 
 	private static Camera currentView;
 
 	public void init() {
-		System.err.println(MAP_TO_LOAD);
-		System.err.println(MAPS.keySet().toString());
 		map = MAPS.get(MAP_TO_LOAD);
 		map.init(this);
 
@@ -49,13 +49,33 @@ public class Game {
 
 		nm = NodeMap.createNodeMap(map);
 
-		System.out.println("Loaded map: Grass Map");
+		System.out.println("Loaded map: " + MAP_TO_LOAD);
 
 		Engine.getInput().addMouseListener(Engine.getMouse());
 
 		started = true;
 	}
 
+	// Update
+	public void tick() {
+		// Update Entities
+		for (Entity entity : Entity.getEntities()) {
+			entity.tick();
+		}
+
+		for (Player player : map.getPlayers()) {
+			if (player != null) {
+				player.tick();
+			}
+		}
+		
+		if(Engine.getInput().isKeyPressed(Input.KEY_V)) {
+			if(!dispView) dispView = true;
+			else dispView = false;
+		}
+	}
+
+	// Tick
 	public void render(Graphics g) {
 
 		Camera curCamera = map.getControlledPlayer().getCamera();
@@ -86,14 +106,17 @@ public class Game {
 		// Render player stuff
 		map.getControlledPlayer().render(g);
 
-		g.setColor(Color.blue);
-		g.draw(c.getRenderRect());
+		// Render the view port if necessary
+		if (dispView) {
+			g.setColor(Color.blue);
+			g.draw(c.getRenderRect());
 
-		g.setColor(Color.pink);
-		g.drawOval(c.getPos(true).getX() - 16, c.getPos(true).getY() - 16, 32, 32);
+			g.setColor(Color.pink);
+			g.drawOval(c.getPos(true).getX() - 16, c.getPos(true).getY() - 16, 32, 32);
 
-		g.setColor(Color.red);
-		g.draw(c.getViewRect());
+			g.setColor(Color.red);
+			g.draw(c.getViewRect());
+		}
 
 		// Revert Camera transformations to draw the UI
 		g.translate(xOffset, yOffset);
@@ -103,6 +126,25 @@ public class Game {
 
 	}
 
+	public void renderUI(Graphics ui) {
+
+		if (map.getControlledPlayer() != null)
+			map.getControlledPlayer().renderUI(ui);
+
+		Mouse m = Engine.getMouse();
+
+		if(dispView) {
+			ui.drawString("Game", 30, 45);
+			ui.drawString(Float.toString(m.getPos().getX()), 30, 60);
+			ui.drawString(Float.toString(m.getPos().getY()), 30, 75);
+	
+			ui.drawString("UI", 120, 45);
+			ui.drawString(Float.toString(m.getScreenPos().getX()), 120, 60);
+			ui.drawString(Float.toString(m.getScreenPos().getY()), 120, 75);
+		}
+	}
+
+	// Conversions
 	public static Point UIToObject(Point point, Camera c) {
 		// ui/zoom + offset
 		Point offset = c.getPos(false);
@@ -119,36 +161,6 @@ public class Game {
 		float newy = (point.getY() - c.getPos(false).getY()) * c.getZoom();
 
 		return new Point(newx, newy);
-	}
-
-	public void renderUI(Graphics ui) {
-
-		if (map.getControlledPlayer() != null)
-			map.getControlledPlayer().renderUI(ui);
-
-		Mouse m = Engine.getMouse();
-
-		ui.drawString("Game", 30, 45);
-		ui.drawString(Float.toString(m.getPos().getX()), 30, 60);
-		ui.drawString(Float.toString(m.getPos().getY()), 30, 75);
-
-		ui.drawString("UI", 120, 45);
-		ui.drawString(Float.toString(m.getScreenPos().getX()), 120, 60);
-		ui.drawString(Float.toString(m.getScreenPos().getY()), 120, 75);
-	}
-
-	public void tick() {
-		// Update Entities
-		ArrayList<Entity> entities = Entity.getEntities();
-		for (int j = 0; j < entities.size(); j++) {
-			entities.get(j).tick();
-		}
-
-		for (int i = 0; i < map.getPlayers().length; i++) {
-			if (map.getPlayers()[i] != null) {
-				map.getPlayers()[i].tick();
-			}
-		}
 	}
 
 	// Getters and Setters
