@@ -80,18 +80,16 @@ public class Camera {
 		Point dir = pollInput();
 		move(dir.getX(),dir.getY());
 		
-		rectOffsetX = (viewRect.getWidth())/2;
-		rectOffsetY = (viewRect.getHeight())/2;
+		rectOffsetX = viewRect.getWidth()/2;
+		rectOffsetY = viewRect.getHeight()/2;
 		
 		viewRect.setX(cameraPos.getX()-rectOffsetX);
 		viewRect.setY(cameraPos.getY()-rectOffsetY);
 		
 		renderRect.setX(viewRect.getX() - tile_buffer * zoom * TW_RENDER);
 		renderRect.setY(viewRect.getY() - tile_buffer * zoom * TH_RENDER);
-		renderRect.setWidth(viewRect.getWidth() + tile_buffer * zoom * 2 * TW_RENDER);
-		renderRect.setHeight(viewRect.getHeight() + tile_buffer * zoom * 2 * TW_RENDER);
-		
-		System.out.println(rectOffsetX);
+		renderRect.setWidth(viewRect.getWidth() + tile_buffer * 2 * zoom * TW_RENDER);
+		renderRect.setHeight(viewRect.getHeight() + tile_buffer * 2 * zoom * TW_RENDER);
 
 	}
 
