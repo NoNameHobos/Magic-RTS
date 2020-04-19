@@ -79,7 +79,7 @@ public class Camera {
 			targetZoom = minZoom;
 
 		float previousZoom = zoom;
-		zoom = Utils.lerp(zoom, targetZoom, 0.1f);
+		zoom = Utils.lerp(zoom, targetZoom, 0.075f);
 
 		float diffX = baseWidth * (previousZoom - zoom);
 		float diffY = baseHeight * (previousZoom - zoom);
@@ -100,7 +100,7 @@ public class Camera {
 		float[] bounds = {0f,
 				0f,
 				map.getMapWidth()*TW_RENDER-viewRect.getWidth(),
-				map.getMapHeight()*TH_RENDER-ResourceLoader.UI.get("UIBottomBar").getHeight()};
+				map.getMapHeight()*TH_RENDER-viewRect.getHeight()+ResourceLoader.UI.get("UIBottomBar").getHeight()};
 		
 		if (viewRect.getX() < bounds[0]) viewRect.setX(Utils.lerp(viewRect.getX(), bounds[0], 0.1f));
 		if (viewRect.getY() < bounds[1]) viewRect.setY(Utils.lerp(viewRect.getY(), bounds[1], 0.1f));
