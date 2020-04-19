@@ -26,6 +26,8 @@ public class ResourceLoader {
 	public static final HashMap<String, Image> SPRITES = new HashMap<String, Image>();
 	public static final HashMap<String, SpriteSheet> SPRITE_SHEETS = new HashMap<String, SpriteSheet>();
 
+	public static final HashMap<String, Image> UI = new HashMap<String, Image>();
+	
 	public static final HashMap<String, Map> MAPS = new HashMap<String, Map>();
 	public static final HashMap<String, TileSet> TILE_SETS = new HashMap<String, TileSet>();
 	public static final HashMap<String, TrueTypeFont> FONTS = new HashMap<String, TrueTypeFont>();
@@ -67,8 +69,9 @@ public class ResourceLoader {
 		SPRITES.put("mithrilIcon", loadImage(path + "UI\\icons\\mithrilIcon"));
 		SPRITES.put("stoneIcon", loadImage(path + "UI\\icons\\stoneIcon"));
 		
+		//--Load UI Sprites--//
 		//Frames
-		SPRITES.put("UIBottomBar", loadImage(path + "UI\\frames\\UIBottomBar"));
+		UI.put("UIBottomBar", loadImage(path + "UI\\frames\\UIBottomBar"));
 		
 		// Report loaded resources
 		int resourceCount = SPRITES.size() + SPRITE_SHEETS.size();
