@@ -82,8 +82,8 @@ public class Camera {
 		float diffX = baseWidth * (previousZoom - zoom);
         float diffY = baseHeight * (previousZoom - zoom);
         
-		zoomOffset.setX((float) (diffX * 0.5f / Math.pow(zoom, 2)));
-		zoomOffset.setY((float) (diffY * 0.5f / Math.pow(zoom, 2)));
+		zoomOffset.setX((float) (diffX * 0.5f / Math.pow((previousZoom+zoom)/2, 2)));
+		zoomOffset.setY((float) (diffY * 0.5f / Math.pow((previousZoom+zoom)/2, 2)));
 		
 		if (zoom != previousZoom) {
 			viewRect.setX(viewRect.getX() - zoomOffset.getX());
