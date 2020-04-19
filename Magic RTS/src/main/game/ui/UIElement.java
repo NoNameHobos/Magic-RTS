@@ -1,7 +1,6 @@
 package main.game.ui;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
@@ -25,8 +24,8 @@ public abstract class UIElement {
 		if(uiPos != null) {
 			//TODO: Give ui visibility to the camera and make only one ui instance instead
 			//of one per player
-			pos.setX(uiPos.getX() * ui.getPlayer().getCamera().getViewRect().getWidth());
-			pos.setY(uiPos.getY() * ui.getPlayer().getCamera().getViewRect().getHeight());
+			pos.setX(uiPos.getX() * Engine.getWIDTH());
+			pos.setY(uiPos.getY() * Engine.getHEIGHT());
 		}
 		step();
 	}
