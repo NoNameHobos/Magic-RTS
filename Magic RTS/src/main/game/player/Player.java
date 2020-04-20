@@ -81,7 +81,7 @@ public class Player {
 		}
 		units.add(new Axeman(this, spawn.getX() + TW_RENDER * 2, spawn.getY() + TH_RENDER * 2));
 		buildings.add(new House(this, new Point(spawn.getX() + 40, spawn.getY() + 40)));
-		if(faction == Map.FACTIONS.get("vikings")) buildings.add(new Townhall(this, spawn));
+		buildings.add(new Townhall(this, spawn));
 
 		selector = new Selector(this, Engine.getInput());
 	}

@@ -66,6 +66,7 @@ public class ResourceLoader {
 		SPRITES.put("vike_th", loadImage(path + "buildings\\viking\\th"));
 		
 		// Steampunk
+		SPRITES.put("steam_th", loadImage(path + "buildings\\steampunk\\th"));
 		
 		// Resources Icons
 		SPRITES.put("manaIcon", loadImage(path + "UI\\icons\\manaIcon"));
