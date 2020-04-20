@@ -37,6 +37,8 @@ public abstract class SelectableEntity extends Entity {
 
 	public void tick() {
 		super.tick();
+		
+		step();
 	}
 
 	public void render(Graphics g) {
@@ -51,7 +53,12 @@ public abstract class SelectableEntity extends Entity {
 				g.setColor(Color.red);
 			g.draw(collider);
 		}
+		
+		draw(g);
 	}
+	
+	public abstract void draw(Graphics g);
+	public abstract void step();
 
 	public boolean mouseOver() {
 		Camera c = player.getCamera();

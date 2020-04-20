@@ -44,10 +44,10 @@ public class Axeman extends Unit {
 	}
 
 	@Override
-	public void tick() {
-		super.tick();
+	public void step() {
 		if(Game.getCurrentView() == player.getCamera()) {
 			move(speed, direction);
 		}
+		
 	}
 }

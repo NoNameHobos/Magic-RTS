@@ -19,7 +19,6 @@ public class Steampunk extends Faction {
 	@Override
 	public void loadBuildings() {
 		sprites.put("house", SPRITES.get("vikehut"));
-		buildings.add("house");
 	}
 	
 	public void loadUI() {

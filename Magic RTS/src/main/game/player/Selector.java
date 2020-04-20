@@ -20,6 +20,8 @@ public class Selector implements MouseListener {
 	private Player player;
 	private Camera camera;
 
+	private boolean selectedSomething = false;
+	
 	private Rectangle selectBox;
 
 	public Selector(Player p, Input input) {
@@ -123,13 +125,16 @@ public class Selector implements MouseListener {
 				startPoint = new Point(x, y);
 
 				// Clear the selected units
-				player.getSelected().clear();
-
+				if(!selectedSomething)
+					player.getSelected().clear();
+				
 				// Handle single selection
 				SelectableEntity nearest = (SelectableEntity) getNearestEntity(true);
 
-				if (nearest.mouseOver())
+				if (nearest.mouseOver()) {
 					player.getSelected().add(nearest);
+					selectedSomething = true;
+				}
 			}
 		}
 	}
@@ -159,8 +164,9 @@ public class Selector implements MouseListener {
 
 							if (safeX && safeY) {
 
-								if (!selected.contains(entity))
+								if (!selected.contains(entity)) {
 									selected.add(entity);
+								}
 							}
 						}
 					}
@@ -184,6 +190,7 @@ public class Selector implements MouseListener {
 
 			endPoint = null;
 			startPoint = null;
+			selectedSomething = false;
 		}
 	}
 

@@ -6,12 +6,14 @@ import org.newdawn.slick.geom.Point;
 import main.entities.Building;
 import main.game.player.Player;
 
-public class House extends Building {
+public class Townhall extends Building {
 
-	public House(Player player, Point pos) {
-		super(player, pos, player.getFaction().getSprite("house"));
+	public Townhall(Player player, Point _pos) {
+		super(player, _pos, player.getFaction().getSprite("townhall"));
+		
+		System.out.println("Created a th");
 	}
-	
+
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub

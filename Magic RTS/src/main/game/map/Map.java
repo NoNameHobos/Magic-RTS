@@ -5,6 +5,7 @@ import static main.GameConstants.TW_RENDER;
 import static main.util.ResourceLoader.TILE_SETS;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import org.newdawn.slick.Color;
@@ -14,12 +15,15 @@ import org.newdawn.slick.geom.Point;
 
 import main.game.Game;
 import main.game.player.Camera;
+import main.game.player.Faction;
 import main.game.player.Player;
 import main.game.player.factions.Steampunk;
 import main.game.player.factions.Viking;
 
 public class Map {
 
+	public final static HashMap<String, Faction> FACTIONS = new HashMap<String, Faction>();
+	
 	public final static String[] PLAYER_NAMES = {
 			"GARY",
 			"BEN",
@@ -70,6 +74,9 @@ public class Map {
 			}
 			
 			this.game = game;
+
+			FACTIONS.put("vikings", new Viking());
+			FACTIONS.put("steampunk", new Steampunk());
 			
 			loadPlayers();
 			loadTiles(tileData);
@@ -78,7 +85,7 @@ public class Map {
 	
 	public void loadPlayers() {
 		players = new Player[spawns.length];
-		controlledPlayer = Player.createPlayer("Bryn", 0, this, new Color(0, 0, 255), new Steampunk(), spawns[0]);
+		controlledPlayer = Player.createPlayer("Bryn", 0, this, new Color(0, 0, 255), FACTIONS.get("vikings"), spawns[0]);
 		System.out.println("Spawned player at: (" + spawns[0].getX() + ", " + spawns[0].getY() + ")");
 		players[0] = controlledPlayer;
 		
@@ -86,7 +93,7 @@ public class Map {
 			Random r = new Random();
 			String n = PLAYER_NAMES[Math.round(r.nextInt(PLAYER_NAMES.length))];
 			System.out.println("Spawned player at: (" + spawns[i].getX() + ", " + spawns[i].getY() + ")");
-			players[i] = Player.createPlayer(n, i, this, new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)), new Viking(), spawns[i]);
+			players[i] = Player.createPlayer(n, i, this, new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)), FACTIONS.get("steampunk"), spawns[i]);
 		}
 	}
 	

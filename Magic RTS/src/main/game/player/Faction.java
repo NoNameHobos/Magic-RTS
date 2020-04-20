@@ -6,6 +6,8 @@ import java.util.HashMap;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
+import main.util.ResourceLoader;
+
 public abstract class Faction {
 
 	protected HashMap<String, Image> sprites; //Hashmap for sprites
@@ -42,8 +44,13 @@ public abstract class Faction {
 	}
 	
 	public Image getSprite(String index) {
-		//System.out.println("Loaded: " + index);
-		return sprites.get(index);
+		System.out.println("Faction: " + name + " getting: " + index);
+		if(sprites.get(index) != null)
+			return sprites.get(index);
+		else {
+			System.err.println(name + " failed to get " + index + " sprite");
+			return ResourceLoader.missing;
+		}
 	}
 	
 	public SpriteSheet getSpriteSheet(String index) { 

@@ -16,9 +16,11 @@ import main.entities.Building;
 import main.entities.Entity;
 import main.entities.Unit;
 import main.entities.buildings.House;
+import main.entities.buildings.Townhall;
 import main.entities.unit.Axeman;
 import main.game.Game;
 import main.game.map.Map;
+import main.game.player.factions.Viking;
 import main.game.ui.UI;
 
 public class Player {
@@ -78,7 +80,8 @@ public class Player {
 			playerCamera.setUI(ui);
 		}
 		units.add(new Axeman(this, spawn.getX() + TW_RENDER * 2, spawn.getY() + TH_RENDER * 2));
-		buildings.add(new House(this, spawn));
+		buildings.add(new House(this, new Point(spawn.getX() + 40, spawn.getY() + 40)));
+		if(faction == Map.FACTIONS.get("vikings")) buildings.add(new Townhall(this, spawn));
 
 		selector = new Selector(this, Engine.getInput());
 	}

@@ -61,8 +61,11 @@ public class ResourceLoader {
 		SPRITES.put("axeman", loadImage(path + "mobs\\vikeaxe"));
 		SPRITE_SHEETS.put("axeman_down", loadSpriteSheet(path + "mobs\\vikeaxe_down", 48, 48));
 
-		// Houses
-		SPRITES.put("vikehut", loadImage(path + "buildings\\vikehut"));
+		// Vikings
+		SPRITES.put("vike_hut", loadImage(path + "buildings\\viking\\hut"));
+		SPRITES.put("vike_th", loadImage(path + "buildings\\viking\\th"));
+		
+		// Steampunk
 		
 		// Resources Icons
 		SPRITES.put("manaIcon", loadImage(path + "UI\\icons\\manaIcon"));
@@ -92,10 +95,6 @@ public class ResourceLoader {
 	
 	public static void loadMaps() {
 		MAPS.put("Seton's Clutch", MapLoader.loadMap("maps\\setons"));
-		MAPS.put("Test Map 1", MapLoader.loadMap("maps\\m"));
-		MAPS.put("Test Map 2", MapLoader.loadMap("maps\\map1"));
-		MAPS.put("Test Map 3", MapLoader.loadMap("maps\\map2"));
-		MAPS.put("Zoom Test", MapLoader.loadMap("maps\\zoomTest"));
 		MAPS.put("Mountain Pass", MapLoader.loadMap("maps\\mountainpass"));
 	}
 	
