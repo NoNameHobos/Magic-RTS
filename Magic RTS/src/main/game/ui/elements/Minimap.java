@@ -18,13 +18,17 @@ public class Minimap extends UIElement {
 
 	private Map map;
 
+	private static int ALPHA = 100;
+
 	private Player player;
 
-	private Rectangle rectMinimap;
+	private Rectangle border;
 
 	private float scaleX, scaleY;
 
 	private static Image sprite;
+
+	private float width = 13;
 
 	public Minimap(UI ui, Point pos) {
 		super(ui, pos);
@@ -38,18 +42,20 @@ public class Minimap extends UIElement {
 
 		sprite = ResourceLoader.UI.get("viking_minimap");
 
-		rectMinimap = new Rectangle(pos.getX(), pos.getY(), width, height);
+		border = new Rectangle(pos.getX(), pos.getY(), width, height);
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(sprite, pos.getX() - 50, pos.getY() - 50, new Color(255, 255, 255, 100));
+		
+		//Draw minimap sprite
+		g.drawImage(sprite, pos.getX() - width, pos.getY() - width, new Color(255, 255, 255, ALPHA));
 		g.setColor(Color.white);
-		g.drawString(player.getFaction().getName(), rectMinimap.getX(), rectMinimap.getY() + 10);
+		g.drawString(player.getFaction().getName(), border.getX(), border.getY() - 15);
 
 		for (Entity entity : Entity.getEntities()) {
 			Color c = entity.getPlayer().getPlayerColor();
-			Color n = new Color(c.getRed(), c.getGreen(), c.getBlue(), 100);
+			Color n = new Color(c.getRed(), c.getGreen(), c.getBlue());
 			g.setColor(n);
 
 			float width = entity.getSprite().getWidth() * scaleX;
@@ -59,7 +65,9 @@ public class Minimap extends UIElement {
 
 			g.fillOval(miniPos.getX() - width / 2, miniPos.getY() - height / 2, width, height);
 		}
-		g.setColor(new Color(255, 255, 255, 100));
+
+		g.setColor(new Color(255, 255, 255, ALPHA));
+
 		for (Entity entity : player.getSelected()) {
 
 			int buffer = 3;
@@ -72,28 +80,40 @@ public class Minimap extends UIElement {
 			float x = miniPos.getX() - width / 2 + buffer;
 			float y = miniPos.getY() - height / 2 + buffer;
 
+			// Draw entities
 			g.fillOval(x, y, width - buffer * 2, height - buffer * 2);
 		}
 
-		Point miniPos = mapToMinimap(
-				new Point(player.getCamera().getViewRect().getX(), player.getCamera().getViewRect().getY()));
-		float width = player.getCamera().getViewRect().getWidth() * scaleX;
-		float height = player.getCamera().getViewRect().getHeight() * scaleY;
+		// Draw the camera square
+		Rectangle r = player.getCamera().getViewRect();
 
-		if (miniPos.getX() + width > rectMinimap.getX() + rectMinimap.getWidth())
-			width = rectMinimap.getX() + rectMinimap.getWidth() - miniPos.getX();
-		if (miniPos.getY() + height > rectMinimap.getY() + rectMinimap.getHeight())
-			height = rectMinimap.getY() + rectMinimap.getHeight() - miniPos.getY();
-		if (miniPos.getX() < rectMinimap.getX()) {
-			width -= rectMinimap.getX() - miniPos.getX();
-			miniPos.setX(rectMinimap.getX());
-		}
-		if (miniPos.getY() < rectMinimap.getY()) {
-			height -= rectMinimap.getY() - miniPos.getY();
-			miniPos.setY(rectMinimap.getY());
+		Point miniPos = mapToMinimap(new Point(r.getX(), r.getY()));
+
+		float width = r.getWidth() * scaleX;
+		float height = r.getHeight() * scaleY;
+
+		if (miniPos.getX() + width > border.getX() + border.getWidth())
+			width = border.getX() + border.getWidth() - miniPos.getX();
+
+		if (miniPos.getY() + height > border.getY() + border.getHeight())
+			height = border.getY() + border.getHeight() - miniPos.getY();
+
+		if (miniPos.getX() < border.getX()) {
+			width -= border.getX() - miniPos.getX();
+			miniPos.setX(border.getX());
 		}
 
+		if (miniPos.getY() < border.getY()) {
+			height -= border.getY() - miniPos.getY();
+			miniPos.setY(border.getY());
+		}
+
+		g.setColor(new Color(255, 255, 255, ALPHA));
 		g.drawRect(miniPos.getX(), miniPos.getY(), width, height);
+
+		// Draw border outline
+		g.setColor(Color.black);
+		g.draw(border);
 
 	}
 
