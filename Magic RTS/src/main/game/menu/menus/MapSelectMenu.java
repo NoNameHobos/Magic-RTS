@@ -3,7 +3,6 @@ package main.game.menu.menus;
 import java.util.HashMap;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.InputListener;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;

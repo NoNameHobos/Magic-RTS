@@ -17,6 +17,9 @@ public abstract class Entity {
 	protected Player player;
 
 	protected Image sprite;
+	
+	protected int depth;
+	
 	protected SpriteSheet ss;
 
 	protected Point pos; // A Point as defined *IN THE GAME* NOT THE UI! use Game.pGameToUI() for its UI
@@ -89,6 +92,8 @@ public abstract class Entity {
 				alarm[i] -= 1;
 			}
 		}
+		
+		depth = -(int)Math.round(pos.getY());
 	}
 
 	public void render(Graphics g) {
@@ -127,5 +132,9 @@ public abstract class Entity {
 	}
 	public Player getPlayer() {
 		return player;
+	}
+
+	public int getDepth() {
+		return depth;
 	}
 }

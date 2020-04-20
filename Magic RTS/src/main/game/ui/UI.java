@@ -11,9 +11,10 @@ import main.engine.Engine;
 import main.game.map.Map;
 import main.game.player.Player;
 import main.game.ui.elements.Bar;
-import main.game.ui.elements.Frame;
-import main.game.ui.elements.Minimap;
-import main.game.ui.elements.UnitInfo;
+import main.game.ui.elements.core.CommandHUD;
+import main.game.ui.elements.core.Frame;
+import main.game.ui.elements.core.Minimap;
+import main.game.ui.elements.core.UnitInfo;
 import main.util.ResourceLoader;
 
 public class UI {
@@ -26,10 +27,16 @@ public class UI {
 		this.player = player;
 
 		new Minimap(this, new Point(Engine.getWIDTH() - player.getFaction().getSprite("ui_minimap").getWidth(), 0));
-		new UnitInfo(this, new Point(0, Engine.getHEIGHT() / 3 * 2));
 
 		Image frameSprite = player.getFaction().getSprite("ui_bottombar");
 		new Frame(this, new Point(0, Engine.getHEIGHT() - frameSprite.getHeight()));
+
+		new CommandHUD(this, new Point(0, Engine.getHEIGHT() * 2 / 3 + frameSprite.getHeight()));
+		
+		float marginX = 16;
+		float marginY = 32;
+		
+		new UnitInfo(this, new Point(Engine.getWIDTH() / 3 + marginX, Engine.getHEIGHT() * 2 / 3 + marginY));
 
 		Image barSprite = ResourceLoader.UI.get("UIManaBar");
 		new Bar(this, new Point(10, 10), barSprite, 100);

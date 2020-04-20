@@ -3,6 +3,7 @@ package main.game;
 import static main.util.ResourceLoader.MAPS;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -59,7 +60,9 @@ public class Game {
 	// Update
 	public void tick() {
 		// Update Entities
-		for (Entity entity : Entity.getEntities()) {
+		ArrayList<Entity> entities = Entity.getEntities();
+		entities.sort(new SortByDepth());
+		for (Entity entity : entities) {
 			entity.tick();
 		}
 
@@ -192,4 +195,16 @@ public class Game {
 		return controllingPlayer;
 	}
 
+}
+
+// Comparators
+
+class SortByDepth implements Comparator<Entity> {
+
+	@Override
+	public int compare(Entity e1, Entity e2) {
+		// TODO Auto-generated method stub
+		return (e2.getDepth() - e1.getDepth());
+	}
+	
 }

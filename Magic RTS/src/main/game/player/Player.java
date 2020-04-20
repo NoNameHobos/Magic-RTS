@@ -20,7 +20,6 @@ import main.entities.buildings.Townhall;
 import main.entities.unit.Axeman;
 import main.game.Game;
 import main.game.map.Map;
-import main.game.player.factions.Viking;
 import main.game.ui.UI;
 
 public class Player {

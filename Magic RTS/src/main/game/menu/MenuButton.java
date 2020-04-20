@@ -7,7 +7,7 @@ import org.newdawn.slick.geom.Point;
 
 import main.util.ResourceLoader;
 
-public class MenuButton extends MenuElement {
+public class MenuButton extends MenuElement implements Button {
 
 	private Animation animation;
 	private Animation backAnim;
@@ -47,9 +47,31 @@ public class MenuButton extends MenuElement {
 		}
 		g.drawString(text, x, pos.getY() - g.getFont().getHeight(text)/8);
 	}
+	
+	// Button Input
+	
+	@Override
+	public void mousePressed(int button, int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	public void mouseReleased(int button, int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isAcceptingInput() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	// Getters and Setters
 	public String getText() {
 		return text;
 	}
+
 
 }

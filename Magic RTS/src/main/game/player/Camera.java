@@ -12,7 +12,6 @@ import main.engine.Engine;
 import main.game.map.Map;
 import main.game.ui.UI;
 import main.game.ui.elements.Bar;
-import main.util.ResourceLoader;
 import main.util.Utils;
 
 public class Camera {

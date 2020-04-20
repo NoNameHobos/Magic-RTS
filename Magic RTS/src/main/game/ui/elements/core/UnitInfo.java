@@ -1,4 +1,4 @@
-package main.game.ui.elements;
+package main.game.ui.elements.core;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;

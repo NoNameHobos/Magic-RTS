@@ -66,17 +66,6 @@ public abstract class Menu implements MouseListener {
 		draw(g);
 	}
 	
-	
-	//Some abstract events
-	public abstract void draw(Graphics g);
-	public abstract void step();
-	
-	// Getters and Setters
-	
-	public ArrayList<MenuButton> getButtons() {
-		return buttons;
-	}
-
 	@Override
 	public void mouseWheelMoved(int arg0) {
 		// TODO Auto-generated method stub
@@ -117,5 +106,15 @@ public abstract class Menu implements MouseListener {
 	public void mouseDragged(int arg0, int arg1, int arg2, int arg3) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	//Some abstract events
+	public abstract void draw(Graphics g);
+	public abstract void step();
+	
+	// Getters and Setters
+	
+	public ArrayList<MenuButton> getButtons() {
+		return buttons;
 	}
 }

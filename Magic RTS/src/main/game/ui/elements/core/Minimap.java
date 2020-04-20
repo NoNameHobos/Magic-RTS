@@ -1,4 +1,4 @@
-package main.game.ui.elements;
+package main.game.ui.elements.core;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -12,7 +12,6 @@ import main.game.map.Map;
 import main.game.player.Player;
 import main.game.ui.UI;
 import main.game.ui.UIElement;
-import main.util.ResourceLoader;
 
 public class Minimap extends UIElement {
 
