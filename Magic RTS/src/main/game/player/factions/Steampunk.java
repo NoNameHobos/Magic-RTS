@@ -23,7 +23,7 @@ public class Steampunk extends Faction {
 	
 	public void loadUI() {
 		sprites.put("ui_bottombar", UI.get("steam_bottom"));
-		sprites.put("ui_minimap", UI.get("viking_minimap"));
+		sprites.put("ui_minimap", UI.get("steam_minimap"));
 	}
 	
 }
