@@ -22,7 +22,7 @@ public class Node {
 
 	private float FCost, GCost, HCost;
 
-	public Node(NodeMap map, int x, int y, int cost) {
+	public Node(NodeMap map, float x, float y, int cost) {
 		pos = new Point(x, y);
 		this.cost = cost;
 		id = (int)(x / TW_RENDER) + map.getHeight() * (int)(y / TH_RENDER);

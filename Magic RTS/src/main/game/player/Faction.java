@@ -12,6 +12,7 @@ public abstract class Faction {
 	protected HashMap<String, SpriteSheet> sprite_sheets; //Hashmap for spritesheets
 	protected ArrayList<String> units;
 	protected ArrayList<String> buildings;
+	//TODO: Change arraylists to maps
 	
 	protected String name;
 	
@@ -23,10 +24,14 @@ public abstract class Faction {
 		buildings = new ArrayList<String>();
 		
 		this.name = name;
+		loadUnits();
+		loadBuildings();
+		loadUI();
 	}
 	
 	public abstract void loadUnits();
 	public abstract void loadBuildings();
+	public abstract void loadUI();
 	
 	public ArrayList<String> getUnits() {
 		return units;

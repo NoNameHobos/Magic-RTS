@@ -4,6 +4,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
+import main.game.player.Player;
 
 public abstract class UIElement {
 
@@ -11,10 +12,14 @@ public abstract class UIElement {
 
 	protected Point pos;
 	protected Point uiPos;
+	
+	protected Player player;
 
 	public UIElement(UI ui, Point pos) {
 		this.ui = ui;
 
+		this.player = ui.getPlayer();
+		
 		this.pos = pos;
 		this.uiPos = new Point(pos.getX() / Engine.getWIDTH(), pos.getY() / Engine.getHEIGHT());
 		ui.getElements().add(this);

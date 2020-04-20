@@ -7,7 +7,6 @@ import org.newdawn.slick.geom.Point;
 import main.engine.Engine;
 import main.game.ui.UI;
 import main.game.ui.UIElement;
-import main.util.ResourceLoader;
 
 public class Frame extends UIElement {
 
@@ -18,7 +17,7 @@ public class Frame extends UIElement {
 	public Frame(UI ui, Point pos) {
 		super(ui, pos);
 		
-		sprite = ResourceLoader.UI.get("UIBottomBar");
+		sprite = player.getFaction().getSprite("ui_bottombar");
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class Frame extends UIElement {
 
 		int sW = sprite.getWidth();
 
-		width = Engine.getWIDTH() / sW;
+		width = (int)Math.ceil((float)Engine.getWIDTH() / (float)sW);
 		
 
 		for (int x = 0; x < width; x++) {
