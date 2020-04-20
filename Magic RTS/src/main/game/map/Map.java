@@ -15,6 +15,7 @@ import org.newdawn.slick.geom.Point;
 import main.game.Game;
 import main.game.player.Camera;
 import main.game.player.Player;
+import main.game.player.factions.Steampunk;
 import main.game.player.factions.Viking;
 
 public class Map {
@@ -77,7 +78,7 @@ public class Map {
 	
 	public void loadPlayers() {
 		players = new Player[spawns.length];
-		controlledPlayer = Player.createPlayer("Bryn", 0, this, new Color(0, 0, 255), new Viking(), spawns[0]);
+		controlledPlayer = Player.createPlayer("Bryn", 0, this, new Color(0, 0, 255), new Steampunk(), spawns[0]);
 		System.out.println("Spawned player at: (" + spawns[0].getX() + ", " + spawns[0].getY() + ")");
 		players[0] = controlledPlayer;
 		

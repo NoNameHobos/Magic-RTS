@@ -42,7 +42,7 @@ public abstract class Faction {
 	}
 	
 	public Image getSprite(String index) {
-		System.out.println("Loaded: " + index);
+		//System.out.println("Loaded: " + index);
 		return sprites.get(index);
 	}
 	
