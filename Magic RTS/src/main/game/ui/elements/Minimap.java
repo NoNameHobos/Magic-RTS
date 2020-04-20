@@ -75,6 +75,13 @@ public class Minimap extends UIElement {
 			
 			g.fillOval(x, y, width - buffer * 2, height - buffer * 2);
 		}
+		
+		Point miniPos = mapToMinimap(new Point(player.getCamera().getViewRect().getX(), player.getCamera().getViewRect().getY()));
+		float width = player.getCamera().getViewRect().getWidth()* scaleX;
+		float height = player.getCamera().getViewRect().getHeight()* scaleY;
+		
+		g.drawRect(miniPos.getX(), miniPos.getY(), width, height);
+		
 	}
 
 	public Point mapToMinimap(Point mapPoint) {

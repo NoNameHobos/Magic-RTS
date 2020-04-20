@@ -101,7 +101,7 @@ public class Camera {
 
 		// Keep camera in bounds
 		float[] bounds = { 0f, 0f, map.getMapWidth() * TW_RENDER - viewRect.getWidth(), map.getMapHeight() * TH_RENDER
-				+ viewRect.getHeight() - ResourceLoader.UI.get("UIBottomBar").getHeight() };
+				- viewRect.getHeight() + ResourceLoader.UI.get("UIBottomBar").getHeight() };
 
 		if (viewRect.getX() < bounds[0])
 			viewRect.setX(Utils.lerp(viewRect.getX(), bounds[0], 0.1f));
