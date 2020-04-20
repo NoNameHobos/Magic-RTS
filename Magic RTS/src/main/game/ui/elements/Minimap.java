@@ -18,7 +18,7 @@ public class Minimap extends UIElement {
 
 	private Map map;
 
-	private static int ALPHA = 100;
+	private static int ALPHA = 255;
 
 	private Player player;
 
@@ -28,28 +28,31 @@ public class Minimap extends UIElement {
 
 	private static Image sprite;
 
-	private float width = 13;
+	private float width;
 
 	public Minimap(UI ui, Point pos) {
 		super(ui, pos);
 		this.player = ui.getPlayer();
 		this.map = player.getMap();
 
-		float width = 200;
-		float height = 200;
-		scaleX = width / (map.getMapWidth() * GameConstants.TW_RENDER);
-		scaleY = height / (map.getMapHeight() * GameConstants.TH_RENDER);
+		sprite = player.getFaction().getSprite("ui_minimap");
+		
+		float mapWidth = 200;
+		float mapHeight = 200;
+		
+		width = (sprite.getWidth()-mapWidth)/2;
+		
+		scaleX = mapWidth / (map.getMapWidth() * GameConstants.TW_RENDER);
+		scaleY = mapHeight / (map.getMapHeight() * GameConstants.TH_RENDER);
 
-		sprite = ResourceLoader.UI.get("viking_minimap");
-
-		border = new Rectangle(pos.getX(), pos.getY(), width, height);
+		border = new Rectangle(pos.getX()+width, pos.getY()+width, mapWidth, mapHeight);
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		
 		//Draw minimap sprite
-		g.drawImage(sprite, pos.getX() - width, pos.getY() - width, new Color(255, 255, 255, ALPHA));
+		g.drawImage(sprite, pos.getX(), pos.getY(), new Color(255, 255, 255, ALPHA));
 		g.setColor(Color.white);
 		g.drawString(player.getFaction().getName(), border.getX(), border.getY() - 15);
 
@@ -109,16 +112,11 @@ public class Minimap extends UIElement {
 		}
 
 		g.setColor(new Color(255, 255, 255, ALPHA));
-		g.drawRect(miniPos.getX(), miniPos.getY(), width, height);
-
-		// Draw border outline
-		g.setColor(Color.black);
-		g.draw(border);
-
+		g.drawRect(miniPos.getX(), miniPos.getY(), width-1, height-1);
 	}
 
 	public Point mapToMinimap(Point mapPoint) {
-		return new Point(pos.getX() + mapPoint.getX() * scaleX, pos.getY() + mapPoint.getY() * scaleY);
+		return new Point(border.getX() + mapPoint.getX() * scaleX, border.getY() + mapPoint.getY() * scaleY);
 	}
 
 	// Getters and Setters

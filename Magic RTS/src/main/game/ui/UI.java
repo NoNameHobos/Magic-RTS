@@ -25,7 +25,7 @@ public class UI {
 	public UI(Player player) {
 		this.player = player;
 
-		new Minimap(this, new Point(Engine.getWIDTH() - 213, 13));
+		new Minimap(this, new Point(Engine.getWIDTH() - player.getFaction().getSprite("ui_minimap").getWidth(), 0));
 		new UnitInfo(this, new Point(0, Engine.getHEIGHT() / 3 * 2));
 
 		Image frameSprite = player.getFaction().getSprite("ui_bottombar");
