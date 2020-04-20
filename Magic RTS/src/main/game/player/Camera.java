@@ -36,6 +36,8 @@ public class Camera {
 	private float rectOffsetX, rectOffsetY;
 
 	private float baseWidth, baseHeight;
+	
+	private float uiOffsetLower = 0f;
 
 	public Camera(Map m, Point pos, float width, float height) {
 
@@ -101,7 +103,7 @@ public class Camera {
 
 		// Keep camera in bounds
 		float[] bounds = { 0f, 0f, map.getMapWidth() * TW_RENDER - viewRect.getWidth(), map.getMapHeight() * TH_RENDER
-				- viewRect.getHeight() + ui.getPlayer().getFaction().getSprite("ui_bottombar").getHeight() / zoom };
+				- viewRect.getHeight() + uiOffsetLower / zoom };
 
 		if (viewRect.getX() < bounds[0])
 			viewRect.setX(Utils.lerp(viewRect.getX(), bounds[0], 0.1f));
@@ -208,5 +210,6 @@ public class Camera {
 
 	public void setUI(UI ui) {
 		this.ui = ui;
+		uiOffsetLower = ui.getPlayer().getFaction().getSprite("ui_bottombar").getHeight();
 	}
 }
