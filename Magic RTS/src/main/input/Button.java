@@ -1,4 +1,4 @@
-package main.game.menu;
+package main.input;
 
 import org.newdawn.slick.Input;
 import org.newdawn.slick.MouseListener;
@@ -15,7 +15,6 @@ public interface Button extends MouseListener {
 		
 	}
 	
-	@Override
 	default void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		
 	}

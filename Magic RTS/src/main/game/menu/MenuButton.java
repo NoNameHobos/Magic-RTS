@@ -5,6 +5,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
+import main.input.Button;
 import main.util.ResourceLoader;
 
 public class MenuButton extends MenuElement implements Button {
@@ -67,7 +68,7 @@ public class MenuButton extends MenuElement implements Button {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
 	// Getters and Setters
 	public String getText() {
 		return text;

@@ -6,16 +6,18 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
-import main.game.menu.Button;
 import main.game.ui.UI;
 import main.game.ui.UIElement;
 import main.game.ui.elements.core.CommandHUD;
+import main.input.Button;
 
 public class CommandButton extends UIElement implements Button {
 
 	private CommandHUD cmd;
 	private Rectangle collider;
 
+	private Point mouse;
+	
 	private boolean pressed = false;
 
 	public static final int WIDTH = 64, HEIGHT = 64;
@@ -27,20 +29,23 @@ public class CommandButton extends UIElement implements Button {
 
 		Engine.getInput().addMouseListener(this);
 		collider = new Rectangle(pos.getX(), pos.getY(), WIDTH, HEIGHT);
+		
+		mouse = new Point(0, 0);
 	}
 
 	@Override // UIElement draw event
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		g.setColor(Color.red);
-		if(pressed) g.setColor(Color.green);
+		if (pressed)
+			g.setColor(Color.green);
 		g.draw(collider);
 	}
 
 	@Override // UIElement step event
 	public void step() {
-		// TODO Auto-generated method stub
-
+		if (!collider.contains(mouse))
+			pressed = false;
 	}
 
 	// Button input
@@ -79,4 +84,14 @@ public class CommandButton extends UIElement implements Button {
 
 	}
 
+	@Override
+	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+		mouse.setX(newx);
+		mouse.setY(newy);
+	}
+	
+	public void mouseDragged(int oldx, int oldy, int newx, int newy) {
+		mouse.setX(newx);
+		mouse.setY(newy);
+	}
 }
