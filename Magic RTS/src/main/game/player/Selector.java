@@ -10,6 +10,7 @@ import org.newdawn.slick.geom.Rectangle;
 import main.engine.Engine;
 import main.entities.Entity;
 import main.entities.SelectableEntity;
+import main.entities.Unit;
 import main.game.Game;
 import main.input.Mouse;
 
@@ -21,7 +22,7 @@ public class Selector implements MouseListener {
 	private Camera camera;
 
 	private boolean selectedSomething = false;
-	
+
 	private Rectangle selectBox;
 
 	public Selector(Player p, Input input) {
@@ -120,14 +121,16 @@ public class Selector implements MouseListener {
 
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		if (button == 0) {
-			if (camera != null) {
+		if (camera != null) {
+			switch (button) {
+			// Left click
+			case 0:
 				startPoint = new Point(x, y);
 
 				// Clear the selected units
-				if(!selectedSomething)
+				if (!selectedSomething)
 					player.getSelected().clear();
-				
+
 				// Handle single selection
 				SelectableEntity nearest = (SelectableEntity) getNearestEntity(true);
 
@@ -135,6 +138,21 @@ public class Selector implements MouseListener {
 					player.getSelected().add(nearest);
 					selectedSomething = true;
 				}
+				break;
+			// Right click
+			case 1:
+				if (player.getSelected().size() > 0) {
+					for (Entity entity : player.getSelected()) {
+						if (entity.getType() == "Unit") {
+
+							Unit unit = (Unit) entity;
+							Point p = Game.UIToObject(new Point(x, y), camera);
+							unit.getDes().setX(p.getX());
+							unit.getDes().setY(p.getY());
+						}
+					}
+				}
+				break;
 			}
 		}
 	}
@@ -171,7 +189,7 @@ public class Selector implements MouseListener {
 						}
 					}
 				}
-			} else if (startPoint != null){
+			} else if (startPoint != null) {
 				if (camera != null) {
 					SelectableEntity e = (SelectableEntity) getNearestEntity(true);
 					float centX = e.getCollider().getWidth() / 2 + e.getCollider().getX();

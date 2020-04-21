@@ -1,10 +1,18 @@
 package main.entities;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
+import main.entities.ai.pathfinding.Node;
+import main.entities.ai.pathfinding.NodeMap;
+import main.entities.ai.pathfinding.Path;
+import main.entities.ai.pathfinding.PathFinder;
 import main.game.player.Player;
+import main.util.Utils;
 
 public abstract class Unit extends SelectableEntity {
 
@@ -18,9 +26,14 @@ public abstract class Unit extends SelectableEntity {
 
 	protected Point des;
 
+	protected Path path;
+
+	public static final int TOLERANCE = 20; // Pathfinding Tolerance
+
 	public Unit(Player player, float x, float y, Image sprite) {
 		super(player, new Point(x, y), sprite);
 		type = "Unit";
+		des = new Point(x, y);
 	}
 
 	public void move(float spd, float angle) {
@@ -31,7 +44,7 @@ public abstract class Unit extends SelectableEntity {
 	}
 
 	public void moveTo(Point target) {
-		if (getDistanceTo(target) >= sprite.getWidth() / 2) {
+		if (getDistanceTo(target) >= (TOLERANCE)) {
 			direction = getPointDirection(target);
 			if (speed < move_speed)
 				speed += acc;
@@ -39,15 +52,81 @@ public abstract class Unit extends SelectableEntity {
 			speed = 0;
 	}
 
+	public void moveAlongPath(Point target) {
+		if (Utils.distance(pos, target) > TOLERANCE) {
+			if (path == null) {
+				ArrayList<Node> nearestStartNodes = getNearestNodes(pos);
+				ArrayList<Node> nearestEndNodes = getNearestNodes(target);
+
+				nearestStartNodes.sort(new SortByDist(target));
+				nearestEndNodes.sort(new SortByDist(target));
+				if (nearestStartNodes.size() == 0) {
+					System.out.println("Start Nodes Size: 0");
+					return;
+				}
+				if (nearestEndNodes.size() == 0) {
+					System.out.println("End Nodes Size: 0");
+					return;
+				}
+				path = PathFinder.findPath(map.getGame().getNodeMap(), nearestStartNodes.get(0),
+						nearestEndNodes.get(0));
+			} else {
+				// Use path
+				if (path.getNodes().size() > 0) {
+					Point nodePos = path.getNodes().get(0).getPos();
+					if (Utils.distance(pos, nodePos) < TOLERANCE) {
+						System.out.println("Next node");
+						path.getNodes().remove(0);
+					} else
+						moveTo(nodePos);
+				} else
+					path = null;
+			}
+		} else {
+			speed = 0;
+			path = null;
+		}
+	}
+
+	public ArrayList<Node> getNearestNodes(Point pos) {
+		ArrayList<Node> nodes = new ArrayList<Node>();
+
+		Node[][] nMap = map.getGame().getNodeMap().getNodes();
+
+		for (int i = 0; i < nMap.length; i++) {
+			for (int j = 0; j < nMap[i].length; j++) {
+				if (Utils.distance(pos, nMap[i][j].getPos()) < (NodeMap.NODE_WIDTH + 3)) {
+					if (nMap[i][j].getCost() < 100)
+						nodes.add(nMap[i][j]);
+				}
+			}
+		}
+
+		return nodes;
+	}
+
+	public void tick() {
+		super.tick();
+
+		moveAlongPath(des);
+		step();
+	}
+
 	@Override
 	public void render(Graphics g) {
 		super.render(g);
 		// Draw The Image to the Graphics context
 		g.drawImage(sprite, pos.getX() - origin.getX(), pos.getY() - origin.getY());
+		if (path != null)
+			path.render(g);
 		draw(g);
 	}
 
 	public abstract void draw(Graphics g);
+
+	public abstract void step();
+
+	// Getters and Setters
 
 	public int getFacing() {
 		float dir = Math.abs(360 - direction);
@@ -111,4 +190,25 @@ public abstract class Unit extends SelectableEntity {
 		return player;
 	}
 
+	public Point getDes() {
+		return des;
+	}
+
+}
+
+// Comparators
+
+class SortByDist implements Comparator<Node> {
+
+	Point goal;
+
+	public SortByDist(Point g) {
+		goal = g;
+	}
+
+	public int compare(Node n1, Node n2) {
+		float dis1 = Utils.distance(n1.getPos(), goal);
+		float dis2 = Utils.distance(n1.getPos(), goal);
+		return (int) Math.signum(dis1 - dis2);
+	}
 }

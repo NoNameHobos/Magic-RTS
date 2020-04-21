@@ -23,10 +23,13 @@ public class NodeMap {
 	public static final float YOFFSET = NODE_HEIGHT / RES;
 
 	private Map map;
-
+	
+	private Node[][] nodes;
+	
 	public NodeMap(Map m) {
 		map = m;
 	}
+
 
 	public static NodeMap createNodeMap(Map m) {
 		// TODO: Make a decent Node Map based off map data
@@ -93,21 +96,14 @@ public class NodeMap {
 			g.drawLine(i * NODE_WIDTH + XOFFSET, 0, i * NODE_WIDTH + XOFFSET, map.getMapHeight() * TH_RENDER);
 		}
 	}
-
-	private Node[][] nodes;
-
-	private int mapHeight, mapWidth;
-
-	public NodeMap() {
-	}
-
+	
 	// Getters and Setters
 	public int getHeight() {
-		return mapHeight;
+		return map.getMapHeight();
 	}
 
 	public int getWidth() {
-		return mapWidth;
+		return map.getMapWidth();
 	}
 
 	public Node[][] getNodes() {

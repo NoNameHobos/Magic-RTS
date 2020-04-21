@@ -195,6 +195,10 @@ public class Game {
 		return controllingPlayer;
 	}
 
+	public NodeMap getNodeMap() {
+		return nm;
+	}
+
 }
 
 // Comparators
