@@ -22,11 +22,10 @@ public class Node {
 
 	private float FCost, GCost, HCost;
 
-	public Node(NodeMap map, float x, float y, int cost) {
+	public Node(NodeMap map, float x, float y, int cost, int id) {
 		pos = new Point(x, y);
 		this.cost = cost;
-		id = (int) Math.floor((x - NodeMap.XOFFSET) / TW_RENDER)
-				+ map.getHeight() * (int) Math.floor((y - NodeMap.YOFFSET) / TH_RENDER);
+		this.id = id;
 		parent = null;
 	}
 

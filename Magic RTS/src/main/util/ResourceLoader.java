@@ -80,7 +80,6 @@ public class ResourceLoader {
 		
 		//--Load UI Sprites--//
 		//Frames
-		UI.put("UIBottomBar", loadImage(path + "UI\\frames\\UIBottomBar"));
 		UI.put("viking_bottom", loadImage(path + "UI\\frames\\bottombar_vike"));
 		UI.put("viking_minimap", loadImage(path + "UI\\minimap\\minimap_vike"));
 		UI.put("steam_bottom", loadImage(path + "UI\\frames\\bottombar_steam"));

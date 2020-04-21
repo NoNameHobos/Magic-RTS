@@ -14,7 +14,7 @@ import main.game.player.Camera;
 
 public class NodeMap {
 
-	public static final int RES = 2;
+	public static final int RES = 1;
 
 	public static final float NODE_WIDTH = TW_RENDER / RES;
 	public static final float NODE_HEIGHT = TH_RENDER / RES;
@@ -57,7 +57,7 @@ public class NodeMap {
 					cost = 0;
 				else if (tileVal == 1 || tileVal == 2)
 					cost = 100;
-				nodes[i][j] = new Node(nm, j * NODE_WIDTH + XOFFSET, i * NODE_HEIGHT + YOFFSET, cost);
+				nodes[i][j] = new Node(nm, j * NODE_WIDTH + XOFFSET, i * NODE_HEIGHT + YOFFSET, cost, i * mapHeight + j);
 			}
 		}
 		nm.setNodes(nodes);

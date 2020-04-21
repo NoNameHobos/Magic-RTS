@@ -12,7 +12,7 @@ public class PathFinder {
 
 		System.err.println("Finding path between: " + startNode.getPos().getX() + " " + startNode.getPos().getY());
 		System.err.println("	And: " + endNode.getPos().getX() + " " + endNode.getPos().getY());
-		
+
 		boolean concluded = false;
 
 		ArrayList<Node> open = new ArrayList<Node>();
@@ -22,9 +22,17 @@ public class PathFinder {
 		open.add(startNode);
 		Node current = null;
 
+		int count = 0;
+
 		while (!concluded) {
 			open.sort(new SortAStar());
-			current = open.get(0);
+			count++;
+			try {
+				current = open.get(0);
+			} catch (IndexOutOfBoundsException e) {
+				System.err.println(count);
+				System.out.println(startNode);
+			}
 			open.remove(0);
 			closed.add(current);
 			if (current == endNode)
@@ -61,18 +69,19 @@ public class PathFinder {
 		}
 
 		ArrayList<Node> path = new ArrayList<Node>();
-
 		do {
 			path.add(current);
 			current = current.getParent();
 		} while (current != startNode);
 		Collections.reverse(path);
-		return new Path(path);
+		Path p = new Path(path);
+		p.setVisited(closed);
+		return p;
 	}
 
 	public static Point mapToGrid(Point nodePos) {
-		float x = (nodePos.getX() - (int)NodeMap.XOFFSET) / NodeMap.NODE_WIDTH;
-		float y = (nodePos.getY() - (int)NodeMap.YOFFSET) / NodeMap.NODE_HEIGHT;
+		float x = (nodePos.getX() - (int) NodeMap.XOFFSET) / NodeMap.NODE_WIDTH;
+		float y = (nodePos.getY() - (int) NodeMap.YOFFSET) / NodeMap.NODE_HEIGHT;
 		return new Point(x, y);
 	}
 
@@ -84,40 +93,30 @@ public class PathFinder {
 
 				Point gridPos = mapToGrid(n.getPos());
 
-				
 				int x = (int) gridPos.getX() + i;
 				int y = (int) gridPos.getY() + j;
 
 				if (x < 0) {
 					x = 0;
-				}
-				else if (x > m.getWidth() - 1) {
+				} else if (x > m.getWidth() - 1) {
 					x = m.getWidth() - 1;
 				}
 				if (y < 0)
 					y = 0;
 				else if (y > m.getHeight() - 1)
 					y = m.getHeight() - 1;
-				
+/*
 				if (i != 0 || j != 0) {
 					boolean cornerObst = false;
 					if (i != 0 && j != 0) {
-						
+
 						int xx = (int) gridPos.getX(), yy = (int) gridPos.getY();
-						
-						try {
-						
-						cornerObst = (m.getNodes()[yy][x].getCost() >= 100)
-								|| (m.getNodes()[y][xx].getCost() >= 100);
-						} catch(ArrayIndexOutOfBoundsException e) {
-							System.err.println("XX: " + xx + " " + yy);
-							System.err.println("X: " + x + " " + y);
-							System.err.println("Map Size: " + m.getWidth() + " " + m.getHeight());
-						}
+
+						cornerObst = (m.getNodes()[yy][x].getCost() >= 100) || (m.getNodes()[y][xx].getCost() >= 100);
 					}
-					if (!cornerObst)
+					if (!cornerObst)*/
 						neighbours.add(m.getNodes()[y][x]);
-				}
+				//}
 			}
 		}
 		return neighbours;

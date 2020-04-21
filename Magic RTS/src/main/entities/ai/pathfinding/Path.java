@@ -9,8 +9,9 @@ import org.newdawn.slick.geom.Point;
 public class Path {
 
 	private ArrayList<Node> nodes;
+	private ArrayList<Node> visited;
 	private int currentIndex;
-
+	
 	private float cost;
 
 	public Path(ArrayList<Node> nodes) {
@@ -25,10 +26,18 @@ public class Path {
 	public void render(Graphics g) {
 		float width = 6;
 		float height = 6;
+		
+		for(Node v : visited) {
+			g.setColor(Color.red);
+			g.drawOval(v.getPos().getX() - width / 2, v.getPos().getY() - height / 2, width, height);
+		}
+		
 		for (Node n : nodes) {
 			g.setColor(Color.yellow);
 			g.drawOval(n.getPos().getX() - width / 2, n.getPos().getY() - height / 2, width, height);
 		}
+		
+		
 		if (nodes.size() > 0) {
 			g.setColor(Color.blue);
 			g.drawOval(nodes.get(0).getPos().getX() - width / 2, nodes.get(0).getPos().getY() - height / 2, width,
@@ -59,6 +68,10 @@ public class Path {
 		return nodes;
 	}
 
+	public void setVisited(ArrayList<Node> v) {
+		visited = v;
+	}
+	
 	public float getCost() {
 		return cost;
 	}
