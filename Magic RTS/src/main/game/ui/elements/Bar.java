@@ -17,7 +17,7 @@ public class Bar extends UIElement {
 	private float progress = 0f;
 
 	public Bar(UI ui, Point pos, Image s, int w) {
-		super(ui, pos);
+		super(ui, pos, w, s.getHeight());
 		sprite = s;
 		sprite.setFilter(Image.FILTER_NEAREST);
 		width = w;
@@ -26,8 +26,8 @@ public class Bar extends UIElement {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(sprite.getScaledCopy(width, sprite.getHeight()), pos.getX(), pos.getY(), new Color(100, 100, 100));
-		g.drawImage(sprite.getScaledCopy((int) (width * progress), sprite.getHeight()), pos.getX(), pos.getY());
+		g.drawImage(sprite.getScaledCopy(width, sprite.getHeight()), bounding.getX(), bounding.getY(), new Color(100, 100, 100));
+		g.drawImage(sprite.getScaledCopy((int) (width * progress), sprite.getHeight()), bounding.getX(), bounding.getY());
 	}
 
 	@Override

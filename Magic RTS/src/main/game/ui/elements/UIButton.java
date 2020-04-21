@@ -1,4 +1,4 @@
-package main.game.ui.elements.core.commandHUD;
+package main.game.ui.elements;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -8,12 +8,11 @@ import org.newdawn.slick.geom.Rectangle;
 import main.engine.Engine;
 import main.game.ui.UI;
 import main.game.ui.UIElement;
-import main.game.ui.elements.core.CommandHUD;
 import main.input.Button;
 
-public class CommandButton extends UIElement implements Button {
+public class UIButton extends UIElement implements Button {
 
-	private CommandHUD cmd;
+	private UIElement container;
 	private Rectangle collider;
 
 	private Point mouse;
@@ -22,13 +21,13 @@ public class CommandButton extends UIElement implements Button {
 
 	public static final int WIDTH = 64, HEIGHT = 64;
 
-	public CommandButton(UI ui, CommandHUD cmd, Point pos) {
-		super(ui, pos);
+	public UIButton(UI ui, UIElement container, Point pos) {
+		super(ui, pos, WIDTH, HEIGHT);
 
-		this.cmd = cmd;
+		this.container = container;
 
 		Engine.getInput().addMouseListener(this);
-		collider = new Rectangle(pos.getX(), pos.getY(), WIDTH, HEIGHT);
+		collider = bounding;
 		
 		mouse = new Point(0, 0);
 	}

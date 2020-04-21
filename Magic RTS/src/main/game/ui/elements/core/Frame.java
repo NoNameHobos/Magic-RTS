@@ -15,7 +15,7 @@ public class Frame extends UIElement {
 	private int width;
 	
 	public Frame(UI ui, Point pos) {
-		super(ui, pos);
+		super(ui, pos, Engine.getWIDTH() ,64);
 		
 		sprite = player.getFaction().getSprite("ui_bottombar");
 	}
@@ -30,8 +30,8 @@ public class Frame extends UIElement {
 
 		for (int x = 0; x < width; x++) {
 			
-				float xx = pos.getX() + (x * sW);
-				float yy = pos.getY();
+				float xx = bounding.getX() + (x * sW);
+				float yy = bounding.getY();
 				g.drawImage(sprite, xx, yy);
 		}
 	}

@@ -12,9 +12,11 @@ public class UnitInfo extends UIElement {
 
 	private Player player;
 	
+	public static final int WIDTH = 300;
+	public static final int HEIGHT = 300;
 	
 	public UnitInfo(UI ui, Point pos) {
-		super(ui, pos);
+		super(ui, pos, WIDTH, HEIGHT);
 		this.player = ui.getPlayer();
 	}
 	@Override
@@ -28,8 +30,8 @@ public class UnitInfo extends UIElement {
 			for(int i = 0; i < player.getSelected().size(); i++) {
 				Entity e = player.getSelected().get(i);
 				
-				float x = pos.getX() + (e.getSprite().getWidth() + marginX) * i;
-				float y = pos.getY() + marginY;
+				float x = bounding.getX() + (e.getSprite().getWidth() + marginX) * i;
+				float y = bounding.getY() + marginY;
 				
 				g.drawImage(e.getSprite(), x, y);
 			}

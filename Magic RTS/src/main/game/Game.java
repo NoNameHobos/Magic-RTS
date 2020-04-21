@@ -17,6 +17,7 @@ import main.entities.ai.pathfinding.NodeMap;
 import main.game.map.Map;
 import main.game.player.Camera;
 import main.game.player.Player;
+import main.game.ui.UI;
 import main.input.Mouse;
 
 public class Game {
@@ -101,8 +102,12 @@ public class Game {
 
 		Camera c = map.getControlledPlayer().getCamera();
 
+		//UI ui = map.getControlledPlayer().getUI();
+		
 		for (Entity entity : entities) {
-			if (c.getRenderRect().contains(entity.getPos()))
+			if (c.getRenderRect().contains(entity.getPos()) 
+					//&& !ui.contains(objectToUI(entity.getPos(), c))
+					)
 				entity.render(g);
 		}
 
@@ -159,7 +164,7 @@ public class Game {
 	}
 
 	public static Point objectToUI(Point point, Camera c) {
-		// UI to Game -> ui * zoom - offset
+		// UI to Game -> (ui - offset) * zoom 
 		float newx = (point.getX() - c.getPos(false).getX()) * c.getZoom();
 		float newy = (point.getY() - c.getPos(false).getY()) * c.getZoom();
 

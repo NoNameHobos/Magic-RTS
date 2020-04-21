@@ -85,7 +85,7 @@ public class Map {
 	
 	public void loadPlayers() {
 		players = new Player[spawns.length];
-		controlledPlayer = Player.createPlayer("BRYN", 0, this, new Color(0, 0, 255), FACTIONS.get("vikings"), spawns[0]);
+		controlledPlayer = Player.createPlayer("BRYN", 0, this, new Color(0, 0, 255), FACTIONS.get("steampunk"), spawns[0]);
 		System.out.println("Spawned player at: (" + spawns[0].getX() + ", " + spawns[0].getY() + ")");
 		players[0] = controlledPlayer;
 		
@@ -145,7 +145,9 @@ public class Map {
 				float rendY = tilePos.getY();
 
 				boolean inCam = currentCamera.getRenderRect().contains(rendX, rendY);
-				if (inCam) {
+				if (inCam 
+						//&& !controlledPlayer.getUI().contains(Game.UIToObject(new Point(rendX, rendY), currentCamera))
+						) {
 					Image image = tiles[i][j].getImage();
 					
 					float width = TW_RENDER;

@@ -2,6 +2,7 @@ package main.game.ui;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
+import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
 import main.game.player.Player;
@@ -10,18 +11,20 @@ public abstract class UIElement {
 
 	protected UI ui;
 
-	protected Point pos;
 	protected Point uiPos;
 	
 	protected Player player;
 
-	public UIElement(UI ui, Point pos) {
+	protected Rectangle bounding;
+	
+	public UIElement(UI ui, Point pos, float width, float height) {
 		this.ui = ui;
 
 		this.player = ui.getPlayer();
+
+		bounding = new Rectangle(pos.getX(), pos.getY(), width, height);
 		
-		this.pos = pos;
-		this.uiPos = new Point(pos.getX() / Engine.getWIDTH(), pos.getY() / Engine.getHEIGHT());
+		this.uiPos = new Point(bounding.getX() / Engine.getWIDTH(), bounding.getY() / Engine.getHEIGHT());
 		ui.getElements().add(this);
 	}
 
@@ -29,8 +32,8 @@ public abstract class UIElement {
 		if(uiPos != null) {
 			//TODO: Give ui visibility to the camera and make only one ui instance instead
 			//of one per player
-			pos.setX(uiPos.getX() * Engine.getWIDTH());
-			pos.setY(uiPos.getY() * Engine.getHEIGHT());
+			bounding.setX(uiPos.getX() * Engine.getWIDTH());
+			bounding.setY(uiPos.getY() * Engine.getHEIGHT());
 		}
 		step();
 	}
@@ -47,11 +50,7 @@ public abstract class UIElement {
 		return ui;
 	}
 
-	public Point getPos() {
-		return pos;
-	}
-
-	public void setPos(Point pos) {
-		this.pos = pos;
+	public Rectangle getBounding() {
+		return bounding;
 	}
 }

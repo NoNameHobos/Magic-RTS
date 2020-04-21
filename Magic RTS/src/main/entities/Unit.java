@@ -53,7 +53,7 @@ public abstract class Unit extends SelectableEntity {
 	}
 
 	public void moveAlongPath(Point target) {
-		if (Utils.distance(pos, target) > TOLERANCE) {
+		if (Utils.distance(pos, target) > (TOLERANCE + 10)) {
 			if (path == null) {
 				ArrayList<Node> nearestStartNodes = getNearestNodes(pos);
 				ArrayList<Node> nearestEndNodes = getNearestNodes(target);

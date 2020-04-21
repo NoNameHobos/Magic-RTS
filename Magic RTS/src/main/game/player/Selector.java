@@ -122,37 +122,41 @@ public class Selector implements MouseListener {
 	@Override
 	public void mousePressed(int button, int x, int y) {
 		if (camera != null) {
-			switch (button) {
-			// Left click
-			case 0:
-				startPoint = new Point(x, y);
+			if (player.getUI() != null) {
+				if (!player.getUI().contains(new Point(x, y))) {
+					switch (button) {
+					// Left click
+					case 0:
+						startPoint = new Point(x, y);
 
-				// Clear the selected units
-				if (!selectedSomething)
-					player.getSelected().clear();
+						// Clear the selected units
+						if (!selectedSomething)
+							player.getSelected().clear();
 
-				// Handle single selection
-				SelectableEntity nearest = (SelectableEntity) getNearestEntity(true);
+						// Handle single selection
+						SelectableEntity nearest = (SelectableEntity) getNearestEntity(true);
 
-				if (nearest.mouseOver()) {
-					player.getSelected().add(nearest);
-					selectedSomething = true;
-				}
-				break;
-			// Right click
-			case 1:
-				if (player.getSelected().size() > 0) {
-					for (Entity entity : player.getSelected()) {
-						if (entity.getType() == "Unit") {
-
-							Unit unit = (Unit) entity;
-							Point p = Game.UIToObject(new Point(x, y), camera);
-							unit.getDes().setX(p.getX());
-							unit.getDes().setY(p.getY());
+						if (nearest.mouseOver()) {
+							player.getSelected().add(nearest);
+							selectedSomething = true;
 						}
+						break;
+					// Right click
+					case 1:
+						if (player.getSelected().size() > 0) {
+							for (Entity entity : player.getSelected()) {
+								if (entity.getType() == "Unit") {
+
+									Unit unit = (Unit) entity;
+									Point p = Game.UIToObject(new Point(x, y), camera);
+									unit.getDes().setX(p.getX());
+									unit.getDes().setY(p.getY());
+								}
+							}
+						}
+						break;
 					}
 				}
-				break;
 			}
 		}
 	}

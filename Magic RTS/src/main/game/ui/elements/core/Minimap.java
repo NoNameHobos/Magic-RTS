@@ -17,8 +17,6 @@ public class Minimap extends UIElement {
 
 	private Map map;
 
-	private static int ALPHA = 255;
-
 	private Player player;
 
 	private Rectangle border;
@@ -27,38 +25,40 @@ public class Minimap extends UIElement {
 
 	private static Image sprite;
 
-	private float width;
+	private float borderWidth;
+
+	public static int WIDTH = 250;
+	public static int HEIGHT = 250;
 
 	public Minimap(UI ui, Point pos) {
-		super(ui, pos);
+		super(ui, pos, WIDTH, HEIGHT);
 		this.player = ui.getPlayer();
 		this.map = player.getMap();
 
 		sprite = player.getFaction().getSprite("ui_minimap");
-		
-		float mapWidth = 200;
-		float mapHeight = 200;
-		
-		width = (sprite.getWidth()-mapWidth)/2;
-		
-		scaleX = mapWidth / (map.getMapWidth() * GameConstants.TW_RENDER);
-		scaleY = mapHeight / (map.getMapHeight() * GameConstants.TH_RENDER);
 
-		border = new Rectangle(pos.getX()+width, pos.getY()+width, mapWidth, mapHeight);
+		float mapWidth = 200;
+		
+		borderWidth = (sprite.getWidth() - mapWidth) / 2;
+
+		scaleX = (mapWidth) / (map.getMapWidth() * GameConstants.TW_RENDER);
+		scaleY = (mapWidth) / (map.getMapHeight() * GameConstants.TH_RENDER);
+
+		border = new Rectangle(pos.getX() + borderWidth, pos.getY() + borderWidth, mapWidth,
+				mapWidth);
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		
-		//Draw minimap sprite
-		g.drawImage(sprite, pos.getX(), pos.getY(), new Color(255, 255, 255, ALPHA));
+
+		// Draw minimap sprite
+		g.drawImage(sprite, border.getX() - borderWidth, border.getY() - borderWidth);
 		g.setColor(Color.white);
 		g.drawString(player.getFaction().getName(), border.getX(), border.getY() - 15);
 
 		for (Entity entity : Entity.getEntities()) {
 			Color c = entity.getPlayer().getPlayerColor();
-			Color n = new Color(c.getRed(), c.getGreen(), c.getBlue());
-			g.setColor(n);
+			g.setColor(c);
 
 			float width = entity.getSprite().getWidth() * scaleX;
 			float height = entity.getSprite().getHeight() * scaleY;
@@ -68,7 +68,7 @@ public class Minimap extends UIElement {
 			g.fillOval(miniPos.getX() - width / 2, miniPos.getY() - height / 2, width, height);
 		}
 
-		g.setColor(new Color(255, 255, 255, ALPHA));
+		g.setColor(Color.white);
 
 		for (Entity entity : player.getSelected()) {
 
@@ -85,6 +85,11 @@ public class Minimap extends UIElement {
 			// Draw entities
 			g.fillOval(x, y, width - buffer * 2, height - buffer * 2);
 		}
+
+		drawView(g);
+	}
+
+	public void drawView(Graphics g) {
 
 		// Draw the camera square
 		Rectangle r = player.getCamera().getViewRect();
@@ -110,8 +115,8 @@ public class Minimap extends UIElement {
 			miniPos.setY(border.getY());
 		}
 
-		g.setColor(new Color(255, 255, 255, ALPHA));
-		g.drawRect(miniPos.getX(), miniPos.getY(), width-1, height-1);
+		g.setColor(Color.white);
+		g.drawRect(miniPos.getX(), miniPos.getY(), width - 1, height - 1);
 	}
 
 	public Point mapToMinimap(Point mapPoint) {
