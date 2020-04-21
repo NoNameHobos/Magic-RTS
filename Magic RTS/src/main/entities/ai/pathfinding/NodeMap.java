@@ -19,8 +19,8 @@ public class NodeMap {
 	public static final float NODE_WIDTH = TW_RENDER / RES;
 	public static final float NODE_HEIGHT = TH_RENDER / RES;
 
-	public static final float XOFFSET = NODE_WIDTH / RES;
-	public static final float YOFFSET = NODE_HEIGHT / RES;
+	public static final float XOFFSET = (NODE_WIDTH / 2);
+	public static final float YOFFSET = (NODE_HEIGHT / 2);
 
 	private Map map;
 	
@@ -57,7 +57,7 @@ public class NodeMap {
 					cost = 0;
 				else if (tileVal == 1 || tileVal == 2)
 					cost = 100;
-				nodes[j][i] = new Node(nm, j * NODE_WIDTH + (int) XOFFSET, i * NODE_HEIGHT + (int) YOFFSET, cost);
+				nodes[i][j] = new Node(nm, j * NODE_WIDTH + XOFFSET, i * NODE_HEIGHT + YOFFSET, cost);
 			}
 		}
 		nm.setNodes(nodes);
@@ -85,7 +85,8 @@ public class NodeMap {
 					g.fillOval(pos.getX(), pos.getY(), NODE_WIDTH / 2,
 							NODE_HEIGHT / 2);
 
-					g.drawString(Integer.toString(n.getCost()), pos.getX(), pos.getY());
+					g.setColor(Color.black);
+					g.drawString(Integer.toString(n.getId()), pos.getX(), pos.getY());
 				}
 
 				g.setColor(Color.black);

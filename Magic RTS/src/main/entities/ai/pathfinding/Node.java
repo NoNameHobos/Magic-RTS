@@ -25,7 +25,8 @@ public class Node {
 	public Node(NodeMap map, float x, float y, int cost) {
 		pos = new Point(x, y);
 		this.cost = cost;
-		id = (int)(x / TW_RENDER) + map.getHeight() * (int)(y / TH_RENDER);
+		id = (int) Math.floor((x - NodeMap.XOFFSET) / TW_RENDER)
+				+ map.getHeight() * (int) Math.floor((y - NodeMap.YOFFSET) / TH_RENDER);
 		parent = null;
 	}
 
