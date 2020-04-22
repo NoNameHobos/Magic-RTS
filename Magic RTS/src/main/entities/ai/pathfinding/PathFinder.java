@@ -26,16 +26,19 @@ public class PathFinder {
 
 		int count = 0;
 
-		while (!concluded) {
+		while (!concluded && count < MAXOPS) {
 			open.sort(new SortAStar());
 			count++;
+			
 			try {
 				current = open.get(0);
+				open.remove(0);
 			} catch (IndexOutOfBoundsException e) {
 				System.err.println(count);
-				System.out.println(startNode);
+				concluded = true;
+				return new PathObject(false, null);
 			}
-			open.remove(0);
+			
 			closed.add(current);
 			if (current == endNode)
 				concluded = true;
@@ -78,7 +81,7 @@ public class PathFinder {
 		Collections.reverse(path);
 		Path p = new Path(path);
 		p.setVisited(closed);
-		return p;
+		return new PathObject(true, p);
 	}
 
 	public static Point mapToGrid(Point nodePos) {
