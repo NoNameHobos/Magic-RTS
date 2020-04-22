@@ -11,6 +11,7 @@ import main.entities.ai.pathfinding.Node;
 import main.entities.ai.pathfinding.NodeMap;
 import main.entities.ai.pathfinding.Path;
 import main.entities.ai.pathfinding.PathFinder;
+import main.entities.ai.pathfinding.PathObject;
 import main.game.player.Player;
 import main.util.Utils;
 
@@ -34,6 +35,7 @@ public abstract class Unit extends SelectableEntity {
 		super(player, new Point(x, y), sprite);
 		type = "Unit";
 		des = new Point(x, y);
+		origin.setY(sprite.getHeight() - 5);
 	}
 
 	public void move(float spd, float angle) {
@@ -53,13 +55,14 @@ public abstract class Unit extends SelectableEntity {
 	}
 
 	public void moveAlongPath(Point target) {
-		if (Utils.distance(pos, target) > (TOLERANCE + 10)) {
+		if (Utils.distance(pos, target) > (NodeMap.NODE_WIDTH)) {
 			if (path == null) {
 				ArrayList<Node> nearestStartNodes = getNearestNodes(pos);
 				ArrayList<Node> nearestEndNodes = getNearestNodes(target);
 
 				nearestStartNodes.sort(new SortByDist(target));
 				nearestEndNodes.sort(new SortByDist(target));
+
 				if (nearestStartNodes.size() == 0) {
 					System.out.println("Start Nodes Size: 0");
 					return;
@@ -68,19 +71,40 @@ public abstract class Unit extends SelectableEntity {
 					System.out.println("End Nodes Size: 0");
 					return;
 				}
-				path = PathFinder.findPath(map.getGame().getNodeMap(), nearestStartNodes.get(0),
+
+				PathObject po = PathFinder.findPath(map.getGame().getNodeMap(), nearestStartNodes.get(0),
 						nearestEndNodes.get(0));
+
+				path = po.getPath();
+
 			} else {
 				// Use path
 				if (path.getNodes().size() > 0) {
+
+					Point endPoint = path.getNodes().get(path.getNodes().size() - 1).getPos();
 					Point nodePos = path.getNodes().get(0).getPos();
+				
+					float dist = Utils.distance(endPoint, target);
+					
+					if (dist >= (1.5 * NodeMap.NODE_WIDTH)) {
+						System.out.println("Distance: " + dist);
+						
+						des.setX(pos.getX());
+						des.setY(pos.getY());
+						
+						speed = 0;
+						path = null;
+						return;
+					}
 					if (Utils.distance(pos, nodePos) < TOLERANCE) {
 						System.out.println("Next node");
 						path.getNodes().remove(0);
 					} else
 						moveTo(nodePos);
-				} else
+				} else {
+					speed = 0;
 					path = null;
+				}
 			}
 		} else {
 			speed = 0;
@@ -95,7 +119,7 @@ public abstract class Unit extends SelectableEntity {
 
 		for (int i = 0; i < nMap.length; i++) {
 			for (int j = 0; j < nMap[i].length; j++) {
-				if (Utils.distance(pos, nMap[i][j].getPos()) < (NodeMap.NODE_WIDTH + 3)) {
+				if (Utils.distance(pos, nMap[i][j].getPos()) < (1.5 * NodeMap.NODE_WIDTH)) {
 					if (nMap[i][j].getCost() < 100)
 						nodes.add(nMap[i][j]);
 				}

@@ -8,7 +8,9 @@ import org.newdawn.slick.geom.Point;
 
 public class PathFinder {
 
-	public static Path findPath(NodeMap map, Node startNode, Node endNode) {
+	public static final int MAXOPS = 3000;
+	
+	public static PathObject findPath(NodeMap map, Node startNode, Node endNode) {
 
 		System.err.println("Finding path between: " + startNode.getPos().getX() + " " + startNode.getPos().getY());
 		System.err.println("	And: " + endNode.getPos().getX() + " " + endNode.getPos().getY());
@@ -115,6 +117,7 @@ public class PathFinder {
 						cornerObst = (m.getNodes()[yy][x].getCost() >= 100) || (m.getNodes()[y][xx].getCost() >= 100);
 					}
 					if (!cornerObst)*/
+				if(m.getNodes()[y][x].getCost() < 100) 
 						neighbours.add(m.getNodes()[y][x]);
 				//}
 			}
