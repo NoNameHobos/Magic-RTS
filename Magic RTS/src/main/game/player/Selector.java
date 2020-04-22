@@ -24,6 +24,8 @@ public class Selector implements MouseListener {
 	private boolean selectedSomething = false;
 
 	private Rectangle selectBox;
+	
+	private boolean selecting = false;
 
 	public Selector(Player p, Input input) {
 		input.addMouseListener(this);
@@ -96,7 +98,8 @@ public class Selector implements MouseListener {
 	@Override
 	public boolean isAcceptingInput() {
 		if (player.getUI() != null) {
-			if (!player.getUI().contains(new Point(Engine.getInput().getMouseX(), Engine.getInput().getMouseY()))) {
+			if (!player.getUI().contains(new Point(Engine.getInput().getMouseX(), Engine.getInput().getMouseY()))
+					|| selecting) {
 				return true;
 			} else return false;
 		} else return false;
@@ -131,6 +134,8 @@ public class Selector implements MouseListener {
 			case 0:
 				startPoint = new Point(x, y);
 
+				selecting = true;
+				
 				// Clear the selected units
 				if (!selectedSomething)
 					player.getSelected().clear();
@@ -167,6 +172,8 @@ public class Selector implements MouseListener {
 			ArrayList<Entity> entities = Entity.ENTITIES;
 			ArrayList<Entity> selected = new ArrayList<Entity>();
 
+			selecting = false;
+			
 			if (startPoint != null && endPoint != null) {
 
 				for (Entity entity : entities) {
