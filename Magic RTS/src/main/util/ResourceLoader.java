@@ -60,6 +60,8 @@ public class ResourceLoader {
 		// Axeman
 		SPRITE_SHEETS.put("axeman_down", loadSpriteSheet(path + "mobs\\axeman\\axeman_down", 48, 48));
 		SPRITE_SHEETS.put("axeman_up", loadSpriteSheet(path + "mobs\\axeman\\axeman_up", 48, 48));
+		SPRITE_SHEETS.put("axeman_left", loadSpriteSheet(path + "mobs\\axeman\\axeman_left", 48, 48));
+		SPRITE_SHEETS.put("axeman_right", loadSpriteSheet(path + "mobs\\axeman\\axeman_right", 48, 48));
 
 		// Vikings
 		SPRITES.put("vike_hut", loadImage(path + "buildings\\viking\\hut"));

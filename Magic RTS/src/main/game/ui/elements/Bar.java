@@ -32,8 +32,6 @@ public class Bar extends UIElement {
 
 	@Override
 	public void step() {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void setProgress(float p) {

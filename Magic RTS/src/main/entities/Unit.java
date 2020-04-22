@@ -115,8 +115,7 @@ public abstract class Unit extends SelectableEntity {
 	@Override
 	public void render(Graphics g) {
 		super.render(g);
-		// Draw The Image to the Graphics context
-		g.drawImage(sprite, pos.getX() - origin.getX(), pos.getY() - origin.getY());
+
 		if (path != null)
 			path.render(g);
 		draw(g);

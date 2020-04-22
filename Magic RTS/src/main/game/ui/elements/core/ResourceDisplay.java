@@ -1,6 +1,5 @@
 package main.game.ui.elements.core;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
@@ -36,8 +35,6 @@ public class ResourceDisplay extends UIElement {
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-		g.setColor(new Color(255, 255, 255, ui.getAlpha()));
-		g.fill(bounding);
 		for(Bar bar : bars) {
 			bar.render(g);
 		}

@@ -12,8 +12,8 @@ public class UnitInfo extends UIElement {
 
 	private Player player;
 	
-	public static final int WIDTH = 300;
-	public static final int HEIGHT = 300;
+	public static int WIDTH = 450;
+	public static final int HEIGHT = 100;
 	
 	public UnitInfo(UI ui, Point pos) {
 		super(ui, pos, WIDTH, HEIGHT);
@@ -39,8 +39,6 @@ public class UnitInfo extends UIElement {
 	}
 	@Override
 	public void step() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	

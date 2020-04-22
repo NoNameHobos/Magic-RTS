@@ -31,12 +31,13 @@ public class Mouse implements MouseListener {
 		Point raw = new Point(input.getMouseX(), input.getMouseY());
 
 		if (Engine.getCurrentState() == Engine.gameState) {
-			Camera c = ((GameState) Engine.gameState).getGame().getMap().getControlledPlayer().getCamera();
+			Camera c = ((GameState) Engine.gameState).getGame().getMap().getMainCamera();
+			if (c != null) {
+				Point targetPoint = Game.UIToObject(raw, c);
 
-			Point targetPoint = Game.UIToObject(raw, c);
-
-			pos.setX(targetPoint.getX());
-			pos.setY(targetPoint.getY());
+				pos.setX(targetPoint.getX());
+				pos.setY(targetPoint.getY());
+			}
 		} else {
 			pos.setX(raw.getX());
 			pos.setY(raw.getY());
@@ -57,42 +58,35 @@ public class Mouse implements MouseListener {
 
 	@Override
 	public void inputEnded() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void inputStarted() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public boolean isAcceptingInput() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public void setInput(Input input) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseClicked(int button, int x, int y, int clickCount) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseDragged(int oldX, int oldY, int newX, int newY) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseMoved(int oldX, int oldY, int newX, int newY) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -108,7 +102,6 @@ public class Mouse implements MouseListener {
 
 	@Override
 	public void mouseWheelMoved(int change) {
-		// TODO Auto-generated method stub
 
 	}
 

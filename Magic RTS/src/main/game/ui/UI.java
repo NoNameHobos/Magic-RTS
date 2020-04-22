@@ -22,11 +22,12 @@ public class UI {
 	private final ArrayList<UIElement> elements = new ArrayList<UIElement>();
 
 	private Player player;
-
+	
 	private int alpha = 255;
 	
 	public UI(Player player) {
 		this.player = player;
+		player.setUI(this);
 
 		new Minimap(this, new Point(Engine.getWIDTH() - player.getFaction().getSprite("ui_minimap").getWidth(), 0));
 
@@ -35,23 +36,16 @@ public class UI {
 
 		new CommandHUD(this, new Point(0, Engine.getHEIGHT() * 2 / 3 + frameSprite.getHeight()));
 		
-		float marginX = 16;
-		float marginY = 32;
+		UnitInfo.WIDTH = (int) (Engine.getWIDTH() - CommandHUD.WIDTH - UnitAbilities.WIDTH);
 		
 		new UnitAbilities(this, new Point(Engine.getWIDTH() - UnitAbilities.WIDTH, Engine.getHEIGHT() - UnitAbilities.HEIGHT));
-		new UnitInfo(this, new Point(Engine.getWIDTH() / 3 + marginX, Engine.getHEIGHT() * 2 / 3 + marginY));
+		new UnitInfo(this, new Point(CommandHUD.WIDTH, Engine.getHEIGHT() - UnitInfo.HEIGHT));
 
 		new ResourceDisplay(this, new Point(5, 5));
+		
+		System.out.println("Created a ui");
 	}
-
-	public ArrayList<UIElement> getElements() {
-		return elements;
-	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
+	
 	public void tick() {
 		int size = elements.size();
 		for (int i = 0; i < size; i++) {
@@ -81,8 +75,8 @@ public class UI {
 				float marginX = 12;
 				float marginY = 12;
 
-				float x1 = Engine.getWIDTH()- marginX - UnitAbilities.WIDTH;
-				float y1 = Engine.getHEIGHT() - UnitAbilities.HEIGHT + (height + marginY) * i;
+				float x1 = Engine.getWIDTH() - Minimap.WIDTH;
+				float y1 = elements.get(0).getBounding().getY() + marginY + i * g.getFont().getHeight(currentPlayer.getName());
 
 				g.setColor(Color.darkGray);
 				g.drawRect(x1, y1, width, height);
@@ -104,6 +98,8 @@ public class UI {
 		return false;
 	}
 	
+	// Getters and Setters
+	
 	public int getAlpha() {
 		return alpha;
 	}
@@ -111,4 +107,13 @@ public class UI {
 	public void setAlpha(int alpha) {
 		this.alpha = alpha;
 	}
+
+	public ArrayList<UIElement> getElements() {
+		return elements;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
 }

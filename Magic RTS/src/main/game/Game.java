@@ -17,7 +17,6 @@ import main.entities.ai.pathfinding.NodeMap;
 import main.game.map.Map;
 import main.game.player.Camera;
 import main.game.player.Player;
-import main.game.ui.UI;
 import main.input.Mouse;
 
 public class Game {
@@ -45,7 +44,7 @@ public class Game {
 		map = MAPS.get(MAP_TO_LOAD);
 		map.init(this);
 
-		controllingPlayer = map.getControlledPlayer();
+		controllingPlayer = map.getFocusedPlayer();
 
 		currentView = controllingPlayer.getCamera();
 
@@ -82,7 +81,7 @@ public class Game {
 	// Tick
 	public void render(Graphics g) {
 
-		Camera curCamera = map.getControlledPlayer().getCamera();
+		Camera curCamera = map.getMainCamera();
 		Rectangle offset = curCamera.getViewRect();
 		float xOffset = offset.getX();
 		float yOffset = offset.getY();
@@ -100,7 +99,7 @@ public class Game {
 		// Render Entities
 		ArrayList<Entity> entities = Entity.getEntities();
 
-		Camera c = map.getControlledPlayer().getCamera();
+		Camera c = map.getMainCamera();
 
 		//UI ui = map.getControlledPlayer().getUI();
 		
@@ -112,7 +111,7 @@ public class Game {
 		}
 
 		// Render player stuff
-		map.getControlledPlayer().render(g);
+		map.getFocusedPlayer().render(g);
 
 		// Render the view port if necessary
 		if (dispView) {
@@ -136,8 +135,8 @@ public class Game {
 
 	public void renderUI(Graphics ui) {
 
-		if (map.getControlledPlayer() != null)
-			map.getControlledPlayer().renderUI(ui);
+		if (map.getFocusedPlayer() != null)
+			map.getFocusedPlayer().renderUI(ui);
 
 		Mouse m = Engine.getMouse();
 
@@ -212,7 +211,6 @@ class SortByDepth implements Comparator<Entity> {
 
 	@Override
 	public int compare(Entity e1, Entity e2) {
-		// TODO Auto-generated method stub
 		return (e2.getDepth() - e1.getDepth());
 	}
 	

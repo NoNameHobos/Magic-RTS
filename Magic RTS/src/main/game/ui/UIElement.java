@@ -1,5 +1,6 @@
 package main.game.ui;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
@@ -12,7 +13,7 @@ public abstract class UIElement {
 	protected UI ui;
 
 	protected Point uiPos;
-	
+
 	protected Player player;
 
 	protected Rectangle bounding;
@@ -39,6 +40,8 @@ public abstract class UIElement {
 	}
 
 	public void render(Graphics g) {
+		g.setColor(new Color(255, 255, 255, ui.getAlpha()));
+		g.fill(bounding);
 		draw(g);
 	}
 

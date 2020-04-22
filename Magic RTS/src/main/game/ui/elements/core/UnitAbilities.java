@@ -50,9 +50,6 @@ public class UnitAbilities extends UIElement {
 	public void draw(Graphics g) {
 		
 		// Draw the skills
-		g.setColor(Color.white);
-		g.fill(bounding);
-		
 		g.setColor(Color.red);
 		
 		if(player.getSelected().size() > 0) {

@@ -16,8 +16,6 @@ public class Townhall extends Building {
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

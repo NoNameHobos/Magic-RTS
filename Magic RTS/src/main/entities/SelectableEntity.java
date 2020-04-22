@@ -43,7 +43,7 @@ public abstract class SelectableEntity extends Entity {
 
 	public void render(Graphics g) {
 		super.render(g);
-		if (map.getControlledPlayer() == player) {
+		if (map.getFocusedPlayer() == player) {
 			
 			selected = player.getSelected().contains(this);
 			

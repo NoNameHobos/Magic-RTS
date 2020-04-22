@@ -32,8 +32,6 @@ public class NodeMap {
 
 
 	public static NodeMap createNodeMap(Map m) {
-		// TODO: Make a decent Node Map based off map data
-
 		ArrayList<String> mapData = m.getMapData();
 
 		int mapHeight = mapData.size();
@@ -71,7 +69,7 @@ public class NodeMap {
 			for (int j = 0; j < nodes[i].length; j++) {
 				Node n = nodes[i][j];
 
-				Camera c = map.getControlledPlayer().getCamera();
+				Camera c = map.getFocusedPlayer().getCamera();
 
 				Point pos = new Point(n.getPos().getX() - NODE_WIDTH / 4, n.getPos().getY() - NODE_HEIGHT / 4);
 				

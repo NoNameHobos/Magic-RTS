@@ -11,32 +11,23 @@ import org.newdawn.slick.geom.Rectangle;
 import main.engine.Engine;
 import main.game.map.Map;
 import main.game.ui.UI;
-import main.game.ui.elements.Bar;
 import main.util.Utils;
 
 public class Camera {
 
 	private Map map;
-
-	private Rectangle renderRect, viewRect;
-
-	private int tile_buffer = 2;
-
-	private float zoom = 1f, targetZoom = zoom;
-
-	private float minZoom = 0.5f, maxZoom = 10f;
-
-	private Point zoomOffset;
-
 	private UI ui;
 
-	private Point cameraPos;
+	private float zoom = 1f, targetZoom = zoom;
+	private float minZoom = 0.5f, maxZoom = 10f;
+	private Point zoomOffset;
 
+	private int tile_buffer = 2;
 	private float rectOffsetX, rectOffsetY;
-
 	private float baseWidth, baseHeight;
-	
-	private float uiOffsetLower = 0f;
+	private float uiOffsetLower;
+	private Point cameraPos;
+	private Rectangle renderRect, viewRect;
 
 	public Camera(Map m, Point pos, float width, float height) {
 
@@ -114,13 +105,6 @@ public class Camera {
 			viewRect.setY(Utils.lerp(viewRect.getY(), bounds[3], 0.1f));
 
 		updateRectangles();
-
-		int size = ui.getElements().size();
-		for (int i = 0; i < size; i++) {
-			if (ui.getElements().get(i) instanceof Bar)
-				((Bar) ui.getElements().get(i)).setProgress(zoom / maxZoom); // TODO REMOVE THIS
-		}
-
 	}
 
 	public void updateRectangles() {

@@ -12,7 +12,6 @@ import main.input.Button;
 
 public class UIButton extends UIElement implements Button {
 
-	private UIElement container;
 	private Rectangle collider;
 
 	private Point mouse;
@@ -23,9 +22,7 @@ public class UIButton extends UIElement implements Button {
 
 	public UIButton(UI ui, UIElement container, Point pos) {
 		super(ui, pos, WIDTH, HEIGHT);
-
-		this.container = container;
-
+		
 		Engine.getInput().addMouseListener(this);
 		collider = bounding;
 		
@@ -34,7 +31,6 @@ public class UIButton extends UIElement implements Button {
 
 	@Override // UIElement draw event
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
 		g.setColor(Color.red);
 		if (pressed)
 			g.setColor(Color.green);
@@ -50,14 +46,12 @@ public class UIButton extends UIElement implements Button {
 	// Button input
 	@Override
 	public boolean isAcceptingInput() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	// Button input
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		// TODO Auto-generated method stub
 		if (collider.contains(new Point(x, y)))
 			switch (button) {
 			case 0:
@@ -71,7 +65,6 @@ public class UIButton extends UIElement implements Button {
 	// Butotn input
 	@Override
 	public void mouseReleased(int button, int x, int y) {
-		// TODO Auto-generated method stub
 		if (collider.contains(new Point(x, y)))
 			switch (button) {
 			case 0:
