@@ -161,7 +161,7 @@ public class Map {
 					float width = TW_RENDER;
 					float height = TH_RENDER;
 
-					image.draw(rendX, rendY, width, height);
+					image.draw((float) Math.floor(rendX), (float) Math.floor(rendY), width, height);
 				}
 			}
 		}

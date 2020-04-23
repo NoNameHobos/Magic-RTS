@@ -150,6 +150,7 @@ public class ResourceLoader {
 		try {
 			i = new Image(ABS_PATH + dir + ".png");
 			System.out.println("Loaded " + dir + ".png");
+			i.setFilter(Image.FILTER_NEAREST);
 			return i;
 		} catch (SlickException e) {
 			System.err.println("Failed to load image at: " + dir);
@@ -164,6 +165,7 @@ public class ResourceLoader {
 	public static Image loadImageFromSS(SpriteSheet ss, int x, int y) {
 		ss.startUse();
 		Image i = ss.getSprite(x, y);
+		i.setFilter(Image.FILTER_NEAREST);
 		ss.endUse();
 		loaded++;
 		return i;
@@ -175,6 +177,7 @@ public class ResourceLoader {
 		try {
 			ss = new SpriteSheet(ABS_PATH + dir + ".png", tw, th);
 			System.out.println("Loaded " + dir + ".png as Sprite Sheet with Tile: " + tw + "x" + th);
+			ss.setFilter(Image.FILTER_NEAREST);
 			return ss;
 		} catch (SlickException e) {
 			System.err.println("Failed to load Sprite Sheet at: " + dir + " (SlickException)");

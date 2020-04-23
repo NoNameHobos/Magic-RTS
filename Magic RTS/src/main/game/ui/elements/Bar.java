@@ -19,7 +19,6 @@ public class Bar extends UIElement {
 	public Bar(UI ui, Point pos, Image s, int w) {
 		super(ui, pos, w, s.getHeight());
 		sprite = s;
-		sprite.setFilter(Image.FILTER_NEAREST);
 		width = w;
 
 	}
