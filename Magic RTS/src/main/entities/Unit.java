@@ -12,6 +12,7 @@ import main.entities.ai.pathfinding.NodeMap;
 import main.entities.ai.pathfinding.Path;
 import main.entities.ai.pathfinding.PathFinder;
 import main.entities.ai.pathfinding.PathObject;
+import main.game.Game;
 import main.game.player.Player;
 import main.util.Utils;
 
@@ -28,6 +29,7 @@ public abstract class Unit extends SelectableEntity {
 	protected Point des;
 
 	protected Path path;
+	protected boolean pathing;
 
 	public static final int TOLERANCE = 20; // Pathfinding Tolerance
 
@@ -36,6 +38,8 @@ public abstract class Unit extends SelectableEntity {
 		type = "Unit";
 		des = new Point(x, y);
 		origin.setY(sprite.getHeight() - 5);
+
+		pathing = false;
 	}
 
 	public void move(float spd, float angle) {
@@ -57,41 +61,42 @@ public abstract class Unit extends SelectableEntity {
 	public void moveAlongPath(Point target) {
 		if (Utils.distance(pos, target) > (NodeMap.NODE_WIDTH)) {
 			if (path == null) {
-				ArrayList<Node> nearestStartNodes = getNearestNodes(pos);
-				ArrayList<Node> nearestEndNodes = getNearestNodes(target);
+				if (pathing) {
+					ArrayList<Node> nearestStartNodes = getNearestNodes(pos);
+					ArrayList<Node> nearestEndNodes = getNearestNodes(target);
 
-				nearestStartNodes.sort(new SortByDist(target));
-				nearestEndNodes.sort(new SortByDist(target));
+					nearestStartNodes.sort(new SortByDist(target));
+					nearestEndNodes.sort(new SortByDist(target));
 
-				if (nearestStartNodes.size() == 0) {
-					System.out.println("Start Nodes Size: 0");
-					return;
+					if (nearestStartNodes.size() == 0) {
+						System.out.println("Start Nodes Size: 0");
+						return;
+					}
+					if (nearestEndNodes.size() == 0) {
+						System.out.println("End Nodes Size: 0");
+						return;
+					}
+
+					PathObject po = PathFinder.findPath(map.getGame().getNodeMap(), nearestStartNodes.get(0),
+							nearestEndNodes.get(0));
+
+					path = po.getPath();
 				}
-				if (nearestEndNodes.size() == 0) {
-					System.out.println("End Nodes Size: 0");
-					return;
-				}
-
-				PathObject po = PathFinder.findPath(map.getGame().getNodeMap(), nearestStartNodes.get(0),
-						nearestEndNodes.get(0));
-
-				path = po.getPath();
-
 			} else {
 				// Use path
 				if (path.getNodes().size() > 0) {
-
+					pathing = false;
 					Point endPoint = path.getNodes().get(path.getNodes().size() - 1).getPos();
 					Point nodePos = path.getNodes().get(0).getPos();
-				
+
 					float dist = Utils.distance(endPoint, target);
-					
+
 					if (dist >= (1.5 * NodeMap.NODE_WIDTH)) {
 						System.out.println("Distance: " + dist);
-						
+
 						des.setX(pos.getX());
 						des.setY(pos.getY());
-						
+
 						speed = 0;
 						path = null;
 						return;
@@ -131,6 +136,9 @@ public abstract class Unit extends SelectableEntity {
 
 	public void tick() {
 		super.tick();
+		if (Game.getCurrentView() == player.getCamera()) {
+			move(speed, direction);
+		}
 
 		moveAlongPath(des);
 		step();
@@ -215,6 +223,22 @@ public abstract class Unit extends SelectableEntity {
 
 	public Point getDes() {
 		return des;
+	}
+
+	public boolean isPathing() {
+		return pathing;
+	}
+
+	public void setPathing(boolean pathing) {
+		this.pathing = pathing;
+	}
+
+	public Path getPath() {
+		return path;
+	}
+
+	public void setPath(Path path) {
+		this.path = path;
 	}
 
 }

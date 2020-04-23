@@ -156,8 +156,10 @@ public class Selector implements MouseListener {
 
 							Unit unit = (Unit) entity;
 							Point p = Game.UIToObject(new Point(x, y), camera);
+							unit.setPath(null);
 							unit.getDes().setX(p.getX());
 							unit.getDes().setY(p.getY());
+							unit.setPathing(true);
 						}
 					}
 				}

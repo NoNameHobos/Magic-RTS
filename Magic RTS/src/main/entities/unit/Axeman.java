@@ -7,7 +7,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
 
 import main.entities.Unit;
-import main.game.Game;
 import main.game.player.Player;
 
 public class Axeman extends Unit {
@@ -32,7 +31,7 @@ public class Axeman extends Unit {
 		
 		//Init Stats
 		health = 80;
-		move_speed = 1f;
+		move_speed = 3f;
 		direction = 120;
 		acc = 0.5f;
 		phys_def = 12;
@@ -68,9 +67,6 @@ public class Axeman extends Unit {
 		if(speed != 0)
 			walking = true;
 		else walking = false;
-		if(Game.getCurrentView() == player.getCamera()) {
-			move(speed, direction);
-		}
 		
 	}
 }

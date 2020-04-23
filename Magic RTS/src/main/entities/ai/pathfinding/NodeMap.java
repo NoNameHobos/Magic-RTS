@@ -14,7 +14,7 @@ import main.game.player.Camera;
 
 public class NodeMap {
 
-	public static final int RES = 3;
+	public static final int RES = 2;
 
 	public static final float NODE_WIDTH = TW_RENDER / RES;
 	public static final float NODE_HEIGHT = TH_RENDER / RES;
