@@ -14,7 +14,7 @@ import main.game.player.Camera;
 
 public class NodeMap {
 
-	public static final int RES = 1;
+	public static final int RES = 3;
 
 	public static final float NODE_WIDTH = TW_RENDER / RES;
 	public static final float NODE_HEIGHT = TH_RENDER / RES;
@@ -59,6 +59,9 @@ public class NodeMap {
 			}
 		}
 		nm.setNodes(nodes);
+		System.out.print(m.getMapWidth());
+		System.out.print(",");
+		System.out.println(nodes.length);
 		return nm;
 	}
 
@@ -98,11 +101,11 @@ public class NodeMap {
 	
 	// Getters and Setters
 	public int getHeight() {
-		return map.getMapHeight();
+		return map.getMapHeight()*RES;
 	}
 
 	public int getWidth() {
-		return map.getMapWidth();
+		return map.getMapWidth()*RES;
 	}
 
 	public Node[][] getNodes() {
