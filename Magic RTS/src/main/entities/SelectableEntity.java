@@ -2,7 +2,6 @@ package main.entities;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
@@ -43,16 +42,6 @@ public abstract class SelectableEntity extends Entity {
 
 	public void render(Graphics g) {
 		super.render(g);
-		if (map.getFocusedPlayer() == player) {
-			
-			selected = player.getSelected().contains(this);
-			
-			if (mouseOver() || selected)
-				g.setColor(Color.green);
-			else
-				g.setColor(Color.red);
-			g.draw(collider);
-		}
 		
 		draw(g);
 	}
@@ -65,7 +54,7 @@ public abstract class SelectableEntity extends Entity {
 		if (c != null) {
 			Point mousePos = Game.UIToObject(Engine.getMouse().getScreenPos(), c);
 
-			boolean safe = collider.contains(mousePos.getX(), mousePos.getY());
+			boolean safe = boundingbox.contains(mousePos.getX(), mousePos.getY());
 			return (safe);
 		} else {
 			return false;

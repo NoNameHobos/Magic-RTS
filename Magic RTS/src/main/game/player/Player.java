@@ -47,23 +47,23 @@ public class Player {
 	
 	private Selector selector;
 	
-	public Player(String name, int playerID, Map map, boolean AI, Color playerColor, Faction faction, Point spawn) {
+	public Player(String name, int playerID, Map map, boolean AI, Color playerColor, Faction faction, Point s) {
+		this.game = map.getGame();
 		this.playerColor = playerColor;
 		this.isAI = AI;
 		this.faction = faction;
 		this.playerID = playerID;
 
 		this.map = map;
-		this.game = map.getGame();
 		this.name = name;
-		this.spawn = spawn;
+		this.spawn = s;
 		
 		buildings = new ArrayList<Building>();
 		units = new ArrayList<Unit>();
 		selected = new ArrayList<Entity>();
 
-		units.add(new Axeman(this, spawn.getX() + TW_RENDER * 2, spawn.getY() + TH_RENDER * 2));
-		buildings.add(new House(this, new Point(spawn.getX() + 40, spawn.getY() + 40)));
+		units.add(new Axeman(this, spawn.getX() - TW_RENDER * 6, spawn.getY() + TH_RENDER * 6));
+		buildings.add(new House(this, new Point(spawn.getX() + TW_RENDER * 5, spawn.getY() + TH_RENDER * 5)));
 		buildings.add(new Townhall(this, new Point(spawn.getX(), spawn.getY())));
 
 		if(map.getFocusedPlayer() == this) selector = new Selector(this, Engine.getInput());
@@ -169,5 +169,9 @@ public class Player {
 
 	public Point getSpawn() {
 		return spawn;
+	}
+
+	public Game getGame() {
+		return game;
 	}
 }

@@ -152,14 +152,15 @@ public class Selector implements MouseListener {
 			case 1:
 				if (player.getSelected().size() > 0) {
 					for (Entity entity : player.getSelected()) {
-						if (entity.getType() == "Unit") {
-
-							Unit unit = (Unit) entity;
-							Point p = Game.UIToObject(new Point(x, y), camera);
-							unit.setPath(null);
-							unit.getDes().setX(p.getX());
-							unit.getDes().setY(p.getY());
-							unit.setPathing(true);
+						if (entity instanceof Unit) {
+							if(entity.getPlayer() == player) {
+								Unit unit = (Unit) entity;
+								Point p = Game.UIToObject(new Point(x, y), camera);
+								unit.setPath(null);
+								unit.getDes().setX(p.getX());
+								unit.getDes().setY(p.getY());
+								unit.setPathing(true);
+							}
 						}
 					}
 				}

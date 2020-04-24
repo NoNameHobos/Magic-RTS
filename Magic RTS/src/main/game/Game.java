@@ -42,13 +42,13 @@ public class Game {
 
 	public void init() {
 		map = MAPS.get(MAP_TO_LOAD);
+		nm = NodeMap.createNodeMap(map);
 		map.init(this);
 
 		controllingPlayer = map.getFocusedPlayer();
 
 		currentView = controllingPlayer.getCamera();
 
-		nm = NodeMap.createNodeMap(map);
 
 		System.out.println("Loaded map: " + MAP_TO_LOAD);
 

@@ -97,5 +97,9 @@ public class Node {
 	public int getCost() {
 		return cost;
 	}
+	
+	public void setCost(int c) {
+		cost = c;
+	}
 
 }

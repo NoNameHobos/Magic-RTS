@@ -14,13 +14,10 @@ public class House extends Building {
 	
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void step() {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -10,8 +10,6 @@ public class Townhall extends Building {
 
 	public Townhall(Player player, Point _pos) {
 		super(player, _pos, player.getFaction().getSprite("townhall"));
-		
-		System.out.println("Created a th");
 	}
 
 	@Override

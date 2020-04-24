@@ -32,7 +32,7 @@ public abstract class Entity {
 
 	public final static ArrayList<Entity> ENTITIES = new ArrayList<Entity>();
 
-	protected Rectangle collider;
+	protected Rectangle boundingbox;
 
 	protected Map map;
 	
@@ -46,7 +46,7 @@ public abstract class Entity {
 		origin = new Point(sprite.getWidth() / 2, sprite.getHeight() / 2); 
 		
 		//Create a collider based off "off-screen" coordinates
-		collider = new Rectangle(pos.getX() - origin.getX(), pos.getY() -
+		boundingbox = new Rectangle(pos.getX() - origin.getX(), pos.getY() -
 				origin.getY(), sprite.getWidth(), sprite.getHeight());
 		
 		//Initialize the alarms and finally add this to the list of entities
@@ -82,9 +82,8 @@ public abstract class Entity {
 		float x = pos.getX() - origin.getX();
 		float y = pos.getY() - origin.getY();
 		
-		Point p = new Point(x, y);
-		collider.setX(p.getX());
-		collider.setY(p.getY());
+		boundingbox.setX(x);
+		boundingbox.setY(y);
 		
 		//Tick down the alarms once per tick
 		for (int i = 0; i < alarm.length; i++) {
@@ -116,7 +115,7 @@ public abstract class Entity {
 	}
 
 	public Rectangle getCollider() {
-		return collider;
+		return boundingbox;
 	}
 
 	public boolean isSelectable() {
