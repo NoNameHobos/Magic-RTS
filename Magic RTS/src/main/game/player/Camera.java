@@ -72,10 +72,10 @@ public class Camera {
 			targetZoom = minZoom;
 		if (targetZoom > maxZoom)
 			targetZoom = maxZoom;
-
+		
 		float previousZoom = zoom;
 		zoom = Utils.lerp(zoom, targetZoom, 0.075f);
-
+		
 		float diffX = baseWidth * (previousZoom - zoom);
 		float diffY = baseHeight * (previousZoom - zoom);
 
