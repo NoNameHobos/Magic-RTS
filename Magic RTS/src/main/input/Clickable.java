@@ -3,7 +3,7 @@ package main.input;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.MouseListener;
 
-public interface Button extends MouseListener {
+public interface Clickable extends MouseListener {
 	
 	@Override
 	default void mouseClicked(int button, int x, int y, int ClickCount) {

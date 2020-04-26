@@ -5,10 +5,10 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
-import main.input.Button;
+import main.input.Clickable;
 import main.util.ResourceLoader;
 
-public class MenuButton extends MenuElement implements Button {
+public class MenuButton extends MenuElement implements Clickable {
 
 	private Animation animation;
 	private Animation backAnim;

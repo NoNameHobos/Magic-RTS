@@ -11,7 +11,7 @@ import main.engine.Engine;
 public class Display {
 
 	private AppGameContainer appgc;
-	
+
 	public Display(Engine engine, int WIDTH, int HEIGHT) {
 		System.out.println("Initializing Display");
 		try {
@@ -24,7 +24,5 @@ public class Display {
 			Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-	
-	
-	
+
 }

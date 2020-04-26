@@ -72,10 +72,10 @@ public class Camera {
 			targetZoom = minZoom;
 		if (targetZoom > maxZoom)
 			targetZoom = maxZoom;
-		
+
 		float previousZoom = zoom;
 		zoom = Utils.lerp(zoom, targetZoom, 0.075f);
-		
+
 		float diffX = baseWidth * (previousZoom - zoom);
 		float diffY = baseHeight * (previousZoom - zoom);
 
@@ -92,8 +92,8 @@ public class Camera {
 		move(dir.getX(), dir.getY());
 
 		// Keep camera in bounds
-		float[] bounds = { 0f, 0f, map.getMapWidth() * TW_RENDER - viewRect.getWidth(), map.getMapHeight() * TH_RENDER
-				- viewRect.getHeight() + uiOffsetLower / zoom };
+		float[] bounds = { 0f, 0f, map.getMapWidth() * TW_RENDER - viewRect.getWidth(),
+				map.getMapHeight() * TH_RENDER - viewRect.getHeight() + uiOffsetLower / zoom };
 
 		if (viewRect.getX() < bounds[0])
 			viewRect.setX(Utils.lerp(viewRect.getX(), bounds[0], 0.1f));
@@ -194,5 +194,15 @@ public class Camera {
 	public void setUI(UI ui) {
 		this.ui = ui;
 		uiOffsetLower = ui.getPlayer().getFaction().getSprite("ui_bottombar").getHeight();
+	}
+
+	public void setPos(Point pos, boolean centre) {
+		if (centre) {
+			viewRect.setX(pos.getX() - rectOffsetX);
+			viewRect.setY(pos.getY() - rectOffsetY);
+		} else {
+			viewRect.setX(pos.getX());
+			viewRect.setY(pos.getY());
+		}
 	}
 }

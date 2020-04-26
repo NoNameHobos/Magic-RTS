@@ -7,17 +7,22 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.GameConstants;
+import main.engine.Engine;
 import main.entities.Entity;
 import main.game.map.Map;
+import main.game.player.Camera;
 import main.game.player.Player;
 import main.game.ui.UI;
 import main.game.ui.UIElement;
+import main.input.Clickable;
 
-public class Minimap extends UIElement {
+public class Minimap extends UIElement implements Clickable {
 
 	private Map map;
 
 	private Player player;
+
+	private Camera camera;
 
 	private Rectangle border;
 
@@ -34,18 +39,20 @@ public class Minimap extends UIElement {
 		super(ui, pos, WIDTH, HEIGHT);
 		this.player = ui.getPlayer();
 		this.map = player.getMap();
+		this.camera = player.getCamera();
+
+		Engine.getInput().addMouseListener(this);
 
 		sprite = player.getFaction().getSprite("ui_minimap");
 
 		float mapWidth = 200;
-		
+
 		borderWidth = (sprite.getWidth() - mapWidth) / 2;
 
 		scaleX = (mapWidth) / (map.getMapWidth() * GameConstants.TW_RENDER);
 		scaleY = (mapWidth) / (map.getMapHeight() * GameConstants.TH_RENDER);
 
-		border = new Rectangle(pos.getX() + borderWidth, pos.getY() + borderWidth, mapWidth,
-				mapWidth);
+		border = new Rectangle(pos.getX() + borderWidth, pos.getY() + borderWidth, mapWidth, mapWidth);
 	}
 
 	@Override
@@ -92,7 +99,7 @@ public class Minimap extends UIElement {
 	public void drawView(Graphics g) {
 
 		// Draw the camera square
-		Rectangle r = player.getCamera().getViewRect();
+		Rectangle r = camera.getViewRect();
 
 		Point miniPos = mapToMinimap(new Point(r.getX(), r.getY()));
 
@@ -123,6 +130,10 @@ public class Minimap extends UIElement {
 		return new Point(border.getX() + mapPoint.getX() * scaleX, border.getY() + mapPoint.getY() * scaleY);
 	}
 
+	public Point minimapToMap(Point gamePoint) {
+		return new Point((gamePoint.getX() - border.getX()) / scaleX, (gamePoint.getY() - border.getY()) / scaleY);
+	}
+
 	// Getters and Setters
 	public Map getMap() {
 		return map;
@@ -132,6 +143,33 @@ public class Minimap extends UIElement {
 	public void step() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void mousePressed(int button, int x, int y) {
+
+		Point pos = new Point(x, y);
+
+		if (border.contains(pos)) {
+			if (button == 0) {
+				System.out.println(button);
+				camera.setPos(minimapToMap(pos), true);
+			}
+		}
+	}
+
+	@Override
+	public void mouseReleased(int button, int x, int y) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean isAcceptingInput() {
+		if (Engine.getCurrentState() == Engine.gameState)
+			return true;
+		else
+			return false;
 	}
 
 }

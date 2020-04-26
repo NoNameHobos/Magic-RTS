@@ -8,24 +8,24 @@ import org.newdawn.slick.geom.Rectangle;
 import main.engine.Engine;
 import main.game.ui.UI;
 import main.game.ui.UIElement;
-import main.input.Button;
+import main.input.Clickable;
 
-public class UIButton extends UIElement implements Button {
+public class UIButton extends UIElement implements Clickable {
 
 	private Rectangle collider;
 
 	private Point mouse;
-	
+
 	private boolean pressed = false;
 
 	public static final int WIDTH = 64, HEIGHT = 64;
 
 	public UIButton(UI ui, UIElement container, Point pos) {
 		super(ui, pos, WIDTH, HEIGHT);
-		
+
 		Engine.getInput().addMouseListener(this);
 		collider = bounding;
-		
+
 		mouse = new Point(0, 0);
 	}
 
@@ -81,7 +81,7 @@ public class UIButton extends UIElement implements Button {
 		mouse.setX(newx);
 		mouse.setY(newy);
 	}
-	
+
 	public void mouseDragged(int oldx, int oldy, int newx, int newy) {
 		mouse.setX(newx);
 		mouse.setY(newy);
