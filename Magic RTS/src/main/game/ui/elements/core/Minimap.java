@@ -99,7 +99,7 @@ public class Minimap extends UIElement implements Clickable {
 	public void drawView(Graphics g) {
 
 		// Draw the camera square
-		Rectangle r = camera.getViewRect();
+		Rectangle r = player.getCamera().getViewRect();
 
 		Point miniPos = mapToMinimap(new Point(r.getX(), r.getY()));
 
@@ -146,16 +146,18 @@ public class Minimap extends UIElement implements Clickable {
 	}
 
 	@Override
-	public void mousePressed(int button, int x, int y) {
+	public void mouseDragged(int oldx, int oldy, int x, int y) {
 
 		Point pos = new Point(x, y);
 
 		if (border.contains(pos)) {
-			if (button == 0) {
-				System.out.println(button);
-				camera.setPos(minimapToMap(pos), true);
-			}
+				player.getCamera().setPos(minimapToMap(pos), true);
 		}
+	}
+	@Override
+	public void mousePressed(int button, int x, int y) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -171,5 +173,4 @@ public class Minimap extends UIElement implements Clickable {
 		else
 			return false;
 	}
-
 }
