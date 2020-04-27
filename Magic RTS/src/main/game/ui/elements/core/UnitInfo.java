@@ -14,7 +14,7 @@ public class UnitInfo extends UIElement {
 	private Player player;
 	
 	public static int WIDTH = 450;
-	public static final int HEIGHT = 100;
+	public static final int HEIGHT = 64;
 	
 	public UnitInfo(UI ui, Point pos) {
 		super(ui, pos, WIDTH, HEIGHT);

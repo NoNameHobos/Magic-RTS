@@ -18,7 +18,7 @@ public class UIButton extends UIElement implements Clickable {
 
 	private boolean pressed = false;
 
-	public static final int WIDTH = 64, HEIGHT = 64;
+	public static final int WIDTH = 48, HEIGHT = 48;
 
 	public UIButton(UI ui, UIElement container, Point pos) {
 		super(ui, pos, WIDTH, HEIGHT);

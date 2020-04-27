@@ -41,7 +41,6 @@ public abstract class UIElement {
 
 	public void render(Graphics g) {
 		g.setColor(new Color(255, 255, 255, ui.getAlpha()));
-		g.fill(bounding);
 		draw(g);
 	}
 

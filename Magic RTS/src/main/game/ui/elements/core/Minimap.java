@@ -1,5 +1,6 @@
 package main.game.ui.elements.core;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -28,6 +29,8 @@ public class Minimap extends UIElement implements Clickable {
 	private static Image sprite;
 
 	private float borderWidth;
+	
+	private boolean dragging = false;
 
 	public static int WIDTH = 250;
 	public static int HEIGHT = 250;
@@ -140,14 +143,11 @@ public class Minimap extends UIElement implements Clickable {
 
 	@Override
 	public void step() {
-	}
-
-	@Override
-	public void mouseDragged(int oldx, int oldy, int x, int y) {
-
-		Point pos = new Point(x, y);
 		
-		if (border.contains(pos)) {
+		if (dragging) {
+		
+		Point pos = new Point(Mouse.getX(),Mouse.getY());
+		
 			player.getCamera().setPos(minimapToMap(pos), true);
 			
 			if (player.getCamera().getPos(false).getX() < player.getCamera().getBounds()[0]) {
@@ -167,13 +167,21 @@ public class Minimap extends UIElement implements Clickable {
 			}
 		}
 	}
+
+	@Override
+	public void mouseDragged(int oldx, int oldy, int x, int y) {
+
+	}
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		
+		if (border.contains(new Point(x,y))) {
+			dragging = true;
+		}
 	}
 
 	@Override
 	public void mouseReleased(int button, int x, int y) {
+		dragging = false;
 	}
 
 	@Override
