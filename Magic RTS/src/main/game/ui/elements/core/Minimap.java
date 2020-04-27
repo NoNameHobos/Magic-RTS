@@ -1,6 +1,5 @@
 package main.game.ui.elements.core;
 
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -28,8 +27,10 @@ public class Minimap extends UIElement implements Clickable {
 
 	private static Image sprite;
 
-	private float borderWidth;
+	private Point mouse;
 	
+	private float borderWidth;
+
 	private boolean dragging = false;
 
 	public static int WIDTH = 250;
@@ -40,6 +41,8 @@ public class Minimap extends UIElement implements Clickable {
 		this.player = ui.getPlayer();
 		this.map = player.getMap();
 
+		mouse = new Point(0, 0);
+		
 		Engine.getInput().addMouseListener(this);
 
 		sprite = player.getFaction().getSprite("ui_minimap");
@@ -64,9 +67,10 @@ public class Minimap extends UIElement implements Clickable {
 
 		for (Entity entity : Entity.getEntities()) {
 			Color c;
-			if(entity.getPlayer() != null) 
+			if (entity.getPlayer() != null)
 				c = entity.getPlayer().getPlayerColor();
-			else c = new Color(0, 0, 200);
+			else
+				c = new Color(0, 0, 200);
 			g.setColor(c);
 
 			float width = entity.getSprite().getWidth() * scaleX;
@@ -132,8 +136,8 @@ public class Minimap extends UIElement implements Clickable {
 		return new Point(border.getX() + mapPoint.getX() * scaleX, border.getY() + mapPoint.getY() * scaleY);
 	}
 
-	public Point minimapToMap(Point gamePoint) {
-		return new Point((gamePoint.getX() - border.getX()) / scaleX, (gamePoint.getY() - border.getY()) / scaleY);
+	public Point minimapToMap(Point miniPoint) {
+		return new Point((miniPoint.getX() - border.getX()) / scaleX, (miniPoint.getY() - border.getY()) / scaleY);
 	}
 
 	// Getters and Setters
@@ -143,25 +147,27 @@ public class Minimap extends UIElement implements Clickable {
 
 	@Override
 	public void step() {
-		
+
 		if (dragging) {
-		
-		Point pos = new Point(Mouse.getX(),Mouse.getY());
-		
+
+			Point pos = new Point(mouse.getX(), mouse.getY());
+
 			player.getCamera().setPos(minimapToMap(pos), true);
+
+			// Collision code
 			
 			if (player.getCamera().getPos(false).getX() < player.getCamera().getBounds()[0]) {
 				player.getCamera().getViewRect().setX(player.getCamera().getBounds()[0]);
 			}
-			
+
 			if (player.getCamera().getPos(false).getY() < player.getCamera().getBounds()[1]) {
 				player.getCamera().getViewRect().setY(player.getCamera().getBounds()[1]);
 			}
-			
+
 			if (player.getCamera().getPos(false).getX() > player.getCamera().getBounds()[2]) {
 				player.getCamera().getViewRect().setX(player.getCamera().getBounds()[2]);
 			}
-			
+
 			if (player.getCamera().getPos(false).getY() > player.getCamera().getBounds()[3]) {
 				player.getCamera().getViewRect().setY(player.getCamera().getBounds()[3]);
 			}
@@ -170,11 +176,18 @@ public class Minimap extends UIElement implements Clickable {
 
 	@Override
 	public void mouseDragged(int oldx, int oldy, int x, int y) {
-
+		mouse.setX(x);
+		mouse.setY(y);
 	}
+
+	public void mouseMoved(int oldx, int oldy, int x, int y) {
+		mouse.setX(x);
+		mouse.setY(y);
+	}
+	
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		if (border.contains(new Point(x,y))) {
+		if (border.contains(new Point(x, y))) {
 			dragging = true;
 		}
 	}
