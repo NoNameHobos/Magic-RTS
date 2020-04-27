@@ -92,11 +92,17 @@ public abstract class Entity {
 			}
 		}
 		
-		depth = -(int)Math.round(pos.getY());
+		depth = -(int)Math.round(pos.getY() + sprite.getHeight() * .8);
+		step();
 	}
 
 	public void render(Graphics g) {
+		draw(g);
 	}
+	
+	public abstract void draw(Graphics g);
+	public abstract void step();
+
 
 	private void initAlarms() {
 		for (int i = 0; i < alarm.length; i++) {

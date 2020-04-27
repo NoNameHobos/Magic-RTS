@@ -10,7 +10,6 @@ import main.GameConstants;
 import main.engine.Engine;
 import main.entities.Entity;
 import main.game.map.Map;
-import main.game.player.Camera;
 import main.game.player.Player;
 import main.game.ui.UI;
 import main.game.ui.UIElement;
@@ -21,8 +20,6 @@ public class Minimap extends UIElement implements Clickable {
 	private Map map;
 
 	private Player player;
-
-	private Camera camera;
 
 	private Rectangle border;
 
@@ -39,7 +36,6 @@ public class Minimap extends UIElement implements Clickable {
 		super(ui, pos, WIDTH, HEIGHT);
 		this.player = ui.getPlayer();
 		this.map = player.getMap();
-		this.camera = player.getCamera();
 
 		Engine.getInput().addMouseListener(this);
 
@@ -64,7 +60,10 @@ public class Minimap extends UIElement implements Clickable {
 		g.drawString(player.getFaction().getName(), border.getX(), border.getY() - 15);
 
 		for (Entity entity : Entity.getEntities()) {
-			Color c = entity.getPlayer().getPlayerColor();
+			Color c;
+			if(entity.getPlayer() != null) 
+				c = entity.getPlayer().getPlayerColor();
+			else c = new Color(0, 0, 200);
 			g.setColor(c);
 
 			float width = entity.getSprite().getWidth() * scaleX;
@@ -141,8 +140,6 @@ public class Minimap extends UIElement implements Clickable {
 
 	@Override
 	public void step() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -156,14 +153,11 @@ public class Minimap extends UIElement implements Clickable {
 	}
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseReleased(int button, int x, int y) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

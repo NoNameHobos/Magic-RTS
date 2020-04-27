@@ -14,11 +14,11 @@ public class Townhall extends Building {
 
 	@Override
 	public void draw(Graphics g) {
+		super.draw(g);
 	}
 
 	@Override
 	public void step() {
-		// TODO Auto-generated method stub
 		
 	}
 

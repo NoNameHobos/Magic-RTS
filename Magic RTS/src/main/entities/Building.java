@@ -29,7 +29,6 @@ public abstract class Building extends SelectableEntity {
 
 		for (int i = 0; i < nodes.length; i++) {
 			for (int j = 0; j < nodes[i].length; j++) {
-				System.out.println(player.getGame());
 				NodeMap nm = player.getGame().getNodeMap();
 				Node[][] nodeMap = nm.getNodes();
 
@@ -51,11 +50,9 @@ public abstract class Building extends SelectableEntity {
 				pos.getY() - colHeight / 2 * GameConstants.TH_RENDER, colWidth, colHeight);
 	}
 
-	public void render(Graphics g) {
-		super.render(g);
+	public void draw(Graphics g) {
 		float width = sprite.getWidth();
 		float height = sprite.getHeight();
 		sprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY(), width, height);
 	}
-
 }

@@ -19,7 +19,9 @@ public abstract class SelectableEntity extends Entity {
 	protected Boolean selected;
 
 	public SelectableEntity(Player player, Point pos, Image sprite) {
-		super(player, player.getMap(), pos, sprite);
+		super(player, 
+				player.getMap(), 
+				pos, sprite);
 		selectable = true;
 		width = sprite.getWidth();
 		height = sprite.getHeight();
@@ -36,19 +38,12 @@ public abstract class SelectableEntity extends Entity {
 
 	public void tick() {
 		super.tick();
-		
-		step();
 	}
 
 	public void render(Graphics g) {
 		super.render(g);
-		
-		draw(g);
 	}
 	
-	public abstract void draw(Graphics g);
-	public abstract void step();
-
 	public boolean mouseOver() {
 		Camera c = player.getCamera();
 		if (c != null) {

@@ -14,6 +14,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
+import main.entities.resources.ManaNode;
 import main.game.Game;
 import main.game.player.Camera;
 import main.game.player.Faction;
@@ -21,6 +22,7 @@ import main.game.player.Player;
 import main.game.player.factions.Steampunk;
 import main.game.player.factions.Viking;
 import main.game.ui.UI;
+import main.util.ResourceLoader;
 
 public class Map {
 
@@ -45,6 +47,8 @@ public class Map {
 	private Game game;
 
 	private Player focusedPlayer;
+	private Player neutralPlayer;
+
 	private Camera mainCamera;
 	private UI ui;
 
@@ -83,23 +87,40 @@ public class Map {
 
 	public void loadPlayers() {
 		players = new Player[spawns.length];
-		focusedPlayer = Player.createPlayer("BRYN", 0, this, new Color(0, 0, 255), FACTIONS.get("vikings"),
-				new Point(32, 32));
+		neutralPlayer = new Player("NEUTRAL", players.length, this, true, new Color(0, 120, 255));
+		focusedPlayer = Player.createPlayer("BRYN", 0, this, new Color(0, 0, 255), FACTIONS.get("vikings"), spawns[0]);
 		System.out.println("Spawned player at: (" + spawns[0].getX() + ", " + spawns[0].getY() + ")");
 		players[0] = focusedPlayer;
+		spawnNodes(spawns[0], 8, 180 / 8, "MANA");
 
 		mainCamera = new Camera(this, focusedPlayer.getSpawn(), Engine.getWIDTH(), Engine.getHEIGHT());
 
-		//Create the UI
-		ui = new UI(focusedPlayer);
-		mainCamera.setUI(ui);
-		
-		focusedPlayer.setCamera(mainCamera);
 		for(int i = 1; i < players.length; i++) {
 			Random r = new Random();
+			String str = PLAYER_NAMES[r.nextInt(PLAYER_NAMES.length - 1)];
 			Color c = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
-			
-			players[i] = Player.createPlayer(PLAYER_NAMES[r.nextInt(PLAYER_NAMES.length - 1)], i, this, c, FACTIONS.get("steampunk"), spawns[i]);
+			players[i] = Player.createPlayer(str, i, this, false, c, FACTIONS.get("steampunk"), spawns[i]);
+			spawnNodes(spawns[i], 8, 180 / 8, "MANA");
+		}
+		// Create the UI
+		ui = new UI(focusedPlayer);
+		mainCamera.setUI(ui);
+
+		focusedPlayer.setCamera(mainCamera);
+
+	}
+
+	public void spawnNodes(Point centrePoint, int density, float sep, String nodeType) {
+		for (int i = 0; i < density; i++) {
+			float x = (float) Math.cos(Math.toRadians(sep * i)) * ResourceLoader.SPRITES.get("node_mana").getWidth() * 2
+					+ (centrePoint.getX() + 2) * TW_RENDER;
+			float y = (float) Math.sin(Math.toRadians(sep * i)) * (ResourceLoader.SPRITES.get("node_mana").getHeight())
+					+ (centrePoint.getY() + 4) * TH_RENDER;
+			switch (nodeType.toUpperCase()) {
+			case "MANA":
+				new ManaNode(this, new Point(x, y));
+				break;
+			}
 		}
 	}
 
@@ -202,6 +223,10 @@ public class Map {
 
 	public Camera getMainCamera() {
 		return mainCamera;
+	}
+
+	public Player getNeutralPlayer() {
+		return neutralPlayer;
 	}
 
 }

@@ -14,6 +14,7 @@ public class House extends Building {
 	
 	@Override
 	public void draw(Graphics g) {
+		super.draw(g);
 	}
 
 	@Override

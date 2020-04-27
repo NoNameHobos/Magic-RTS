@@ -71,9 +71,9 @@ public class ResourceLoader {
 		SPRITES.put("steam_th", loadImage(path + "buildings\\steampunk\\th"));
 		
 		//Resource Nodes
-		SPRITES.put("node_mana", loadImage(path+"objects\\resources\\mananode"));
-		SPRITES.put("node_stone", loadImage(path+"objects\\resources\\stonenode"));
-		SPRITES.put("node_mithril", loadImage(path+"objects\\resources\\mithrilnode"));
+		SPRITES.put("node_mana", loadImage(path+"objects\\resources\\mana"));
+		SPRITES.put("node_stone", loadImage(path+"objects\\resources\\stone"));
+		SPRITES.put("node_mithril", loadImage(path+"objects\\resources\\mithril"));
 		
 		// Resources Icons
 		UI.put("manaIcon", loadImage(path + "UI\\icons\\manaIcon"));

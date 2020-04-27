@@ -69,6 +69,16 @@ public class Player {
 		if(map.getFocusedPlayer() == this) selector = new Selector(this, Engine.getInput());
 	}
 	
+	public Player(String name, int playerID, Map map, boolean AI, Color playerColor) {
+		this.game = map.getGame();
+		this.playerColor = playerColor;
+		this.isAI = AI;
+		this.playerID = playerID;
+
+		this.map = map;
+		this.name = name;
+	}
+	
 	public void tick() {
 		if(map.getFocusedPlayer() == this) {
 			if(playerCamera != null) playerCamera.update();
@@ -107,9 +117,7 @@ public class Player {
 		Point tSpawn = new Point(spawn.getX() * TW_RENDER, spawn.getY() * TH_RENDER);
 		return new Player(name, id, m, false, color, f, tSpawn);
 	}
-	
-	
-	
+		
 	// Getters and Setters
 	public Color getPlayerColor() {
 		return playerColor;

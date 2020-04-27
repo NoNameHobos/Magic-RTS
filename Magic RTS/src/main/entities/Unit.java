@@ -62,6 +62,7 @@ public abstract class Unit extends SelectableEntity {
 		if (Utils.distance(pos, target) > (NodeMap.NODE_WIDTH)) {
 			if (path == null) {
 				if (pathing) {
+					speed = 0;
 					ArrayList<Node> nearestStartNodes = getNearestNodes(pos);
 					ArrayList<Node> nearestEndNodes = getNearestNodes(target);
 
