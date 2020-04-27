@@ -28,6 +28,8 @@ public class Camera {
 	private float uiOffsetLower;
 	private Point cameraPos;
 	private Rectangle renderRect, viewRect;
+	
+	private float bounds[];
 
 	public Camera(Map m, Point pos, float width, float height) {
 
@@ -56,6 +58,9 @@ public class Camera {
 		} else {
 			minZoom = viewRect.getHeight() / (TW_RENDER * map.getMapHeight());
 		}
+		
+		bounds = new float[]{ 0f, 0f, map.getMapWidth() * TW_RENDER - viewRect.getWidth(),
+				map.getMapHeight() * TH_RENDER - viewRect.getHeight() + uiOffsetLower / zoom };
 
 	}
 
@@ -92,12 +97,10 @@ public class Camera {
 		move(dir.getX(), dir.getY());
 
 		// Keep camera in bounds
-		float[] bounds = { 
-				0f, 
-				0f, 
-				map.getMapWidth() * TW_RENDER - viewRect.getWidth(),
-				map.getMapHeight() * TH_RENDER - viewRect.getHeight() + uiOffsetLower / zoom 
-		};
+		bounds[0] = 0f;
+		bounds[1] = 0f; 
+		bounds[2] = map.getMapWidth() * TW_RENDER - viewRect.getWidth();
+		bounds[3] = map.getMapHeight() * TH_RENDER - viewRect.getHeight() + uiOffsetLower / zoom;
 
 		if (viewRect.getX() < bounds[0])
 			viewRect.setX(Utils.lerp(viewRect.getX(), bounds[0], 0.1f));
@@ -208,5 +211,9 @@ public class Camera {
 			viewRect.setX(pos.getX());
 			viewRect.setY(pos.getY());
 		}
+	}
+	
+	public float[] getBounds() {
+		return bounds;
 	}
 }

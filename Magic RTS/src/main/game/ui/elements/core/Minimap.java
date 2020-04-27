@@ -146,9 +146,25 @@ public class Minimap extends UIElement implements Clickable {
 	public void mouseDragged(int oldx, int oldy, int x, int y) {
 
 		Point pos = new Point(x, y);
-
+		
 		if (border.contains(pos)) {
-				player.getCamera().setPos(minimapToMap(pos), true);
+			player.getCamera().setPos(minimapToMap(pos), true);
+			
+			if (player.getCamera().getPos(false).getX() < player.getCamera().getBounds()[0]) {
+				player.getCamera().getViewRect().setX(player.getCamera().getBounds()[0]);
+			}
+			
+			if (player.getCamera().getPos(false).getY() < player.getCamera().getBounds()[1]) {
+				player.getCamera().getViewRect().setY(player.getCamera().getBounds()[1]);
+			}
+			
+			if (player.getCamera().getPos(false).getX() > player.getCamera().getBounds()[2]) {
+				player.getCamera().getViewRect().setX(player.getCamera().getBounds()[2]);
+			}
+			
+			if (player.getCamera().getPos(false).getY() > player.getCamera().getBounds()[3]) {
+				player.getCamera().getViewRect().setY(player.getCamera().getBounds()[3]);
+			}
 		}
 	}
 	@Override
