@@ -146,7 +146,7 @@ public class Minimap extends UIElement implements Clickable {
 		
 		if (dragging) {
 		
-		Point pos = new Point(Mouse.getX(),Mouse.getY());
+			Point pos = new Point(Mouse.getX(),Mouse.getY());
 		
 			player.getCamera().setPos(minimapToMap(pos), true);
 			
