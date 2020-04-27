@@ -12,12 +12,12 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
-import main.entities.Building;
 import main.entities.Entity;
-import main.entities.Unit;
+import main.entities.buildings.Building;
 import main.entities.buildings.House;
 import main.entities.buildings.Townhall;
 import main.entities.unit.Axeman;
+import main.entities.unit.Unit;
 import main.game.Game;
 import main.game.map.Map;
 import main.game.ui.UI;
@@ -65,7 +65,7 @@ public class Player {
 		units.add(new Axeman(this, spawn.getX() - TW_RENDER * 6, spawn.getY() + TH_RENDER * 6));
 		buildings.add(new House(this, new Point(spawn.getX() + TW_RENDER * 5, spawn.getY() + TH_RENDER * 5)));
 		buildings.add(new Townhall(this, new Point(spawn.getX(), spawn.getY())));
-
+		
 		if(map.getFocusedPlayer() == this) selector = new Selector(this, Engine.getInput());
 	}
 	

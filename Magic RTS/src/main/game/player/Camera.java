@@ -92,8 +92,12 @@ public class Camera {
 		move(dir.getX(), dir.getY());
 
 		// Keep camera in bounds
-		float[] bounds = { 0f, 0f, map.getMapWidth() * TW_RENDER - viewRect.getWidth(),
-				map.getMapHeight() * TH_RENDER - viewRect.getHeight() + uiOffsetLower / zoom };
+		float[] bounds = { 
+				0f, 
+				0f, 
+				map.getMapWidth() * TW_RENDER - viewRect.getWidth(),
+				map.getMapHeight() * TH_RENDER - viewRect.getHeight() + uiOffsetLower / zoom 
+		};
 
 		if (viewRect.getX() < bounds[0])
 			viewRect.setX(Utils.lerp(viewRect.getX(), bounds[0], 0.1f));

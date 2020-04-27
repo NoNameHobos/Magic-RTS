@@ -20,30 +20,28 @@ import main.game.map.TileSet;
 
 public class ResourceLoader {
 
-	
 	public static final int FONT_SIZE = 60;
 
 	public static final HashMap<String, Image> SPRITES = new HashMap<String, Image>();
 	public static final HashMap<String, SpriteSheet> SPRITE_SHEETS = new HashMap<String, SpriteSheet>();
 
 	public static final HashMap<String, Image> UI = new HashMap<String, Image>();
-	
+
 	public static final HashMap<String, Map> MAPS = new HashMap<String, Map>();
 	public static final HashMap<String, TileSet> TILE_SETS = new HashMap<String, TileSet>();
 	public static final HashMap<String, TrueTypeFont> FONTS = new HashMap<String, TrueTypeFont>();
-	
-	
+
 	public static Image missing;
 	public static SpriteSheet missingSS;
 
 	public static final int thingsToLoad = 7;
 	private static int loaded = 0;
-	
+
 	public static void loadMenuSprites() {
 		SPRITE_SHEETS.put("menu_button", loadSpriteSheet("res\\sprites\\menu\\button_anim", 220, 60));
 		SPRITE_SHEETS.put("menu_buttonR", loadSpriteSheet("res\\sprites\\menu\\button_animR", 220, 60));
 	}
-	
+
 	public static void loadTiles() {
 
 		// Load grassLand tile set
@@ -66,32 +64,36 @@ public class ResourceLoader {
 		// Vikings
 		SPRITES.put("vike_hut", loadImage(path + "buildings\\viking\\hut"));
 		SPRITES.put("vike_th", loadImage(path + "buildings\\viking\\th"));
-		
+
 		// Steampunk
 		SPRITES.put("steam_th", loadImage(path + "buildings\\steampunk\\th"));
-		
-		//Resource Nodes
-		SPRITES.put("node_mana", loadImage(path+"objects\\resources\\mana"));
-		SPRITES.put("node_stone", loadImage(path+"objects\\resources\\stone"));
-		SPRITES.put("node_mithril", loadImage(path+"objects\\resources\\mithril"));
-		
+
+		// Resource Nodes
+		SPRITES.put("node_mana", loadImage(path + "objects\\resources\\mana"));
+		SPRITES.put("node_stone", loadImage(path + "objects\\resources\\stone"));
+		SPRITES.put("node_mithril", loadImage(path + "objects\\resources\\mithril"));
+
+		// Workers
+		SPRITES.put("worker_right", loadImage(path + "mobs\\worker\\miner"));
+		SPRITES.put("worker_left", loadImage(path + "mobs\\worker\\miner_left"));
+
 		// Resources Icons
 		UI.put("manaIcon", loadImage(path + "UI\\icons\\manaIcon"));
 		UI.put("mithrilIcon", loadImage(path + "UI\\icons\\mithrilIcon"));
 		UI.put("stoneIcon", loadImage(path + "UI\\icons\\stoneIcon"));
-		
-		//Progress bars
+
+		// Progress bars
 		UI.put("UIManaBar", loadImage(path + "UI\\bars\\manaBar"));
 		UI.put("UIStoneBar", loadImage(path + "UI\\bars\\stoneBar"));
 		UI.put("UIMithrilBar", loadImage(path + "UI\\bars\\mithrilBar"));
-		
-		//--Load UI Sprites--//
-		//Frames
+
+		// --Load UI Sprites--//
+		// Frames
 		UI.put("viking_bottom", loadImage(path + "UI\\frames\\bottombar_vike"));
 		UI.put("viking_minimap", loadImage(path + "UI\\minimap\\minimap_vike"));
 		UI.put("steam_bottom", loadImage(path + "UI\\frames\\bottombar_steam"));
 		UI.put("steam_minimap", loadImage(path + "UI\\minimap\\minimap_steam"));
-		
+
 		// Report loaded resources
 		int resourceCount = SPRITES.size() + SPRITE_SHEETS.size();
 		System.out.println("Loaded " + resourceCount + " Resources!");
@@ -100,14 +102,14 @@ public class ResourceLoader {
 	public static void loadFonts() {
 		FONTS.put("Menu", loadFont("FantaisieArtistique.ttf", 45));
 	}
-	
+
 	public static void loadMaps() {
 		MAPS.put("Seton's Clutch", MapLoader.loadMap("maps\\setons"));
 		MAPS.put("Mountain Pass", MapLoader.loadMap("maps\\mountainpass"));
 	}
-	
+
 	public static void initResources() {
-		
+
 		try {
 			missing = new Image(ABS_PATH + "res\\sprites\\missingtex.png");
 			missingSS = new SpriteSheet(ABS_PATH + "res\\sprites\\missingtex.png", 48, 48);
@@ -128,10 +130,10 @@ public class ResourceLoader {
 
 		Engine.setCurrentState(Engine.menuState);
 	}
-	
+
 	public static TrueTypeFont loadFont(String font, int size) {
 		InputStream is = org.newdawn.slick.util.ResourceLoader.getResourceAsStream("res\\font\\" + font);
-	    TrueTypeFont ttf = null;
+		TrueTypeFont ttf = null;
 		try {
 			Font f = Font.createFont(Font.TRUETYPE_FONT, is);
 			f = f.deriveFont(size * 1f);
@@ -140,10 +142,10 @@ public class ResourceLoader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+
 		return ttf;
 	}
-	
+
 	public static Image loadImage(String dir) {
 		Image i;
 		loaded++;

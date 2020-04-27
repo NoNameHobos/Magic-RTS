@@ -1,4 +1,4 @@
-package main.entities;
+package main.entities.unit;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -7,6 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
+import main.entities.SelectableEntity;
 import main.entities.ai.pathfinding.Node;
 import main.entities.ai.pathfinding.NodeMap;
 import main.entities.ai.pathfinding.Path;
@@ -26,6 +27,9 @@ public abstract class Unit extends SelectableEntity {
 	protected float phys_def;
 	protected float mag_def;
 
+	protected boolean walking = false;
+	//TODO: Add state machine
+	
 	protected Point des;
 
 	protected Path path;

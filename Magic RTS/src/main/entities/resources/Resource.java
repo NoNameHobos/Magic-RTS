@@ -1,9 +1,10 @@
-package main.entities;
+package main.entities.resources;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
+import main.entities.SelectableEntity;
 import main.game.map.Map;
 
 public abstract class Resource extends SelectableEntity {

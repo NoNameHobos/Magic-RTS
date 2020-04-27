@@ -86,25 +86,29 @@ public class Map {
 	}
 
 	public void loadPlayers() {
+		
+		int NODES_PER_SITE = 1;
+		
 		players = new Player[spawns.length];
 		neutralPlayer = new Player("NEUTRAL", players.length, this, true, new Color(0, 120, 255));
 		focusedPlayer = Player.createPlayer("BRYN", 0, this, new Color(0, 0, 255), FACTIONS.get("vikings"), spawns[0]);
 		System.out.println("Spawned player at: (" + spawns[0].getX() + ", " + spawns[0].getY() + ")");
 		players[0] = focusedPlayer;
-		spawnNodes(spawns[0], 8, 180 / 8, "MANA");
+		spawnNodes(spawns[0], NODES_PER_SITE, 180 / 8, "MANA");
 
 		mainCamera = new Camera(this, focusedPlayer.getSpawn(), Engine.getWIDTH(), Engine.getHEIGHT());
 
+		// Create the UI
+		ui = new UI(focusedPlayer);
+		mainCamera.setUI(ui);
+		
 		for(int i = 1; i < players.length; i++) {
 			Random r = new Random();
 			String str = PLAYER_NAMES[r.nextInt(PLAYER_NAMES.length - 1)];
 			Color c = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
 			players[i] = Player.createPlayer(str, i, this, false, c, FACTIONS.get("steampunk"), spawns[i]);
-			spawnNodes(spawns[i], 8, 180 / 8, "MANA");
+			spawnNodes(spawns[i], NODES_PER_SITE, 180 / 8, "MANA");
 		}
-		// Create the UI
-		ui = new UI(focusedPlayer);
-		mainCamera.setUI(ui);
 
 		focusedPlayer.setCamera(mainCamera);
 

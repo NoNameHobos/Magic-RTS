@@ -1,4 +1,4 @@
-package main.entities;
+package main.entities.buildings;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -6,6 +6,7 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.GameConstants;
+import main.entities.SelectableEntity;
 import main.entities.ai.pathfinding.Node;
 import main.entities.ai.pathfinding.NodeMap;
 import main.game.player.Player;

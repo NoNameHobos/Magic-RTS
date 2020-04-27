@@ -3,7 +3,6 @@ package main.entities.resources;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
-import main.entities.Resource;
 import main.game.map.Map;
 import main.util.ResourceLoader;
 
