@@ -92,6 +92,11 @@ public class ResourceLoader {
 		
 		// Command Buttons
 		UI.put("move_button", loadImage(path + "buttons\\move"));
+		UI.put("attack_button", loadImage(path + "buttons\\attack"));
+		UI.put("build_button", loadImage(path + "buttons\\build"));
+		
+		// Command HUD
+		UI.put("commandhud", loadImage(path + "command hud\\commandhud"));
 	}
 
 	public static void loadMenuSprites() {

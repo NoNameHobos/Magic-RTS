@@ -8,16 +8,20 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
+import main.GameConstants;
 import main.engine.Engine;
 import main.game.map.Map;
 import main.game.ui.UI;
+import main.input.Clickable;
 import main.util.Utils;
 
-public class Camera {
+public class Camera implements Clickable {
 
 	private Map map;
 	private UI ui;
 
+	private Point mouse;
+	
 	private float zoom = 1f, targetZoom = zoom;
 	private float minZoom = 0.5f, maxZoom = 10f;
 	private Point zoomOffset;
@@ -34,7 +38,7 @@ public class Camera {
 	public Camera(Map m, Point pos, float width, float height) {
 
 		map = m;
-
+		mouse = new Point(0, 0);
 		baseWidth = width;
 		baseHeight = height;
 		zoom = 1f;
@@ -141,13 +145,13 @@ public class Camera {
 
 		Input input = Engine.getInput();
 
-		if (input.isKeyDown(Input.KEY_D))
+		if (input.isKeyDown(GameConstants.CAMERA_RIGHT))
 			dir |= 1;
-		if (input.isKeyDown(Input.KEY_A))
+		if (input.isKeyDown(GameConstants.CAMERA_LEFT))
 			dir |= 2;
-		if (input.isKeyDown(Input.KEY_W))
+		if (input.isKeyDown(GameConstants.CAMERA_UP))
 			dir |= 4;
-		if (input.isKeyDown(Input.KEY_S))
+		if (input.isKeyDown(GameConstants.CAMERA_DOWN))
 			dir |= 8;
 
 		if ((dir & 1) != 0)
@@ -215,5 +219,33 @@ public class Camera {
 	
 	public float[] getBounds() {
 		return bounds;
+	}
+
+	@Override
+	public void mousePressed(int arg0, int arg1, int arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(int arg0, int arg1, int arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void mouseMoved(int oldx, int oldy, int x, int y) {
+		mouse.setX(x);
+		mouse.setY(y);
+	}
+	
+	public void mouseDragged(int oldx, int oldy, int x, int y) {
+		mouse.setX(x);
+		mouse.setY(y);
+	}
+
+	@Override
+	public boolean isAcceptingInput() {
+		// TODO Auto-generated method stub
+		return Engine.getCurrentState() == Engine.gameState;
 	}
 }
