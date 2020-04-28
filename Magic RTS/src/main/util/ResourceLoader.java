@@ -37,17 +37,6 @@ public class ResourceLoader {
 	public static final int thingsToLoad = 7;
 	private static int loaded = 0;
 
-	public static void loadMenuSprites() {
-		SPRITE_SHEETS.put("menu_button", loadSpriteSheet("res\\sprites\\menu\\button_anim", 220, 60));
-		SPRITE_SHEETS.put("menu_buttonR", loadSpriteSheet("res\\sprites\\menu\\button_animR", 220, 60));
-	}
-
-	public static void loadTiles() {
-
-		// Load grassLand tile set
-		TILE_SETS.put("grass", TileSet.loadTileSet("plains"));
-		TILE_SETS.put("setons", TileSet.loadTileSet("setons"));
-	}
 
 	public static void loadSprites() {
 		String path = "res\\sprites\\";
@@ -77,28 +66,45 @@ public class ResourceLoader {
 		SPRITES.put("worker_right", loadImage(path + "mobs\\worker\\miner"));
 		SPRITES.put("worker_left", loadImage(path + "mobs\\worker\\miner_left"));
 
-		// Resources Icons
-		UI.put("manaIcon", loadImage(path + "UI\\icons\\manaIcon"));
-		UI.put("mithrilIcon", loadImage(path + "UI\\icons\\mithrilIcon"));
-		UI.put("stoneIcon", loadImage(path + "UI\\icons\\stoneIcon"));
-
-		// Progress bars
-		UI.put("UIManaBar", loadImage(path + "UI\\bars\\manaBar"));
-		UI.put("UIStoneBar", loadImage(path + "UI\\bars\\stoneBar"));
-		UI.put("UIMithrilBar", loadImage(path + "UI\\bars\\mithrilBar"));
-
-		// --Load UI Sprites--//
-		// Frames
-		UI.put("viking_bottom", loadImage(path + "UI\\frames\\bottombar_vike"));
-		UI.put("viking_minimap", loadImage(path + "UI\\minimap\\minimap_vike"));
-		UI.put("steam_bottom", loadImage(path + "UI\\frames\\bottombar_steam"));
-		UI.put("steam_minimap", loadImage(path + "UI\\minimap\\minimap_steam"));
-
 		// Report loaded resources
 		int resourceCount = SPRITES.size() + SPRITE_SHEETS.size();
 		System.out.println("Loaded " + resourceCount + " Resources!");
 	}
 
+	public static void loadUI() {
+		String path = "res\\sprites\\UI\\";
+		// Resources Icons
+		UI.put("manaIcon", loadImage(path + "icons\\manaIcon"));
+		UI.put("mithrilIcon", loadImage(path + "icons\\mithrilIcon"));
+		UI.put("stoneIcon", loadImage(path + "icons\\stoneIcon"));
+
+		// Progress bars
+		UI.put("UIManaBar", loadImage(path + "bars\\manaBar"));
+		UI.put("UIStoneBar", loadImage(path + "bars\\stoneBar"));
+		UI.put("UIMithrilBar", loadImage(path + "bars\\mithrilBar"));
+
+		// --Load UI Sprites--//
+		// Frames
+		UI.put("viking_bottom", loadImage(path + "frames\\bottombar_vike"));
+		UI.put("viking_minimap", loadImage(path + "minimap\\minimap_vike"));
+		UI.put("steam_bottom", loadImage(path + "frames\\bottombar_steam"));
+		UI.put("steam_minimap", loadImage(path + "minimap\\minimap_steam"));
+		
+		// Command Buttons
+		UI.put("move_button", loadImage(path + "buttons\\move"));
+	}
+
+	public static void loadMenuSprites() {
+		SPRITE_SHEETS.put("menu_button", loadSpriteSheet("res\\sprites\\menu\\button_anim", 220, 60));
+		SPRITE_SHEETS.put("menu_buttonR", loadSpriteSheet("res\\sprites\\menu\\button_animR", 220, 60));
+	}
+
+	public static void loadTiles() {
+
+		// Load setons tile set
+		TILE_SETS.put("setons", TileSet.loadTileSet("setons"));
+	}
+	
 	public static void loadFonts() {
 		FONTS.put("Menu", loadFont("FantaisieArtistique.ttf", 45));
 	}
@@ -126,6 +132,7 @@ public class ResourceLoader {
 		report();
 		loadMenuSprites();
 		loadSprites();
+		loadUI();
 		report();
 
 		Engine.setCurrentState(Engine.menuState);
@@ -204,4 +211,5 @@ public class ResourceLoader {
 	public static float getLoaded() {
 		return loaded / thingsToLoad;
 	}
+	
 }

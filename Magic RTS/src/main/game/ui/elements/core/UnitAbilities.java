@@ -40,7 +40,7 @@ public class UnitAbilities extends UIElement {
 				
 				Point buttonPos = new Point(x, y);
 				
-				buttons.add(new UIButton(ui, this, buttonPos));
+				buttons.add(new UIButton(ui, this, buttonPos, ""));
 			}
 		}
 		
