@@ -1,5 +1,6 @@
 package main.entities.buildings;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
@@ -55,5 +56,13 @@ public abstract class Building extends SelectableEntity {
 		float width = sprite.getWidth();
 		float height = sprite.getHeight();
 		sprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY(), width, height);
+
+		for (Node[] nodeSet : nodes) {
+			for (Node node : nodeSet) {
+				g.setColor(Color.white);
+				Point p = node.getPos();
+				g.drawOval(p.getX() - 8, p.getY() - 8, 16, 16);
+			}
+		}
 	}
 }

@@ -13,7 +13,6 @@ import main.entities.ai.pathfinding.NodeMap;
 import main.entities.ai.pathfinding.Path;
 import main.entities.ai.pathfinding.PathFinder;
 import main.entities.ai.pathfinding.PathObject;
-import main.game.Game;
 import main.game.player.Player;
 import main.util.Utils;
 
@@ -44,6 +43,15 @@ public abstract class Unit extends SelectableEntity {
 		origin.setY(sprite.getHeight() - 5);
 
 		pathing = false;
+		
+		//Init Stats
+		health = 80;
+		move_speed = 3f;
+		direction = 120;
+		acc = 0.5f;
+		phys_def = 12;
+		mag_def = 9;
+		health_max = health;
 	}
 
 	public void move(float spd, float angle) {
@@ -51,6 +59,10 @@ public abstract class Unit extends SelectableEntity {
 		float cos = (float) Math.cos(Math.toRadians(angle));
 		pos.setX(pos.getX() + spd * cos);
 		pos.setY(pos.getY() + spd * sin);
+		
+		if(this instanceof Worker) {
+			System.out.println("Moving to: " + spd + " " + angle);
+		}
 	}
 
 	public void moveTo(Point target) {
@@ -96,6 +108,12 @@ public abstract class Unit extends SelectableEntity {
 
 					float dist = Utils.distance(endPoint, target);
 
+					if (Utils.distance(pos, nodePos) < TOLERANCE) {
+						System.out.println("Next node");
+						path.getNodes().remove(0);
+					} else
+						moveTo(nodePos);
+					
 					if (dist >= (1.5 * NodeMap.NODE_WIDTH)) {
 						System.out.println("Distance: " + dist);
 
@@ -106,11 +124,6 @@ public abstract class Unit extends SelectableEntity {
 						path = null;
 						return;
 					}
-					if (Utils.distance(pos, nodePos) < TOLERANCE) {
-						System.out.println("Next node");
-						path.getNodes().remove(0);
-					} else
-						moveTo(nodePos);
 				} else {
 					speed = 0;
 					path = null;
@@ -141,10 +154,7 @@ public abstract class Unit extends SelectableEntity {
 
 	public void tick() {
 		super.tick();
-		if (Game.getCurrentView() == player.getCamera()) {
-			move(speed, direction);
-		}
-
+		move(speed, direction);
 		moveAlongPath(des);
 		step();
 	}
