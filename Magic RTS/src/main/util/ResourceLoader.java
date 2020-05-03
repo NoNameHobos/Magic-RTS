@@ -117,6 +117,7 @@ public class ResourceLoader {
 	public static void loadMaps() {
 		MAPS.put("Seton's Clutch", MapLoader.loadMap("maps\\setons"));
 		MAPS.put("Mountain Pass", MapLoader.loadMap("maps\\mountainpass"));
+		MAPS.put("Grass", MapLoader.loadMap("maps\\grass"));
 	}
 
 	public static void initResources() {
