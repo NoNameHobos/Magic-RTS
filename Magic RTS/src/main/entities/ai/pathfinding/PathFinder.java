@@ -8,7 +8,9 @@ import org.newdawn.slick.geom.Point;
 
 public class PathFinder {
 
-	public static final int MAXOPS = 3000;
+	
+	// Number of ops per tile in distance
+	public static final int MAXOPS = 5;
 	
 	public static PathObject findPath(NodeMap map, Node startNode, Node endNode) {
 
@@ -26,7 +28,9 @@ public class PathFinder {
 
 		int count = 0;
 
-		while (!concluded && count < MAXOPS) {
+		int max_ops = (int) (MAXOPS * NodeMap.RES * getDist(startNode.getPos(), endNode.getPos()));
+		
+		while (!concluded && count < max_ops) {
 			open.sort(new SortAStar());
 			count++;
 			

@@ -1,4 +1,4 @@
-package main.entities.unit;
+package main.entities;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -7,12 +7,12 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
-import main.entities.SelectableEntity;
 import main.entities.ai.pathfinding.Node;
 import main.entities.ai.pathfinding.NodeMap;
 import main.entities.ai.pathfinding.Path;
 import main.entities.ai.pathfinding.PathFinder;
 import main.entities.ai.pathfinding.PathObject;
+import main.entities.unit.Worker;
 import main.game.player.Player;
 import main.util.Utils;
 
@@ -45,12 +45,12 @@ public abstract class Unit extends SelectableEntity {
 		pathing = false;
 		
 		//Init Stats
-		health = 80;
-		move_speed = 3f;
+		health = 1;
+		move_speed = 0.1f;
 		direction = 120;
-		acc = 0.5f;
-		phys_def = 12;
-		mag_def = 9;
+		acc = 0.0001f;
+		phys_def = 0;
+		mag_def = 0;
 		health_max = health;
 	}
 
@@ -162,9 +162,6 @@ public abstract class Unit extends SelectableEntity {
 	@Override
 	public void render(Graphics g) {
 		super.render(g);
-
-		if (path != null)
-			path.render(g);
 		draw(g);
 	}
 

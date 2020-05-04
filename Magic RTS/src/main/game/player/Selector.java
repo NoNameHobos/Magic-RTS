@@ -10,7 +10,7 @@ import org.newdawn.slick.geom.Rectangle;
 import main.engine.Engine;
 import main.entities.Entity;
 import main.entities.SelectableEntity;
-import main.entities.unit.Unit;
+import main.entities.Unit;
 import main.game.Game;
 import main.input.Mouse;
 

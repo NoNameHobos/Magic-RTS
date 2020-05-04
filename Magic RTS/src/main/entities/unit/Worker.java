@@ -2,6 +2,7 @@ package main.entities.unit;
 
 import org.newdawn.slick.Graphics;
 
+import main.entities.Unit;
 import main.game.player.Player;
 import main.util.ResourceLoader;
 

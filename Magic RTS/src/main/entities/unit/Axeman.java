@@ -6,6 +6,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
 
+import main.entities.Unit;
 import main.game.player.Player;
 
 public class Axeman extends Unit {

@@ -1,15 +1,14 @@
-package main.entities.projectiles;
+package main.entities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
-import main.entities.Entity;
 import main.game.map.Map;
 import main.game.player.Player;
 
 public abstract class Projectile extends Entity {
 	
-	protected float speed;
+	protected float speed, direction;
 	
 	protected Point target;
 
@@ -18,8 +17,4 @@ public abstract class Projectile extends Entity {
 		this.target = target;
 	}
 	
-	public void tick() {
-		super.tick();;
-	}
-
 }

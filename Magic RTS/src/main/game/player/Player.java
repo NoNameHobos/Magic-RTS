@@ -13,11 +13,11 @@ import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
 import main.entities.Entity;
+import main.entities.Unit;
 import main.entities.buildings.Building;
 import main.entities.buildings.House;
 import main.entities.buildings.Townhall;
 import main.entities.unit.Axeman;
-import main.entities.unit.Unit;
 import main.game.Game;
 import main.game.map.Map;
 import main.game.ui.UI;
