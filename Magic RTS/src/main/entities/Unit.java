@@ -12,7 +12,6 @@ import main.entities.ai.pathfinding.NodeMap;
 import main.entities.ai.pathfinding.Path;
 import main.entities.ai.pathfinding.PathFinder;
 import main.entities.ai.pathfinding.PathObject;
-import main.entities.unit.Worker;
 import main.game.player.Player;
 import main.util.Utils;
 
@@ -59,10 +58,6 @@ public abstract class Unit extends SelectableEntity {
 		float cos = (float) Math.cos(Math.toRadians(angle));
 		pos.setX(pos.getX() + spd * cos);
 		pos.setY(pos.getY() + spd * sin);
-		
-		if(this instanceof Worker) {
-			System.out.println("Moving to: " + spd + " " + angle);
-		}
 	}
 
 	public void moveTo(Point target) {
@@ -75,7 +70,7 @@ public abstract class Unit extends SelectableEntity {
 	}
 
 	public void moveAlongPath(Point target) {
-		if (Utils.distance(pos, target) > (NodeMap.NODE_WIDTH)) {
+		if (Utils.distance(pos, target) > (NodeMap.NODE_WIDTH / (NodeMap.RES))) {
 			if (path == null) {
 				if (pathing) {
 					speed = 0;

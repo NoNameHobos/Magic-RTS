@@ -14,8 +14,6 @@ import main.game.player.Player;
 
 public abstract class Building extends SelectableEntity {
 
-	protected Player player;
-
 	protected Rectangle collider;
 
 	protected Node[][] nodes;
@@ -24,26 +22,9 @@ public abstract class Building extends SelectableEntity {
 		super(player, new Point(_pos.getX() + sprite.getWidth() / 2, _pos.getY() + sprite.getHeight() / 2), sprite);
 		type = "Building";
 
-		int w = (int) Math.ceil(sprite.getWidth() / GameConstants.TW_RENDER);
-		int h = (int) Math.ceil((sprite.getHeight() / 2) / GameConstants.TH_RENDER);
-
-		nodes = new Node[w * NodeMap.RES][h * NodeMap.RES];
-
-		for (int i = 0; i < nodes.length; i++) {
-			for (int j = 0; j < nodes[i].length; j++) {
-				NodeMap nm = player.getGame().getNodeMap();
-				Node[][] nodeMap = nm.getNodes();
-
-				Point topLeft = new Point(pos.getX() - origin.getX(),
-						pos.getY() - origin.getY() + (float) Math.ceil(sprite.getHeight() / 3 * 2));
-
-				int x = (int) ((topLeft.getX() - NodeMap.XOFFSET) / NodeMap.NODE_WIDTH) + i;
-				int y = (int) ((topLeft.getY() - NodeMap.YOFFSET) / NodeMap.NODE_HEIGHT) + j;
-
-				nodes[i][j] = nodeMap[y + 1][x + 1];
-				nodes[i][j].setCost(100);
-			}
-		}
+		nodes = null;
+		
+		while(nodes == null) nodes = findNodes();
 
 		float colWidth = nodes[0].length * GameConstants.TW_RENDER;
 		float colHeight = nodes.length * GameConstants.TH_RENDER;
@@ -52,6 +33,38 @@ public abstract class Building extends SelectableEntity {
 				pos.getY() - colHeight / 2 * GameConstants.TH_RENDER, colWidth, colHeight);
 	}
 
+	public Node[][] findNodes() {
+		int w = (int) Math.ceil(sprite.getWidth() / GameConstants.TW_RENDER);
+		int h = (int) Math.ceil((sprite.getHeight() / 2) / GameConstants.TH_RENDER);
+
+		Node[][] n = new Node[w * NodeMap.RES][h * NodeMap.RES];
+		NodeMap nm = player.getGame().getNodeMap();
+		Node[][] nodeMap = nm.getNodes();
+
+		for (int i = 0; i < n.length; i++) {
+			for (int j = 0; j < n[i].length; j++) {
+
+				Point topLeft = new Point(pos.getX() - origin.getX(),
+						pos.getY() - origin.getY() + (float) Math.ceil(sprite.getHeight() / 3 * 2));
+
+				int x = (int) ((topLeft.getX() - NodeMap.XOFFSET) / NodeMap.NODE_WIDTH) + i;
+				int y = (int) ((topLeft.getY() - NodeMap.YOFFSET) / NodeMap.NODE_HEIGHT) + j;
+				try {
+					n[i][j] = nodeMap[y + 1][x + 1];
+					n[i][j].setCost(100);
+				} catch (ArrayIndexOutOfBoundsException e) {
+					if(System.currentTimeMillis() % 1000 == 0) 
+						System.err.println(pos.getX() + " " + pos.getY());
+					pos.setX(map.getMapWidth() / 2);
+					pos.setY(map.getMapHeight() / 2);
+					return null;					
+				}
+			}
+		}
+		
+		return n;
+	}
+	
 	public void draw(Graphics g) {
 		float width = sprite.getWidth();
 		float height = sprite.getHeight();
