@@ -46,7 +46,7 @@ public class TileSet {
 		}
 		
 		//Load tiles
-		SpriteSheet tiles = ResourceLoader.loadSpriteSheet(path + "\\tiles", 32, 32);
+		SpriteSheet tiles = ResourceLoader.loadSpriteSheet(path + "\\tiles", 33, 33);
 		
 		//Create a new TileSet
 		TileSet ts = new TileSet(tiles);
