@@ -8,9 +8,12 @@ public class Tile {
 	private Image image;
 	private Point pos;
 	
-	public Tile(Image tileSprite, float x, float y) {
+	private float depth;
+		
+	public Tile(Image tileSprite, float x, float y, Map map) {
 		image = tileSprite;
 		this.pos = new Point(x, y);
+		depth = -x - y * map.getMapWidth();
 	}
 	
 	public Point getPos() {
@@ -19,5 +22,9 @@ public class Tile {
 	
 	public Image getImage() {
 		return image;
+	}
+	
+	public float getDepth() {
+		return depth;
 	}
 }

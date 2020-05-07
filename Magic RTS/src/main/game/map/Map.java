@@ -5,6 +5,7 @@ import static main.GameConstants.TW_RENDER;
 import static main.util.ResourceLoader.TILE_SETS;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -86,9 +87,9 @@ public class Map {
 	}
 
 	public void loadPlayers() {
-		
+
 		int NODES_PER_SITE = 1;
-		
+
 		players = new Player[spawns.length];
 		neutralPlayer = new Player("NEUTRAL", players.length, this, true, new Color(0, 120, 255));
 		focusedPlayer = Player.createPlayer("BRYN", 0, this, new Color(0, 0, 255), FACTIONS.get("vikings"), spawns[0]);
@@ -101,8 +102,8 @@ public class Map {
 		// Create the UI
 		ui = new UI(focusedPlayer);
 		mainCamera.setUI(ui);
-		
-		for(int i = 1; i < players.length; i++) {
+
+		for (int i = 1; i < players.length; i++) {
 			Random r = new Random();
 			String str = PLAYER_NAMES[r.nextInt(PLAYER_NAMES.length - 1)];
 			Color c = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
@@ -155,7 +156,7 @@ public class Map {
 					tileType = "darkDirt";
 					break;
 				}
-				tiles[j][i] = new Tile(tileset.getTile(tileType), j * TW_RENDER, i * TH_RENDER);
+				tiles[j][i] = new Tile(tileset.getTile(tileType), j * TW_RENDER, i * TH_RENDER, this);
 			}
 		}
 	}
@@ -166,25 +167,30 @@ public class Map {
 
 	public void renderTiles(Graphics g) {
 
-		for (int i = 0; i < tiles.length; i++) {
-			for (int j = 0; j < tiles[i].length; j++) {
-				Point tilePos = tiles[i][j].getPos();
+		ArrayList<Tile> tile_array = new ArrayList<Tile>();
 
-				float rendX = tilePos.getX();
-				float rendY = tilePos.getY();
+		for (Tile[] tileList : tiles) {
+			for (Tile tile : tileList) {
+				tile_array.add(tile);
+			}
+		}
 
-				boolean inCam = mainCamera.getRenderRect().contains(rendX, rendY);
-				if (inCam
-				// && !controlledPlayer.getUI().contains(Game.UIToObject(new Point(rendX,
-				// rendY), currentCamera))
-				) {
-					Image image = tiles[i][j].getImage();
+		tile_array.sort(new SortByDepth());
 
-					float width = TW_RENDER;
-					float height = TH_RENDER;
+		for (Tile tile : tile_array) {
+			Point tilePos = tile.getPos();
 
-					image.draw((float) Math.floor(rendX), (float) Math.floor(rendY), width, height);
-				}
+			float rendX = tilePos.getX();
+			float rendY = tilePos.getY();
+
+			boolean inCam = mainCamera.getRenderRect().contains(rendX, rendY);
+			if (inCam) {
+				Image image = tile.getImage();
+
+				float width = TW_RENDER + 1;
+				float height = TH_RENDER + 1;
+
+				image.draw((float) Math.floor(rendX), (float) Math.floor(rendY), width, height);
 			}
 		}
 	}
@@ -231,6 +237,16 @@ public class Map {
 
 	public Player getNeutralPlayer() {
 		return neutralPlayer;
+	}
+
+}
+
+class SortByDepth implements Comparator<Tile> {
+
+	@Override
+	public int compare(Tile t1, Tile t2) {
+		// TODO Auto-generated method stub
+		return (int) (t2.getDepth() - t1.getDepth());
 	}
 
 }
