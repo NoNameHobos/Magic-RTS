@@ -7,8 +7,8 @@ import org.newdawn.slick.MouseListener;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
-import main.entities.Entity;
 import main.game.Game;
+import main.game.entities.Entity;
 import main.game.player.Camera;
 import main.game.states.GameState;
 

@@ -12,14 +12,13 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
-import main.entities.Entity;
-import main.entities.Unit;
-import main.entities.buildings.Building;
-import main.entities.buildings.House;
-import main.entities.buildings.Townhall;
-import main.entities.unit.vikings.Axeman;
-import main.entities.unit.vikings.Warg;
 import main.game.Game;
+import main.game.entities.Building;
+import main.game.entities.Entity;
+import main.game.entities.buildings.House;
+import main.game.entities.buildings.Townhall;
+import main.game.entities.selectables.Unit;
+import main.game.entities.selectables.unit.vikings.Warg;
 import main.game.map.Map;
 import main.game.ui.UI;
 

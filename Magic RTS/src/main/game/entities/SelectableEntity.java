@@ -1,4 +1,4 @@
-package main.entities;
+package main.game.entities;
 
 import static main.GameConstants.STAT_ACC;
 import static main.GameConstants.STAT_ATTACK;

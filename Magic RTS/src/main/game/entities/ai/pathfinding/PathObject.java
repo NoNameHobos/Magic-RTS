@@ -1,4 +1,4 @@
-package main.entities.ai.pathfinding;
+package main.game.entities.ai.pathfinding;
 
 public class PathObject {
 

@@ -1,4 +1,4 @@
-package main.entities.ai.pathfinding;
+package main.game.entities.ai.pathfinding;
 
 import static main.GameConstants.TH_RENDER;
 import static main.GameConstants.TW_RENDER;

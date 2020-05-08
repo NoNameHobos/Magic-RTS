@@ -4,7 +4,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
-import main.entities.Entity;
+import main.game.entities.Entity;
 import main.game.player.Player;
 import main.game.ui.UI;
 import main.game.ui.UIElement;

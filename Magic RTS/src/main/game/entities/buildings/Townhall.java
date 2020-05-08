@@ -1,9 +1,10 @@
-package main.entities.buildings;
+package main.game.entities.buildings;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
-import main.entities.unit.Worker;
+import main.game.entities.Building;
+import main.game.entities.selectables.unit.Worker;
 import main.game.player.Player;
 
 public class Townhall extends Building {

@@ -8,7 +8,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 import main.GameConstants;
 import main.engine.Engine;
-import main.entities.Entity;
+import main.game.entities.Entity;
 import main.game.map.Map;
 import main.game.player.Player;
 import main.game.ui.UI;

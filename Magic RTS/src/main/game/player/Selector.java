@@ -8,10 +8,10 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
-import main.entities.Entity;
-import main.entities.SelectableEntity;
-import main.entities.Unit;
 import main.game.Game;
+import main.game.entities.Entity;
+import main.game.entities.SelectableEntity;
+import main.game.entities.selectables.Unit;
 import main.input.Mouse;
 
 public class Selector implements MouseListener {

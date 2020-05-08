@@ -15,9 +15,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
-import main.entities.ai.pathfinding.NodeMap;
-import main.entities.resources.ManaNode;
 import main.game.Game;
+import main.game.entities.ai.pathfinding.NodeMap;
+import main.game.entities.resources.ManaNode;
 import main.game.player.Camera;
 import main.game.player.Faction;
 import main.game.player.Player;

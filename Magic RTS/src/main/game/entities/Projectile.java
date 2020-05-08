@@ -1,4 +1,4 @@
-package main.entities;
+package main.game.entities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;

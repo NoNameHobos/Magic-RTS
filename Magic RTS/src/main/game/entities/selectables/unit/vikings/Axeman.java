@@ -1,4 +1,4 @@
-package main.entities.unit.vikings;
+package main.game.entities.selectables.unit.vikings;
 
 import static main.GameConstants.STAT_ACC;
 import static main.GameConstants.STAT_ATTACK;
@@ -13,7 +13,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
 
-import main.entities.Unit;
+import main.game.entities.selectables.Unit;
 import main.game.player.Player;
 
 public class Axeman extends Unit {

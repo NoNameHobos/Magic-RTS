@@ -1,4 +1,4 @@
-package main.entities.ai.pathfinding;
+package main.game.entities.ai.pathfinding;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;

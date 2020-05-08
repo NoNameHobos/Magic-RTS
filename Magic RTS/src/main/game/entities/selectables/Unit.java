@@ -1,4 +1,4 @@
-package main.entities;
+package main.game.entities.selectables;
 
 import static main.GameConstants.STAT_ACC;
 
@@ -10,12 +10,13 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import main.GameConstants;
-import main.entities.ai.pathfinding.Node;
-import main.entities.ai.pathfinding.NodeMap;
-import main.entities.ai.pathfinding.Path;
-import main.entities.ai.pathfinding.PathFinder;
-import main.entities.ai.pathfinding.PathObject;
-import main.entities.unit.abilities.BasicCommandable;
+import main.game.entities.SelectableEntity;
+import main.game.entities.ai.pathfinding.Node;
+import main.game.entities.ai.pathfinding.NodeMap;
+import main.game.entities.ai.pathfinding.Path;
+import main.game.entities.ai.pathfinding.PathFinder;
+import main.game.entities.ai.pathfinding.PathObject;
+import main.game.entities.selectables.unit.abilities.BasicCommandable;
 import main.game.player.Player;
 import main.util.Utils;
 
