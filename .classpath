@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/slick"/>
+	<classpathentry kind="src" path="Magic RTS/src"/>
+	<classpathentry kind="src" path="slick/src"/>
+	<classpathentry kind="src" path="slick/tools"/>
+	<classpathentry kind="lib" path="slick/lib/ibxm.jar"/>
+	<classpathentry kind="lib" path="slick/lib/jinput.jar"/>
+	<classpathentry kind="lib" path="slick/lib/jnlp.jar"/>
+	<classpathentry kind="lib" path="slick/lib/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="slick/lib/jorbis-0.0.15.jar"/>
+	<classpathentry kind="lib" path="slick/lib/lwjgl_util_applet.jar"/>
+	<classpathentry kind="lib" path="slick/lib/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="slick/lib/lwjgl.jar"/>
+	<classpathentry kind="lib" path="slick/lib/natives-linux.jar"/>
+	<classpathentry kind="lib" path="slick/lib/natives-mac.jar"/>
+	<classpathentry kind="lib" path="slick/lib/natives-windows.jar"/>
+	<classpathentry kind="lib" path="slick/lib/slick-examples.jar"/>
+	<classpathentry kind="lib" path="slick/lib/slick.jar"/>
+	<classpathentry kind="lib" path="slick/lib/tinylinepp.jar"/>
+	<classpathentry kind="lib" path="slick/Pack200Task.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
