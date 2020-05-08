@@ -17,7 +17,8 @@ import main.entities.Unit;
 import main.entities.buildings.Building;
 import main.entities.buildings.House;
 import main.entities.buildings.Townhall;
-import main.entities.unit.Axeman;
+import main.entities.unit.bigUnit.vikings.Warg;
+import main.entities.unit.viking.Axeman;
 import main.game.Game;
 import main.game.map.Map;
 import main.game.ui.UI;
@@ -62,7 +63,7 @@ public class Player {
 		units = new ArrayList<Unit>();
 		selected = new ArrayList<Entity>();
 
-		units.add(new Axeman(this, spawn.getX() - TW_RENDER * 6, spawn.getY() + TH_RENDER * 6));
+		units.add(new Warg(this, spawn.getX() - TW_RENDER * 6, spawn.getY() + TH_RENDER * 6));
 		buildings.add(new House(this, new Point(spawn.getX() + TW_RENDER * 5, spawn.getY() + TH_RENDER * 5)));
 		buildings.add(new Townhall(this, new Point(spawn.getX(), spawn.getY())));
 		

@@ -9,7 +9,7 @@ import main.game.player.Player;
 public class Townhall extends Building {
 
 	public Townhall(Player player, Point _pos) {
-		super(player, _pos, player.getFaction().getSprite("townhall"));
+		super(player, _pos, player.getFaction().getSprite("townhall").copy());
 
 		for(int i = -2; i < 1; i++) {
 			// Spawn Workers

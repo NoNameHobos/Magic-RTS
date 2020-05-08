@@ -1,4 +1,4 @@
-package main.entities.unit;
+package main.entities.unit.viking;
 
 import static main.util.ResourceLoader.SPRITE_SHEETS;
 
@@ -25,7 +25,7 @@ public class Axeman extends Unit {
 	private static Animation[] animations;
 	
 	public Axeman(Player player, float x, float y) {
-		super(player, x, y, ANIM_SS[0].getSubImage(0, 0));
+		super(player, x, y, ANIM_SS[0].getSubImage(0, 0).copy());
 		
 		animations = new Animation[4];
 		

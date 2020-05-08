@@ -1,17 +1,16 @@
-package main.entities.unit;
+package main.entities.unit.bigUnit.vikings;
 
 import org.newdawn.slick.Graphics;
 
 import main.entities.Unit;
 import main.game.player.Player;
-import main.util.ResourceLoader;
 
-public class Worker extends Unit {
-	
-	public Worker(Player player, float x, float y) {
-		super(player, x, y, ResourceLoader.SPRITES.get("worker_right").copy());
-		// TODO Auto-generated constructor stub
+import static main.util.ResourceLoader.SPRITES;
 
+public class Warg extends Unit {
+
+	public Warg(Player player, float x, float y) {
+		super(player, x, y, SPRITES.get("warg_right").copy());
 		//Init Stats
 		health = 80;
 		move_speed = 3f;
@@ -24,17 +23,16 @@ public class Worker extends Unit {
 
 	@Override
 	public void draw(Graphics g) {
-
 		float drawX = pos.getX() - origin.getX();
 		float drawY = pos.getY() - origin.getY();
-
+		
 		g.drawImage(sprite, drawX, drawY);
-
 	}
 
 	@Override
 	public void step() {
 		// TODO Auto-generated method stub
+		
 	}
-
+	
 }

@@ -8,7 +8,7 @@ import main.game.player.Player;
 public class House extends Building {
 
 	public House(Player player, Point pos) {
-		super(player, pos, player.getFaction().getSprite("house"));
+		super(player, pos, player.getFaction().getSprite("house").copy());
 	}
 	
 	@Override

@@ -9,7 +9,7 @@ import main.util.ResourceLoader;
 public class ManaNode extends Resource {
 
 	public ManaNode(Map map, Point pos) {
-		super(map, pos, ResourceLoader.SPRITES.get("node_mana"));
+		super(map, pos, ResourceLoader.SPRITES.get("node_mana").copy());
 		// TODO Auto-generated constructor stub
 	}
 

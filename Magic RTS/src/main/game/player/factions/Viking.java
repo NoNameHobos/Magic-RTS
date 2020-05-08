@@ -13,6 +13,7 @@ public class Viking extends Faction {
 	@Override
 	public void loadUnits() { //Put Unit stuff in here, add to unit hashmap
 		sprites.put("axeman", SPRITES.get("axeman"));
+		sprites.put("warg", SPRITES.get("warg_right"));
 	}
 
 	@Override
