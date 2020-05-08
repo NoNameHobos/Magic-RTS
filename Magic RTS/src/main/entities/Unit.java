@@ -1,5 +1,7 @@
 package main.entities;
 
+import static main.GameConstants.STAT_ACC;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -7,31 +9,34 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
+import main.GameConstants;
 import main.entities.ai.pathfinding.Node;
 import main.entities.ai.pathfinding.NodeMap;
 import main.entities.ai.pathfinding.Path;
 import main.entities.ai.pathfinding.PathFinder;
 import main.entities.ai.pathfinding.PathObject;
+import main.entities.unit.abilities.BasicCommandable;
 import main.game.player.Player;
 import main.util.Utils;
 
-public abstract class Unit extends SelectableEntity {
-
-	protected float health, health_max;
-	protected float move_speed;
-	protected float speed;
-	protected float direction;
-	protected float acc;
-	protected float phys_def;
-	protected float mag_def;
+public abstract class Unit extends SelectableEntity implements BasicCommandable {
 
 	protected boolean walking = false;
-	//TODO: Add state machine
-	
-	protected Point des;
 
+	// Pathing
+	protected Point des;
 	protected Path path;
 	protected boolean pathing;
+	protected float direction;
+	protected float speed, max_speed;
+	protected SelectableEntity target;
+
+	// Patrol stuff
+	protected Point[] patrolPoints;
+	protected int cur_point;
+
+	// State stuff
+	protected int state;
 
 	public static final int TOLERANCE = 20; // Pathfinding Tolerance
 
@@ -42,15 +47,12 @@ public abstract class Unit extends SelectableEntity {
 		origin.setY(sprite.getHeight() - 5);
 
 		pathing = false;
-		
-		//Init Stats
-		health = 1;
-		move_speed = 0.1f;
 		direction = 120;
-		acc = 0.0001f;
-		phys_def = 0;
-		mag_def = 0;
-		health_max = health;
+		max_speed = 0.1f;
+
+		// Pathing setup
+		cur_point = 0;
+		patrolPoints = null;
 	}
 
 	public void move(float spd, float angle) {
@@ -63,77 +65,74 @@ public abstract class Unit extends SelectableEntity {
 	public void moveTo(Point target) {
 		if (getDistanceTo(target) >= (TOLERANCE)) {
 			direction = getPointDirection(target);
-			if (speed < move_speed)
-				speed += acc;
+			if (speed < max_speed)
+				speed += stats[STAT_ACC];
 		} else
 			speed = 0;
 	}
 
-	public void moveAlongPath(Point target) {
+	public Path findPath(Point target) {
 		if (Utils.distance(pos, target) > (NodeMap.NODE_WIDTH / (NodeMap.RES))) {
-			if (path == null) {
-				if (pathing) {
-					speed = 0;
-					ArrayList<Node> nearestStartNodes = getNearestNodes(pos);
-					ArrayList<Node> nearestEndNodes = getNearestNodes(target);
+			Path p;
 
-					nearestStartNodes.sort(new SortByDist(target));
-					nearestEndNodes.sort(new SortByDist(target));
+			speed = 0;
+			ArrayList<Node> nearestStartNodes = getNearestNodes(pos);
+			ArrayList<Node> nearestEndNodes = getNearestNodes(target);
 
-					if (nearestStartNodes.size() == 0) {
-						System.out.println("Start Nodes Size: 0");
-						return;
-					}
-					if (nearestEndNodes.size() == 0) {
-						System.out.println("End Nodes Size: 0");
-						return;
-					}
+			nearestStartNodes.sort(new SortByDist(target));
+			nearestEndNodes.sort(new SortByDist(target));
 
-					PathObject po = PathFinder.findPath(map.getGame().getNodeMap(), nearestStartNodes.get(0),
-							nearestEndNodes.get(0));
+			if (nearestStartNodes.size() == 0) {
+				System.out.println("Start Nodes Size: 0");
+				return null;
+			}
+			if (nearestEndNodes.size() == 0) {
+				System.out.println("End Nodes Size: 0");
+				return null;
+			}
 
-					path = po.getPath();
-				}
-			} else {
-				// Use path
-				if (path.getNodes().size() > 0) {
-					pathing = false;
-					Point endPoint = path.getNodes().get(path.getNodes().size() - 1).getPos();
-					Point nodePos = path.getNodes().get(0).getPos();
+			PathObject po = PathFinder.findPath(map.getNodeMap(), nearestStartNodes.get(0), nearestEndNodes.get(0));
 
-					float dist = Utils.distance(endPoint, target);
+			p = po.getPath();
+			return p;
+		} else
+			return null;
+	}
 
-					if (Utils.distance(pos, nodePos) < TOLERANCE) {
-						System.out.println("Next node");
-						path.getNodes().remove(0);
-					} else
-						moveTo(nodePos);
-					
-					if (dist >= (1.5 * NodeMap.NODE_WIDTH)) {
-						System.out.println("Distance: " + dist);
+	public void moveAlongPath(Path p) {
+		// Use path
+		if (path.getNodes().size() > 0) {
+			pathing = false;
+			Point endPoint = path.getNodes().get(path.getNodes().size() - 1).getPos();
+			Point nodePos = path.getNodes().get(0).getPos();
 
-						des.setX(pos.getX());
-						des.setY(pos.getY());
+			float dist = Utils.distance(endPoint, pos);
 
-						speed = 0;
-						path = null;
-						return;
-					}
-				} else {
-					speed = 0;
-					path = null;
-				}
+			if (Utils.distance(pos, nodePos) < TOLERANCE) {
+				System.out.println("Next node");
+				path.getNodes().remove(0);
+			} else
+				moveTo(nodePos);
+
+			if (dist <= (1.5 * NodeMap.NODE_WIDTH)) {
+				des.setX(pos.getX());
+				des.setY(pos.getY());
+
+				speed = 0;
+				path = null;
+				return;
 			}
 		} else {
 			speed = 0;
 			path = null;
+			return;
 		}
 	}
 
 	public ArrayList<Node> getNearestNodes(Point pos) {
 		ArrayList<Node> nodes = new ArrayList<Node>();
 
-		Node[][] nMap = map.getGame().getNodeMap().getNodes();
+		Node[][] nMap = map.getNodeMap().getNodes();
 
 		for (int i = 0; i < nMap.length; i++) {
 			for (int j = 0; j < nMap[i].length; j++) {
@@ -148,9 +147,40 @@ public abstract class Unit extends SelectableEntity {
 	}
 
 	public void tick() {
+		
 		super.tick();
-		move(speed, direction);
-		moveAlongPath(des);
+		
+		// State machine
+		
+		switch (state) {
+		case GameConstants.STATE_IDLE:
+			break;
+			
+		case GameConstants.STATE_MOVING:
+			move(speed, direction);
+			if(path == null)
+				path = findPath(des);
+			else if (path != null)
+				moveAlongPath(path);
+			break;
+			
+		case GameConstants.STATE_ATTACK:
+			if (target != null)
+
+				attack(this, target);
+			break;
+			
+		case GameConstants.STATE_PATROL:
+			if (patrolPoints == null)
+				// Set some patrol points
+				state = GameConstants.STATE_IDLE;
+			patrol(this, patrolPoints);
+			break;
+			
+		default:
+			System.err.println(this + " invalid state: " + state + " setting state to idle");
+			state = GameConstants.STATE_IDLE;
+		}
 		step();
 	}
 
@@ -179,49 +209,8 @@ public abstract class Unit extends SelectableEntity {
 		}
 	}
 
-	public float getHealth() {
-		return health;
-	}
-
-	public void setHealth(float health, boolean rel) {
-		if (!rel)
-			this.health = health;
-		else
-			this.health += health;
-	}
-
-	public void setHealth(float health) {
-		this.health = health;
-	}
-
-	public float getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(float speed, boolean rel) {
-		if (!rel)
-			this.speed = speed;
-		else
-			this.speed += speed;
-	}
-
-	public float getAcc() {
-		return acc;
-	}
-
-	public void setAcc(float acc, boolean rel) {
-		if (!rel)
-			this.acc = acc;
-		else
-			this.acc += acc;
-	}
-
-	public float getHealthMax() {
-		return health_max;
-	}
-
-	public float getMoveSpeed() {
-		return move_speed;
+	public float getMaxSpeed() {
+		return max_speed;
 	}
 
 	public Player getPlayer() {
@@ -248,6 +237,21 @@ public abstract class Unit extends SelectableEntity {
 		this.path = path;
 	}
 
+	public int getCurPoint() {
+		return cur_point;
+	}
+
+	public void setCurPoint(int index) {
+		cur_point = index;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public int getState() {
+		return state;
+	}
 }
 
 // Comparators

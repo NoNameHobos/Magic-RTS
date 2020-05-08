@@ -1,5 +1,12 @@
-package main.entities.unit.viking;
+package main.entities.unit.vikings;
 
+import static main.GameConstants.STAT_ACC;
+import static main.GameConstants.STAT_ATTACK;
+import static main.GameConstants.STAT_ATTACK_RANGE;
+import static main.GameConstants.STAT_HEALTH;
+import static main.GameConstants.STAT_HEALTH_MAX;
+import static main.GameConstants.STAT_MAG_DEF;
+import static main.GameConstants.STAT_PHYS_DEF;
 import static main.util.ResourceLoader.SPRITE_SHEETS;
 
 import org.newdawn.slick.Animation;
@@ -29,25 +36,29 @@ public class Axeman extends Unit {
 		
 		animations = new Animation[4];
 		
-		//Init Stats
-		health = 80;
-		move_speed = 3f;
-		direction = 120;
-		acc = 0.5f;
-		phys_def = 12;
-		mag_def = 9;
-		health_max = health;
+		// Init Stats
+		stats[STAT_HEALTH] = 1f;
+		stats[STAT_HEALTH_MAX] = 1f;
+		stats[STAT_ACC] = 0.0001f;
+		stats[STAT_PHYS_DEF] = 0f;
+		stats[STAT_MAG_DEF] = 0f;
+		
+		
+		// Attack stuff
+		stats[STAT_ATTACK] = 1;
+		// Attack range in tiles
+		stats[STAT_ATTACK_RANGE] = 1;
 
-		animations[0] = new Animation(ANIM_SS[0], (int)(67 * (move_speed + 0.5f)));
+		animations[0] = new Animation(ANIM_SS[0], (int)(67 * (max_speed + 0.5f)));
 		animations[0].setLooping(true);
 		
-		animations[1] = new Animation(ANIM_SS[1], (int)(67 * (move_speed + 0.5f)));
+		animations[1] = new Animation(ANIM_SS[1], (int)(67 * (max_speed + 0.5f)));
 		animations[1].setLooping(true);
 		
-		animations[2] = new Animation(ANIM_SS[2], (int)(67 * (move_speed + 0.5f)));
+		animations[2] = new Animation(ANIM_SS[2], (int)(67 * (max_speed + 0.5f)));
 		animations[2].setLooping(true);
 		
-		animations[3] = new Animation(ANIM_SS[3], (int)(67 * (move_speed + 0.5f)));
+		animations[3] = new Animation(ANIM_SS[3], (int)(67 * (max_speed + 0.5f)));
 		animations[3].setLooping(true);
 	}
 

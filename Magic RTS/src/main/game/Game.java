@@ -13,7 +13,6 @@ import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
 import main.entities.Entity;
-import main.entities.ai.pathfinding.NodeMap;
 import main.game.map.Map;
 import main.game.player.Camera;
 import main.game.player.Player;
@@ -31,7 +30,6 @@ public class Game {
 	public static String MAP_TO_LOAD = "";
 
 	private Map map;
-	private NodeMap nm;
 
 	private boolean started = false;
 	private boolean dispView = false;
@@ -42,7 +40,6 @@ public class Game {
 
 	public void init() {
 		map = MAPS.get(MAP_TO_LOAD);
-		nm = NodeMap.createNodeMap(map);
 		map.init(this);
 
 		controllingPlayer = map.getFocusedPlayer();
@@ -92,9 +89,6 @@ public class Game {
 
 		// Render all the tiles
 		map.renderTiles(g);
-		if (renderPathing) {
-			nm.render(g);
-		}
 
 		// Render Entities
 		ArrayList<Entity> entities = Entity.getEntities();
@@ -198,11 +192,6 @@ public class Game {
 	public Player getControllingPlayer() {
 		return controllingPlayer;
 	}
-
-	public NodeMap getNodeMap() {
-		return nm;
-	}
-
 }
 
 // Comparators

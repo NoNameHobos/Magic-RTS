@@ -8,6 +8,7 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
+import main.game.Game;
 import main.game.map.Map;
 import main.game.player.Player;
 
@@ -36,10 +37,13 @@ public abstract class Entity {
 
 	protected Map map;
 	
+	protected Game game;
+	
 	public Entity(Player p, Map map, Point pos, Image sprite) {
 		this.sprite = sprite;
 		this.pos = pos;
 		this.map = map;
+		game = map.getGame();
 		this.player = p;
 
 		//Set origin to centre of image
@@ -141,5 +145,13 @@ public abstract class Entity {
 
 	public int getDepth() {
 		return depth;
+	}
+	
+	public Map getMap() {
+		return map;
+	}
+	
+	public Game getGame() {
+		return game;
 	}
 }

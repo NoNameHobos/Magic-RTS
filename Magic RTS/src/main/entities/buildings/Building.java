@@ -38,7 +38,7 @@ public abstract class Building extends SelectableEntity {
 		int h = (int) Math.ceil((sprite.getHeight() / 2) / GameConstants.TH_RENDER);
 
 		Node[][] n = new Node[w * NodeMap.RES][h * NodeMap.RES];
-		NodeMap nm = player.getGame().getNodeMap();
+		NodeMap nm = player.getMap().getNodeMap();
 		Node[][] nodeMap = nm.getNodes();
 
 		for (int i = 0; i < n.length; i++) {

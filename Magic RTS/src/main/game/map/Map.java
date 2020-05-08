@@ -15,6 +15,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
+import main.entities.ai.pathfinding.NodeMap;
 import main.entities.resources.ManaNode;
 import main.game.Game;
 import main.game.player.Camera;
@@ -53,6 +54,8 @@ public class Map {
 	private Camera mainCamera;
 	private UI ui;
 
+	private NodeMap nodeMap;
+	
 	public Map(String title, String tileSet, ArrayList<String> mapData) {
 		mapName = title;
 		tileset = TILE_SETS.get(tileSet);
@@ -81,8 +84,9 @@ public class Map {
 			FACTIONS.put("vikings", new Viking());
 			FACTIONS.put("steampunk", new Steampunk());
 
-			loadPlayers();
+			nodeMap = NodeMap.createNodeMap(this);
 			loadTiles(tileData);
+			loadPlayers();
 		}
 	}
 
@@ -237,6 +241,10 @@ public class Map {
 
 	public Player getNeutralPlayer() {
 		return neutralPlayer;
+	}
+	
+	public NodeMap getNodeMap() {
+		return nodeMap;
 	}
 
 }
