@@ -63,7 +63,6 @@ public class MapSelectMenu extends Menu {
 
 	@Override
 	public void mousePressed(int b, int x, int y) {
-		// TODO Auto-generated method stub
 		if (b == 0) {
 			for (MenuButton button : buttons) {
 				if (button.mouseOver()) {
@@ -72,7 +71,7 @@ public class MapSelectMenu extends Menu {
 						Engine.getInput().removeAllListeners();
 						Engine.setCurrentState(Engine.gameState);
 					} else {
-						menuState.setCurrentMenu(MenuState.MENUS.get(0));
+						menuState.goBack();
 					}
 				}
 			}

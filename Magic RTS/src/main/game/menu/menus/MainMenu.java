@@ -19,10 +19,14 @@ public class MainMenu extends Menu {
 			return;
 		initialized = true;
 
-		buttons.add(new MenuButton(this, new Point(0, 400), "Campaign"));
-		buttons.add(new MenuButton(this, new Point(0, 455), "Skirmish"));
-		buttons.add(new MenuButton(this, new Point(0, 510), "Options"));
-		buttons.add(new MenuButton(this, new Point(0, 565), "Quit"));
+		final int MENU_Y = 400;
+		final int BUTTON_HEIGHT = 55;
+		
+		buttons.add(new MenuButton(this, new Point(0, MENU_Y), "Campaign"));
+		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT), "Skirmish"));
+		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 2), "Map Editor"));
+		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 3), "Options"));
+		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 4), "Quit"));
 	}
 
 	@Override
@@ -45,25 +49,21 @@ public class MainMenu extends Menu {
 	}
 
 	@Override
-	public void mousePressed(int arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(int b, int x, int y) {
-		System.out.println(b);
+	public void mousePressed(int b, int x, int y) {
 		if (b == 0) {
 			for (MenuButton button : buttons) {
 				if (button.mouseOver()) {
-					switch (((MenuButton) button).getText()) {
+					switch (button.getText()) {
 
 					case "Skirmish":
-						menuState.setCurrentMenu(MenuState.MENUS.get(1));
+						menuState.setCurrentMenu(MenuState.MENUS.get("map"));
 						break;
 
 					case "Quit":
-						System.exit(0); // TODO:Probably need to change this
+						System.exit(0); // TODO: Probably need to change this
+						break;
+					case "Map Editor":
+						menuState.setCurrentMenu(MenuState.MENUS.get("editor"));
 						break;
 					default:
 						alarm[0] = 120;
@@ -73,6 +73,10 @@ public class MainMenu extends Menu {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void mouseReleased(int b, int x, int y) {
 	}
 
 }
