@@ -1,5 +1,6 @@
 package main.game.menu.menus;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
@@ -68,7 +69,6 @@ public class EditorMenu extends Menu {
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
 		
 	}
 

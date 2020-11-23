@@ -246,6 +246,10 @@ public class Map {
 	public NodeMap getNodeMap() {
 		return nodeMap;
 	}
+	
+	public Tile[][] getTiles() {
+		return tiles;
+	}
 
 }
 

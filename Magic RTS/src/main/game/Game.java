@@ -58,8 +58,14 @@ public class Game {
 	public void tick() {
 		// Update Entities
 		ArrayList<Entity> entities = Entity.getEntities();
+		entities.removeIf(entity -> (entity.isDead()));
+		
 		entities.sort(new SortByDepth());
 		for (Entity entity : entities) {
+			if(entity.getPos().getX() < 0 || entity.getPos().getY() < 0) {
+				entity.setDead(true);
+				continue;
+			}
 			entity.tick();
 		}
 
@@ -75,7 +81,7 @@ public class Game {
 		}
 	}
 
-	// Tick
+	// Render
 	public void render(Graphics g) {
 
 		Camera curCamera = map.getMainCamera();

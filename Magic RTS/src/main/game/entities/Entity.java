@@ -28,7 +28,8 @@ public abstract class Entity {
 	protected Point origin; //Origin of the sprite
 	
 	protected boolean selectable = false;
-
+	protected boolean dead = false;
+	
 	protected int[] alarm = new int[10];
 
 	public final static ArrayList<Entity> ENTITIES = new ArrayList<Entity>();
@@ -85,7 +86,6 @@ public abstract class Entity {
 	public void tick() {
 		float x = pos.getX() - origin.getX();
 		float y = pos.getY() - origin.getY();
-		
 		boundingbox.setX(x);
 		boundingbox.setY(y);
 		
@@ -153,5 +153,13 @@ public abstract class Entity {
 	
 	public Game getGame() {
 		return game;
+	}
+	
+	public boolean isDead() {
+		return dead;
+	}
+	
+	public void setDead(boolean d) {
+		dead = d;
 	}
 }
