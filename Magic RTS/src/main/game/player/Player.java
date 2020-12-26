@@ -18,7 +18,6 @@ import main.game.entities.Entity;
 import main.game.entities.buildings.House;
 import main.game.entities.buildings.Townhall;
 import main.game.entities.selectables.Unit;
-import main.game.entities.selectables.unit.vikings.Warg;
 import main.game.map.Map;
 import main.game.ui.UI;
 
@@ -62,7 +61,6 @@ public class Player {
 		units = new ArrayList<Unit>();
 		selected = new ArrayList<Entity>();
 
-		units.add(new Warg(this, spawn.getX() - TW_RENDER * 6, spawn.getY() + TH_RENDER * 6));
 		buildings.add(new House(this, new Point(spawn.getX() + TW_RENDER * 5, spawn.getY() + TH_RENDER * 5)));
 		buildings.add(new Townhall(this, new Point(spawn.getX(), spawn.getY())));
 		

@@ -11,11 +11,13 @@ public class GameConstants {
 	public static final int TH_RENDER = 64;
 
 	
+	private static boolean arrowKeys = false;
+	
 	// Camera controls
-	public static final int CAMERA_DOWN = Input.KEY_DOWN;
-	public static final int CAMERA_UP = Input.KEY_UP;
-	public static final int CAMERA_LEFT = Input.KEY_LEFT;
-	public static final int CAMERA_RIGHT = Input.KEY_RIGHT;
+	public static final int CAMERA_DOWN  = (!arrowKeys) ? Input.KEY_S : Input.KEY_DOWN;
+	public static final int CAMERA_UP    = (!arrowKeys) ? Input.KEY_W : Input.KEY_UP;
+	public static final int CAMERA_LEFT  = (!arrowKeys) ? Input.KEY_A : Input.KEY_LEFT;
+	public static final int CAMERA_RIGHT = (!arrowKeys) ? Input.KEY_D : Input.KEY_RIGHT;
 	
 	// Unit states
 	public static final int STATE_MOVING = 0;
