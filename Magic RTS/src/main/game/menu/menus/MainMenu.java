@@ -21,12 +21,16 @@ public class MainMenu extends Menu {
 
 		final int MENU_Y = 400;
 		final int BUTTON_HEIGHT = 55;
+
+		boolean all_defunct = false;
+
+		final String[] button_text = { "Campaign", "Skirmish", "Map Editor", "Options", "Quit" };
+
+		for(int i = 0; i < button_text.length; i++) {
+			buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * i), button_text[i], all_defunct));
+		}
 		
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y), "Campaign"));
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT), "Skirmish"));
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 2), "Map Editor"));
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 3), "Options"));
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 4), "Quit"));
+
 	}
 
 	@Override
@@ -39,7 +43,7 @@ public class MainMenu extends Menu {
 			button.tick();
 
 		}
-		
+
 	}
 
 	@Override

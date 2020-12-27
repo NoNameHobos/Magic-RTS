@@ -60,10 +60,10 @@ public class EditorMenu extends Menu {
 		final int MENU_Y = 400;
 		final int BUTTON_HEIGHT = 55;
 		
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y), "New Map"));
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT), "Load Map"));
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 2), "Delete"));
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 4), "Back"));
+		buttons.add(new MenuButton(this, new Point(0, MENU_Y), "New Map", false));
+		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT), "Load Map", false));
+		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 2), "Delete", false));
+		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 4), "Back", false));
 		
 	}
 

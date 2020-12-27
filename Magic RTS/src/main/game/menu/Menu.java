@@ -6,6 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.MouseListener;
+import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
 import main.game.states.MenuState;
@@ -36,6 +37,20 @@ public abstract class Menu implements MouseListener {
 		for(@SuppressWarnings("unused") int a : alarm) {
 			a = -1;
 		}
+	}
+	
+	public boolean addButton(Point pos, String text, boolean defunct) {
+		MenuButton mb = new MenuButton(this, pos, text, defunct);
+		addButton(mb);
+		return true;
+	}
+	
+	public boolean addButton(MenuButton button) {
+		// TODO: Check success
+		
+		buttons.add(button);
+		
+		return true;
 	}
 	
 	public abstract void init();

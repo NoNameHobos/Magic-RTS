@@ -14,15 +14,19 @@ public class MenuButton extends MenuElement implements Clickable {
 	private Animation backAnim;
 	private String text;
 
-	public MenuButton(Menu menu, Point pos, String text) {
+	private boolean defunct;
+	
+	public MenuButton(Menu menu, Point pos, String text, boolean defunct) {
 		super(menu, text,  pos, new Point(190, 48));
 		this.text = text;
 		animation = new Animation(ResourceLoader.SPRITE_SHEETS.get("menu_button"), 5);
 		animation.setLooping(false);
 		backAnim = new Animation(ResourceLoader.SPRITE_SHEETS.get("menu_buttonR"), 5);
 		backAnim.setLooping(false);
+		
+		this.defunct = defunct;
 	}
-
+	
 	@Override
 	public void tick() {
 		
@@ -74,5 +78,14 @@ public class MenuButton extends MenuElement implements Clickable {
 		return text;
 	}
 
+	
+	/*
+		buttons.add(new MenuButton(this, new Point(0, MENU_Y), "Campaign", all_defunct));
+		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT), "Skirmish", all_defunct));
+		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 2), "Map Editor", all_defunct));
+		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 3), "Options", all_defunct));
+		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 4), "Quit", all_defunct));*/
+	
+	
 
 }

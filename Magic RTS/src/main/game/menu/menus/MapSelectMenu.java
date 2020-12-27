@@ -37,10 +37,10 @@ public class MapSelectMenu extends Menu {
 		float marginY = 55;
 
 		for (int i = 0; i < vals.length; i++) {
-			buttons.add(new MenuButton(this, new Point(0, y + marginY * i), vals[i]));
+			buttons.add(new MenuButton(this, new Point(0, y + marginY * i), vals[i], false));
 		}
 
-		buttons.add(new MenuButton(this, new Point(0, Engine.getHEIGHT() - 65), "Back"));
+		buttons.add(new MenuButton(this, new Point(0, Engine.getHEIGHT() - 65), "Back", false));
 	}
 
 	@Override
