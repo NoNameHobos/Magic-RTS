@@ -257,7 +257,6 @@ class SortByDepth implements Comparator<Tile> {
 
 	@Override
 	public int compare(Tile t1, Tile t2) {
-		// TODO Auto-generated method stub
 		return (int) (t2.getDepth() - t1.getDepth());
 	}
 

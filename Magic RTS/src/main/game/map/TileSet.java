@@ -37,11 +37,9 @@ public class TileSet {
 				tileData.add(st);
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			System.err.println("Missing or corrupt inf file");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

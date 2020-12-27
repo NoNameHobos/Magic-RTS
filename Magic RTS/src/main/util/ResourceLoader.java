@@ -155,7 +155,6 @@ public class ResourceLoader {
 			f = f.deriveFont(size * 1f);
 			ttf = new TrueTypeFont(f, false);
 		} catch (FontFormatException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

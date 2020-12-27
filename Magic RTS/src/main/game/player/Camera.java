@@ -223,14 +223,10 @@ public class Camera implements Clickable {
 
 	@Override
 	public void mousePressed(int arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseReleased(int arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public void mouseMoved(int oldx, int oldy, int x, int y) {
@@ -245,7 +241,6 @@ public class Camera implements Clickable {
 
 	@Override
 	public boolean isAcceptingInput() {
-		// TODO Auto-generated method stub
 		return Engine.getCurrentState() == Engine.gameState;
 	}
 }

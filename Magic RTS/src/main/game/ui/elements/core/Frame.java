@@ -38,7 +38,6 @@ public class Frame extends UIElement {
 
 	@Override
 	public void step() {
-		// TODO Auto-generated method stub
 
 	}
 

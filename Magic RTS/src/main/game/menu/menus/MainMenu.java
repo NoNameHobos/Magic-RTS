@@ -29,8 +29,6 @@ public class MainMenu extends Menu {
 		for(int i = 0; i < button_text.length; i++) {
 			buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * i), button_text[i], all_defunct));
 		}
-		
-
 	}
 
 	@Override
@@ -48,37 +46,9 @@ public class MainMenu extends Menu {
 
 	@Override
 	public void mouseMoved(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
 
 	}
-
-	@Override
-	public void mousePressed(int b, int x, int y) {
-		if (b == 0) {
-			for (MenuButton button : buttons) {
-				if (button.mouseOver()) {
-					switch (button.getText()) {
-
-					case "Skirmish":
-						menuState.setCurrentMenu(MenuState.MENUS.get("map"));
-						break;
-
-					case "Quit":
-						System.exit(0); // TODO: Probably need to change this
-						break;
-					case "Map Editor":
-						menuState.setCurrentMenu(MenuState.MENUS.get("editor"));
-						break;
-					default:
-						alarm[0] = 120;
-						break;
-
-					}
-				}
-			}
-		}
-	}
-
+	
 	@Override
 	public void mouseReleased(int b, int x, int y) {
 	}

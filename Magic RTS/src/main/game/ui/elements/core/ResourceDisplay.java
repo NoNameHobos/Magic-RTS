@@ -34,7 +34,6 @@ public class ResourceDisplay extends UIElement {
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
 		for(Bar bar : bars) {
 			bar.render(g);
 		}

@@ -1,4 +1,4 @@
-package main.game.menu;
+ package main.game.menu;
 
 import java.util.ArrayList;
 
@@ -10,8 +10,9 @@ import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
 import main.game.states.MenuState;
+import main.input.Clickable;
 
-public abstract class Menu implements MouseListener {
+public abstract class Menu implements Clickable {
 
 	protected ArrayList<MenuButton> buttons;
 
@@ -20,6 +21,15 @@ public abstract class Menu implements MouseListener {
 	protected MenuState menuState;
 	
 	protected boolean initialized = false;
+
+	//Some abstract events
+	public abstract void init();
+	public abstract void draw(Graphics g);
+	public abstract void step();
+
+	private static final int LEFT = 0;
+	private static final int RIGHT = 1;
+	private static final int MIDDLE = 2;
 	
 	public Menu(MenuState menuState, ArrayList<MenuButton> buttons) {
 		this.menuState = menuState;
@@ -38,23 +48,7 @@ public abstract class Menu implements MouseListener {
 			a = -1;
 		}
 	}
-	
-	public boolean addButton(Point pos, String text, boolean defunct) {
-		MenuButton mb = new MenuButton(this, pos, text, defunct);
-		addButton(mb);
-		return true;
-	}
-	
-	public boolean addButton(MenuButton button) {
-		// TODO: Check success
-		
-		buttons.add(button);
-		
-		return true;
-	}
-	
-	public abstract void init();
-	
+			
 	public void update() {
 		for(int i = 0; i < alarm.length; i++) {
 			if(alarm[i] != -1) alarm[i] -= 1;
@@ -63,7 +57,6 @@ public abstract class Menu implements MouseListener {
 			for(MenuButton button : buttons) {
 				button.tick();
 			}
-			
 			
 			step();
 		}
@@ -81,54 +74,43 @@ public abstract class Menu implements MouseListener {
 		draw(g);
 	}
 	
-	@Override
-	public void mouseWheelMoved(int arg0) {
-		// TODO Auto-generated method stub
-		
+	public boolean addButton(Point pos, String text, ButtonAction action) {
+		MenuButton mb = new MenuButton(this, pos, text, (action == null));
+		mb.setAction(action);
+		return addButton(mb, action);
 	}
+	
+	public boolean addButton(MenuButton button, ButtonAction action) {
+		// TODO: Check success
+		buttons.add(button);
+		
+		return (action != null);
+	}
+	
+	/*----------------------INTERFACE: MouseListener -------------*/
 
 	@Override
-	public void inputEnded() {
-		// TODO Auto-generated method stub
+	public void mousePressed(int b, int x, int y) {
 		
+		switch(b) {
+			case LEFT:
+				for (MenuButton button : buttons) {
+					if(!button.isDefunct()) {
+						if(button.mouseOver()) {
+							button.getAction().execute();
+						}
+					} else alarm[0] = 120;
+				}
+			break;
+		}
 	}
-
-	@Override
-	public void inputStarted() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	public boolean isAcceptingInput() {
-		// TODO Auto-generated method stub
 		return menuState.getCurrentMenu() == this;
 	}
-
-	@Override
-	public void setInput(Input arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseClicked(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseDragged(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	//Some abstract events
-	public abstract void draw(Graphics g);
-	public abstract void step();
 	
 	// Getters and Setters
-	
 	public ArrayList<MenuButton> getButtons() {
 		return buttons;
 	}

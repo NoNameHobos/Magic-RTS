@@ -14,6 +14,8 @@ public class MenuButton extends MenuElement implements Clickable {
 	private Animation backAnim;
 	private String text;
 
+	private ButtonAction buttonAction;
+	
 	private boolean defunct;
 	
 	public MenuButton(Menu menu, Point pos, String text, boolean defunct) {
@@ -35,7 +37,9 @@ public class MenuButton extends MenuElement implements Clickable {
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.white);
+		
 		float x;
+		
 		g.setFont(ResourceLoader.FONTS.get("Menu"));
 		if (mouseOver()) {
 			animation.start();
@@ -57,19 +61,16 @@ public class MenuButton extends MenuElement implements Clickable {
 	
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseReleased(int button, int x, int y) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public boolean isAcceptingInput() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
@@ -77,15 +78,16 @@ public class MenuButton extends MenuElement implements Clickable {
 	public String getText() {
 		return text;
 	}
-
 	
-	/*
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y), "Campaign", all_defunct));
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT), "Skirmish", all_defunct));
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 2), "Map Editor", all_defunct));
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 3), "Options", all_defunct));
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 4), "Quit", all_defunct));*/
+	public boolean isDefunct() {
+		return defunct;
+	}
 	
+	public void setAction(ButtonAction action) {
+		this.buttonAction = action;
+	}
 	
-
+	public ButtonAction getAction() {
+		return buttonAction;
+	}
 }

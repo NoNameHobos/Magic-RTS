@@ -26,19 +26,16 @@ public interface Clickable extends MouseListener {
 	
 	@Override
 	default void inputEnded() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	default void inputStarted() {
-		// TODO Auto-generated method stub
 		
 	}
 	
 	@Override
 	default void setInput(Input input) {
-		// TODO Auto-generated method stub
 		
 	}
 	

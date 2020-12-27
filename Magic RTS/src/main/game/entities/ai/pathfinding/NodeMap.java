@@ -62,6 +62,7 @@ public class NodeMap {
 		System.out.print(m.getMapWidth());
 		System.out.print(",");
 		System.out.println(nodes.length);
+		
 		return nm;
 	}
 

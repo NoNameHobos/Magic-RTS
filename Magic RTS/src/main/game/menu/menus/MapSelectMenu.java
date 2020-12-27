@@ -19,7 +19,6 @@ public class MapSelectMenu extends Menu {
 
 	public MapSelectMenu(MenuState state) {
 		super(state);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -45,7 +44,6 @@ public class MapSelectMenu extends Menu {
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -57,7 +55,6 @@ public class MapSelectMenu extends Menu {
 
 	@Override
 	public void mouseMoved(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
 
 	}
 

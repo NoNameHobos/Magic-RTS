@@ -18,7 +18,6 @@ public class Worker extends Unit {
 	
 	public Worker(Player player, float x, float y) {
 		super(player, x, y, ResourceLoader.SPRITES.get("worker_right").copy());
-		// TODO Auto-generated constructor stub
 
 		// Init Stats
 		stats[STAT_HEALTH] = 1f;
@@ -47,7 +46,6 @@ public class Worker extends Unit {
 
 	@Override
 	public void step() {
-		// TODO Auto-generated method stub
 	}
 
 }

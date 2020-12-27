@@ -1,9 +1,9 @@
 package main.game.menu.menus;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
+import main.game.menu.ButtonAction;
 import main.game.menu.Menu;
 import main.game.menu.MenuButton;
 import main.game.states.MenuState;
@@ -12,18 +12,15 @@ public class EditorMenu extends Menu {
 
 	public EditorMenu(MenuState menuState) {
 		super(menuState);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void mouseMoved(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mousePressed(int arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -60,10 +57,10 @@ public class EditorMenu extends Menu {
 		final int MENU_Y = 400;
 		final int BUTTON_HEIGHT = 55;
 		
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y), "New Map", false));
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT), "Load Map", false));
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 2), "Delete", false));
-		buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * 4), "Back", false));
+		addButton(new Point(0, MENU_Y), "New Map", () -> false);
+		addButton(new Point(0, MENU_Y + BUTTON_HEIGHT), "Load Map", () -> false);
+		addButton(new Point(0, MENU_Y + BUTTON_HEIGHT * 2), "Delete", () -> false);
+		addButton(new Point(0, MENU_Y + BUTTON_HEIGHT * 3), "Back", () -> false);
 		
 	}
 
@@ -74,7 +71,6 @@ public class EditorMenu extends Menu {
 
 	@Override
 	public void step() {
-		// TODO Auto-generated method stub
 		
 	}
 
