@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
 
-public abstract class State {
+public abstract class State extends GameObject {
 	
 	protected String name;
 	public static ArrayList<State> STATES = new ArrayList<State>();

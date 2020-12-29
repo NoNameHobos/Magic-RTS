@@ -2,7 +2,6 @@ package main.game.menu.menus;
 
 import java.util.HashMap;
 
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
@@ -39,17 +38,11 @@ public class MapSelectMenu extends Menu {
 			cur_button.setAction(() -> {
 				MAP_TO_LOAD = cur_button.getText();
 				Engine.setCurrentState(Engine.gameState);
-				System.out.println(MAP_TO_LOAD);
 			});
 		}
 
 		// TODO: Remove "65" as a magic number
 		// Back Button
-		addButton(new Point(0, Engine.getHEIGHT() - 65), "Back", null);
-	}
-
-	@Override
-	public void draw(Graphics g) {
-
+		addBackButton(new Point(0, Engine.getHEIGHT() - 65));
 	}
 }

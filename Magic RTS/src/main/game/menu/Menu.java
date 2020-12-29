@@ -2,16 +2,14 @@ package main.game.menu;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
-import main.engine.Engine;
 import main.game.states.MenuState;
 import main.input.Clickable;
 
 public abstract class Menu implements Clickable {
-
+	
 	protected ArrayList<MenuButton> buttons;
 
 	protected int[] alarm = new int[10];
@@ -22,13 +20,10 @@ public abstract class Menu implements Clickable {
 
 	// Some abstract events
 	protected abstract void init_buttons();
-	public abstract void draw(Graphics g);
 
 	private static final int M_LEFT = 0;
-	private static final int M_RIGHT = 1;
-	private static final int M_MIDDLE = 2;
-
-	
+	//private static final int M_RIGHT = 1;
+	//private static final int M_MIDDLE = 2;
 	
 	public Menu(MenuState menuState) {
 		this.menuState = menuState;
@@ -64,12 +59,6 @@ public abstract class Menu implements Clickable {
 		for (MenuButton button : buttons) {
 			button.render(g);
 		}
-		if (alarm[0] != -1) {
-			g.setColor(new Color(1, 1, 1, (float) (alarm[0]) / 60));
-			g.drawString("Button  Defunct", Engine.getWIDTH() / 3, Engine.getHEIGHT() / 2);
-		}
-
-		draw(g);
 	}
 	
 	public MenuButton addButton(Point pos, String text, ButtonAction action) {
@@ -83,6 +72,17 @@ public abstract class Menu implements Clickable {
 		buttons.add(button);
 		return button;
 	}
+	
+	public MenuButton addButton(int x, int y, String text, ButtonAction action) {
+		Point pos = new Point(x, y);
+		return addButton(pos, text, action);
+	}
+	
+	public MenuButton addBackButton(Point pos) {
+		return addButton(pos, "Back", () -> {
+			menuState.setCurrentMenu(menuState.getLastMenu());
+		});
+	}
 
 	/*----------------------INTERFACE: MouseListener -------------*/
 
@@ -91,12 +91,9 @@ public abstract class Menu implements Clickable {
 
 		switch (b) {
 			case M_LEFT:
-				for (MenuButton button : buttons) {
-					if (button.mouseOver())
-						System.out.println(button.isDefunct());
-					
-					if (!button.isDefunct()) {
-						if (button.mouseOver()) {
+				for (MenuButton button : buttons) {		
+						if (button.mouseOver()) {			
+							if (!button.isDefunct()) {
 							// TODO: Fix NullPointer
 							try {
 								button.getAction().execute();
@@ -107,8 +104,8 @@ public abstract class Menu implements Clickable {
 									System.err.println("An unknown error occurred with button: " + button.getText());
 								e.printStackTrace();
 							}
+							} else System.out.println("Button defunct");
 						}
-					} else alarm[0] = 120;
 				}
 			break;
 		}

@@ -1,8 +1,8 @@
 package main.game.menu.menus;
 
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
+import main.engine.Engine;
 import main.game.menu.Menu;
 import main.game.states.MenuState;
 
@@ -21,11 +21,6 @@ public class EditorMenu extends Menu {
 		addButton(new Point(0, MENU_Y), "New Map", null);
 		addButton(new Point(0, MENU_Y + BUTTON_HEIGHT), "Load Map", null);
 		addButton(new Point(0, MENU_Y + BUTTON_HEIGHT * 2), "Delete", null);
-		addButton(new Point(0, MENU_Y + BUTTON_HEIGHT * 3), "Back", null);
-	}
-	
-	@Override
-	public void draw(Graphics g) {
-		
+		addBackButton(new Point(0, Engine.getHEIGHT() - 65));
 	}
 }
