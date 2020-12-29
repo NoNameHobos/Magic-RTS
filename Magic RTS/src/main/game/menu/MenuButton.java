@@ -37,11 +37,15 @@ public class MenuButton extends MenuElement  {
 		
 		g.setFont(ResourceLoader.FONTS.get("Menu"));
 		if (mouseOver()) {
-			animation.start();
+			if(animation.isStopped())
+				animation.start();
+			
 			animation.draw(pos.getX(), pos.getY());
+			
+			//if(backAnim.getCurrentFrame())
 			backAnim.restart();
-			x = pos.getX() + animation.getFrame() * 0.5f;
 			backAnim.stop();
+			x = pos.getX() + animation.getFrame() * 0.5f;
 		} else {
 			animation.restart();
 			animation.stop();

@@ -19,6 +19,8 @@ import main.game.map.MapLoader;
 import main.game.map.TileSet;
 
 public class ResourceLoader {
+	
+	// TODO: Move onto separate thread
 
 	public static final int FONT_SIZE = 60;
 

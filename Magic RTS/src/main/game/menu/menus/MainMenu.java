@@ -23,7 +23,7 @@ public class MainMenu extends Menu {
 		addButton(new Point(0, MENU_Y + BUTTON_HEIGHT * 2), "Map Editor", () -> menuState.setCurrentMenu("editor"));
 		addButton(new Point(0, MENU_Y + BUTTON_HEIGHT * 3), "Options", null);
 		
-		// Quit
+		// Quit Button
 		// TODO: REMOVE MAGIC NUMBER
 		addButton(new Point(Engine.getWIDTH() - 160, MENU_Y + BUTTON_HEIGHT * 4), "Quit", () -> System.exit(0));
 	}
