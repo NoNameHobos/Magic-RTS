@@ -4,7 +4,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
 import main.game.menu.Menu;
-import main.game.menu.MenuButton;
 import main.game.states.MenuState;
 
 public class MainMenu extends Menu {
@@ -14,43 +13,19 @@ public class MainMenu extends Menu {
 	}
 
 	@Override
-	public void init() {
-		if (initialized)
-			return;
-		initialized = true;
+	protected void init_buttons() {
 
 		final int MENU_Y = 400;
 		final int BUTTON_HEIGHT = 55;
 
-		boolean all_defunct = false;
-
-		final String[] button_text = { "Campaign", "Skirmish", "Map Editor", "Options", "Quit" };
-
-		for(int i = 0; i < button_text.length; i++) {
-			buttons.add(new MenuButton(this, new Point(0, MENU_Y + BUTTON_HEIGHT * i), button_text[i], all_defunct));
-		}
-	}
-
-	@Override
-	public void draw(Graphics g) {
-	}
-
-	@Override
-	public void step() {
-		for (MenuButton button : buttons) {
-			button.tick();
-
-		}
-
-	}
-
-	@Override
-	public void mouseMoved(int arg0, int arg1, int arg2, int arg3) {
-
+		addButton(new Point(0, MENU_Y), "Campaign", null);
+		addButton(new Point(0, MENU_Y + BUTTON_HEIGHT), "Skirmish", () -> menuState.setCurrentMenu("map_select"));
+		addButton(new Point(0, MENU_Y + BUTTON_HEIGHT * 2), "Map Editor", () -> menuState.setCurrentMenu("editor"));
+		addButton(new Point(0, MENU_Y + BUTTON_HEIGHT * 3), "Options", null);
+		addButton(new Point(0, MENU_Y + BUTTON_HEIGHT * 4), "Quit", () -> System.exit(0));
 	}
 	
 	@Override
-	public void mouseReleased(int b, int x, int y) {
+	public void draw(Graphics g) {
 	}
-
 }

@@ -25,7 +25,7 @@ public class MenuState extends State {
 	public MenuState() {
 		super("Menu");
 		MENUS.put("main", new MainMenu(this));
-		MENUS.put("map", new MapSelectMenu(this));
+		MENUS.put("map_select", new MapSelectMenu(this));
 		MENUS.put("editor", new EditorMenu(this));
 		currentMenu = MENUS.get("main");
 	}
@@ -55,6 +55,16 @@ public class MenuState extends State {
 		lastMenu = currentMenu;
 		menu.init();
 		currentMenu = menu;
+	}
+	
+	public void setCurrentMenu(String name) {
+		Menu menu = MENUS.get(name);
+		try {
+			setCurrentMenu(menu);
+		} catch(NullPointerException e) {
+			System.err.println("Menu: " + name + " is null");
+			e.printStackTrace();
+		}
 	}
 	
 	public Menu getCurrentMenu() {

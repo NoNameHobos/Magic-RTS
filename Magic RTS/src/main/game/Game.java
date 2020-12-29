@@ -46,7 +46,6 @@ public class Game {
 
 		currentView = controllingPlayer.getCamera();
 
-
 		System.out.println("Loaded map: " + MAP_TO_LOAD);
 
 		Engine.getInput().addMouseListener(Engine.getMouse());

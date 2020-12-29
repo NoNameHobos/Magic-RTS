@@ -5,18 +5,15 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
-import main.input.Clickable;
 import main.util.ResourceLoader;
 
-public class MenuButton extends MenuElement implements Clickable {
+public class MenuButton extends MenuElement  {
 
 	private Animation animation;
 	private Animation backAnim;
 	private String text;
 
 	private ButtonAction buttonAction;
-	
-	private boolean defunct;
 	
 	public MenuButton(Menu menu, Point pos, String text, boolean defunct) {
 		super(menu, text,  pos, new Point(190, 48));
@@ -25,8 +22,6 @@ public class MenuButton extends MenuElement implements Clickable {
 		animation.setLooping(false);
 		backAnim = new Animation(ResourceLoader.SPRITE_SHEETS.get("menu_buttonR"), 5);
 		backAnim.setLooping(false);
-		
-		this.defunct = defunct;
 	}
 	
 	@Override
@@ -56,31 +51,14 @@ public class MenuButton extends MenuElement implements Clickable {
 		}
 		g.drawString(text, x, pos.getY() - g.getFont().getHeight(text)/8);
 	}
-	
-	// Button Input
-	
-	@Override
-	public void mousePressed(int button, int x, int y) {
-		
-	}
 
-	@Override
-	public void mouseReleased(int button, int x, int y) {
-		
-	}
-
-	@Override
-	public boolean isAcceptingInput() {
-		return false;
-	}
-	
 	// Getters and Setters
 	public String getText() {
 		return text;
 	}
 	
 	public boolean isDefunct() {
-		return defunct;
+		return (this.buttonAction == null);
 	}
 	
 	public void setAction(ButtonAction action) {
