@@ -2,6 +2,7 @@ package main.game.player;
 
 import static main.GameConstants.TH_RENDER;
 import static main.GameConstants.TW_RENDER;
+import static main.game.player.Faction.FACTIONS;
 
 import java.util.ArrayList;
 
@@ -106,14 +107,34 @@ public class Player {
 		else System.out.println("UI is null: " + name);
 	}
 
-	public static Player createPlayer(String name, int id, Map m, boolean ai, Color color, Faction f, Point spawn) {
+	/**
+	 * Used to create a new player
+	 * @param spawn Point on the map to spawn on (in terms of tiles)
+	 * @param name  Player name
+	 * @param map Map to spawn on
+	 * @param color Player color
+	 * @param faction Player faction (string)
+	 * @param id Player ID
+	 * @param ai isAI?
+	 * @return returns player object
+	 */
+	public static Player createPlayer(Point spawn, String name, Map map, Color color, String faction, int id, boolean ai) {
+		System.out.println("Spawned player at: (" + spawn.getX() + ", " + spawn.getY() + ")");
 		Point tSpawn = new Point(spawn.getX() * TW_RENDER, spawn.getY() * TH_RENDER);
-		return new Player(name, id, m, ai, color, f, tSpawn);
+		return new Player(name, id, map, ai, color, FACTIONS.get(faction), tSpawn);
 	}
-	
-	public static Player createPlayer(String name, int id, Map m, Color color, Faction f, Point spawn) {
-		Point tSpawn = new Point(spawn.getX() * TW_RENDER, spawn.getY() * TH_RENDER);
-		return new Player(name, id, m, false, color, f, tSpawn);
+	/**
+	 * Used to create a new non-ai player
+	 * @param spawn Point on the map to spawn on (in terms of tiles)
+	 * @param name Player name
+	 * @param map Map to spawn on
+	 * @param color Player color
+	 * @param faction Player faction (string)
+	 * @param id Player ID
+	 * @return returns player object
+	 */
+	public static Player createPlayer(Point spawn, String name, Map map, Color color, String faction, int id) {
+		return createPlayer(spawn, name, map, color, faction, id, false);
 	}
 		
 	// Getters and Setters

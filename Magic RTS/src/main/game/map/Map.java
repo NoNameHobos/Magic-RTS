@@ -4,9 +4,9 @@ import static main.GameConstants.TH_RENDER;
 import static main.GameConstants.TW_RENDER;
 import static main.util.ResourceLoader.TILE_SETS;
 
+
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Random;
 
 import org.newdawn.slick.Color;
@@ -19,16 +19,11 @@ import main.game.Game;
 import main.game.entities.ai.pathfinding.NodeMap;
 import main.game.entities.resources.ManaNode;
 import main.game.player.Camera;
-import main.game.player.Faction;
 import main.game.player.Player;
-import main.game.player.factions.Steampunk;
-import main.game.player.factions.Viking;
 import main.game.ui.UI;
 import main.util.ResourceLoader;
 
 public class Map {
-
-	public final static HashMap<String, Faction> FACTIONS = new HashMap<String, Faction>();
 
 	public final static String[] PLAYER_NAMES = { "GARY", "BEN", "TOM", "TODD", "DAN", "DANIELLE" };
 
@@ -56,6 +51,13 @@ public class Map {
 
 	private NodeMap nodeMap;
 	
+	// TODO: Merge constructor and create static load function
+	// For a new map
+	public Map(String title) {
+		
+	}
+	
+	// For a loaded map
 	public Map(String title, String tileSet, ArrayList<String> mapData) {
 		mapName = title;
 		tileset = TILE_SETS.get(tileSet);
@@ -73,17 +75,14 @@ public class Map {
 
 	public void init(Game game) {
 		if (tiles == null) {
+			this.game = game;
+			
 			String[][] tileData = new String[mapHeight][mapWidth];
 
 			for (int i = 0; i < mapHeight; i++) {
 				tileData[i] = mapData.get(i).split(" ");
 			}
-
-			this.game = game;
-
-			FACTIONS.put("vikings", new Viking());
-			FACTIONS.put("steampunk", new Steampunk());
-
+			
 			nodeMap = NodeMap.createNodeMap(this);
 			loadTiles(tileData);
 			loadPlayers();
@@ -96,8 +95,8 @@ public class Map {
 
 		players = new Player[spawns.length];
 		neutralPlayer = new Player("NEUTRAL", players.length, this, true, new Color(0, 120, 255));
-		focusedPlayer = Player.createPlayer("BRYN", 0, this, new Color(0, 0, 255), FACTIONS.get("vikings"), spawns[0]);
-		System.out.println("Spawned player at: (" + spawns[0].getX() + ", " + spawns[0].getY() + ")");
+		focusedPlayer = Player.createPlayer(spawns[0], "BRYN", this, new Color(0, 0, 255), "vikings", 0);
+		
 		players[0] = focusedPlayer;
 		spawnNodes(spawns[0], NODES_PER_SITE, 180 / 8, "MANA");
 
@@ -111,7 +110,9 @@ public class Map {
 			Random r = new Random();
 			String str = PLAYER_NAMES[r.nextInt(PLAYER_NAMES.length - 1)];
 			Color c = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
-			players[i] = Player.createPlayer(str, i, this, false, c, FACTIONS.get("steampunk"), spawns[i]);
+			
+			players[i] = Player.createPlayer(spawns[i], str, this, c, "steampunk",  i);
+			
 			spawnNodes(spawns[i], NODES_PER_SITE, 180 / 8, "MANA");
 		}
 

@@ -43,7 +43,7 @@ public class CommandHUD extends UIElement {
 		float marginX = 2;
 		float marginY = 2;
 		
-		float xOffset = 3; //TODO: Adjust image
+		float xOffset = 3; //TODO: Adjust image/Remove magic numbers
 		float yOffset = 3;
 		/*
 		 * int xCount = (int) Math.floor(WIDTH / (UIButton.WIDTH + marginX)); int yCount

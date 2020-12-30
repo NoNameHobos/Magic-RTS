@@ -22,11 +22,11 @@ public class Worker extends Unit {
 		// Init Stats
 		stats[STAT_HEALTH] = 1f;
 		stats[STAT_HEALTH_MAX] = 1f;
-		stats[STAT_ACC] = 0.0001f;
+		stats[STAT_ACC] = 0.1f;
 		stats[STAT_PHYS_DEF] = 0f;
 		stats[STAT_MAG_DEF] = 0f;
 		
-		max_speed = 2;
+		max_speed = 5f;
 		
 		// Attack stuff
 		stats[STAT_ATTACK] = 1;

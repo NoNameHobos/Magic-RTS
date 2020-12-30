@@ -110,7 +110,6 @@ public abstract class Unit extends SelectableEntity implements BasicCommandable 
 			float dist = Utils.distance(endPoint, pos);
 
 			if (Utils.distance(pos, nodePos) < TOLERANCE) {
-				System.out.println("Next node");
 				path.getNodes().remove(0);
 			} else
 				moveTo(nodePos);

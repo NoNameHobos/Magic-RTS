@@ -9,9 +9,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import main.game.State;
-import main.game.states.GameState;
-import main.game.states.LoadState;
-import main.game.states.MenuState;
+import main.game.states.*;
 import main.graphics.Display;
 import main.input.Mouse;
 
@@ -32,6 +30,7 @@ public class Engine implements Game {
 	public static final State menuState = new MenuState();
 	public static final State loadState = new LoadState();
 	public static final State gameState = new GameState();
+	public static final State editorState = new EditorState();
 
 	public Engine(int WIDTH, int HEIGHT, String TITLE) {
 		System.out.println("Initializing Engine..");

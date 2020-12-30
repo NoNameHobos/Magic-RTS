@@ -15,6 +15,7 @@ import main.engine.Engine;
 import main.game.entities.Entity;
 import main.game.map.Map;
 import main.game.player.Camera;
+import main.game.player.Faction;
 import main.game.player.Player;
 import main.input.Mouse;
 
@@ -39,6 +40,7 @@ public class Game {
 	private static Camera currentView;
 
 	public void init() {
+		Faction.initFactions();
 		map = MAPS.get(MAP_TO_LOAD);
 		map.init(this);
 

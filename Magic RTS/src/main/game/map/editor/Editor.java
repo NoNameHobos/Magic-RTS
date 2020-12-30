@@ -6,9 +6,16 @@ public class Editor {
 
 	private Map currentMap;
 	
+	public Editor() {
+		
+	}
 	
 	// Initialize a new editor
 	public Editor(Map map) {
+		// Generate a new map
+		if(map == null) {
+			map = new Map("");
+		}
 		this.currentMap = map;
 	}
 	
