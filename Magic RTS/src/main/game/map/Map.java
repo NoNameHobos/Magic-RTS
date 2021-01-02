@@ -94,7 +94,7 @@ public class Map {
 		int NODES_PER_SITE = 1;
 
 		players = new Player[spawns.length];
-		neutralPlayer = new Player("NEUTRAL", players.length, this, true, new Color(0, 120, 255));
+		neutralPlayer = Player.createPlayer(new Point(0, 0), "NEUTARL", this, Color.green, "wild", 0);
 		focusedPlayer = Player.createPlayer(spawns[0], "BRYN", this, new Color(0, 0, 255), "vikings", 0);
 		
 		players[0] = focusedPlayer;

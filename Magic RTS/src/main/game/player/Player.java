@@ -47,7 +47,7 @@ public class Player {
 	
 	private Selector selector;
 	
-	public Player(String name, int playerID, Map map, boolean AI, Color playerColor, Faction faction, Point s) {
+	private Player(String name, int playerID, Map map, boolean AI, Color playerColor, Faction faction, Point s) {
 		this.game = map.getGame();
 		this.playerColor = playerColor;
 		this.isAI = AI;
@@ -67,17 +67,7 @@ public class Player {
 		
 		if(map.getFocusedPlayer() == this) selector = new Selector(this, Engine.getInput());
 	}
-	
-	public Player(String name, int playerID, Map map, boolean AI, Color playerColor) {
-		this.game = map.getGame();
-		this.playerColor = playerColor;
-		this.isAI = AI;
-		this.playerID = playerID;
 
-		this.map = map;
-		this.name = name;
-	}
-	
 	public void tick() {
 		if(map.getFocusedPlayer() == this) {
 			if(playerCamera != null) playerCamera.update();
