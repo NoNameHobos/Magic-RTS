@@ -1,7 +1,5 @@
 package main.graphics;
 
-import java.util.HashMap;
-
 public class AnimationSet {
 
 	// TODO: Implement anim sets

@@ -109,7 +109,7 @@ public class Game {
 			if (c.getRenderRect().contains(entity.getPos()) 
 					//&& !ui.contains(objectToUI(entity.getPos(), c))
 					)
-				entity.render(g);
+				entity.draw(g);
 		}
 
 		// Render player stuff

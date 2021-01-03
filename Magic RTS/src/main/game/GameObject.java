@@ -34,13 +34,23 @@ public abstract class GameObject {
 	public static void updateAll() {
 		for(GameObject object : OBJECTS) {
 			object.update();
+			
+			// Check if object is an entity, if so - check if it needs to be removed
+			if(object instanceof Entity) {
+				Entity entity = (Entity)object;
+				
+				if(entity.getPos().getX() < 0 || entity.getPos().getY() < 0) {
+					entity.dispose();
+					continue;
+				}
+			}
 		}
 	}
 	
 	public static void renderAll(Graphics g) {
 		for(GameObject object : OBJECTS) {
 			if(object instanceof Entity)
-				((Entity)object).render(g);
+				((Entity)object).draw(g);
 		}
 	}
 	

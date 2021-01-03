@@ -182,13 +182,7 @@ public abstract class Unit extends SelectableEntity implements BasicCommandable 
 		}
 		step();
 	}
-
-	@Override
-	public void render(Graphics g) {
-		super.render(g);
-		draw(g);
-	}
-
+	
 	public abstract void draw(Graphics g);
 
 	public abstract void step();

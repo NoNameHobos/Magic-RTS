@@ -46,7 +46,6 @@ public class Worker extends Unit {
 
 	@Override
 	public void step() {
-		// TODO Auto-generated method stub
 		
 	}
 

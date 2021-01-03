@@ -22,6 +22,7 @@ public abstract class Entity extends GameObject {
 	protected Game game;
 	protected Map map;
 
+	// Drawing Stuff
 	protected Image currentSprite;
 	protected AnimObj animations[];
 	
@@ -48,8 +49,11 @@ public abstract class Entity extends GameObject {
 		this.currentSprite = sprite;
 		this.pos = pos;
 		this.map = map;
-		game = map.getGame();
 		this.player = p;
+		
+		//animations = new AnimObj[30];
+		
+		game = map.getGame();
 
 		//Set origin to centre of image
 		origin = new Point(sprite.getWidth() / 2, sprite.getHeight() / 2); 
@@ -61,6 +65,15 @@ public abstract class Entity extends GameObject {
 		ENTITIES.add(this);
 	}
 
+	public void tick() {
+		float x = pos.getX() - origin.getX();
+		float y = pos.getY() - origin.getY();
+		boundingbox.setX(x);
+		boundingbox.setY(y);
+		
+		depth = -(int)Math.round(pos.getY() + currentSprite.getHeight() * .8);
+	}
+	
 	public float getPointDirection(Point target) {
 		float deltaX = target.getX() - pos.getX();
 		float deltaY = target.getY() - pos.getY();
@@ -83,21 +96,6 @@ public abstract class Entity extends GameObject {
 		float dY = (float)Math.pow(y1 - y2, 2);
 		
 		return (float)Math.pow(dX + dY, 0.5);
-	}
-
-	public void tick() {
-		float x = pos.getX() - origin.getX();
-		float y = pos.getY() - origin.getY();
-		boundingbox.setX(x);
-		boundingbox.setY(y);
-		
-		depth = -(int)Math.round(pos.getY() + currentSprite.getHeight() * .8);
-		step();
-	}
-
-	// Entity 
-	public void render(Graphics g) {
-		draw(g);
 	}
 		
 	// Getters and Setters

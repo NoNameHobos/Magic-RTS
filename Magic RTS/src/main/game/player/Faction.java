@@ -15,9 +15,9 @@ public abstract class Faction {
 	
 	protected HashMap<String, Image> sprites; //Hashmap for sprites
 	protected HashMap<String, SpriteSheet> sprite_sheets; //Hashmap for spritesheets
+	
 	protected ArrayList<String> units;
 	protected ArrayList<String> buildings;
-	//TODO: Change arraylists to maps of units
 	
 	protected String name;
 

@@ -27,8 +27,6 @@ public class EditorState extends State {
 
 	@Override
 	public void step() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
