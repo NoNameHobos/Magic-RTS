@@ -19,10 +19,8 @@ public abstract class Building extends SelectableEntity {
 
 	public Building(Player player, Point _pos, Image sprite) {
 		super(player, new Point(_pos.getX() + sprite.getWidth() / 2, _pos.getY() + sprite.getHeight() / 2), sprite);
-		type = "Building";
-
-		nodes = null;
 		
+		nodes = null;
 		while(nodes == null) nodes = findNodes();
 
 		float colWidth = nodes[0].length * GameConstants.TW_RENDER;
@@ -33,8 +31,8 @@ public abstract class Building extends SelectableEntity {
 	}
 
 	public Node[][] findNodes() {
-		int w = (int) Math.ceil(sprite.getWidth() / GameConstants.TW_RENDER);
-		int h = (int) Math.ceil((sprite.getHeight() / 2) / GameConstants.TH_RENDER);
+		int w = (int) Math.ceil(currentSprite.getWidth() / GameConstants.TW_RENDER);
+		int h = (int) Math.ceil((currentSprite.getHeight() / 2) / GameConstants.TH_RENDER);
 
 		Node[][] n = new Node[w * NodeMap.RES][h * NodeMap.RES];
 		NodeMap nm = player.getMap().getNodeMap();
@@ -44,7 +42,7 @@ public abstract class Building extends SelectableEntity {
 			for (int j = 0; j < n[i].length; j++) {
 
 				Point topLeft = new Point(pos.getX() - origin.getX(),
-						pos.getY() - origin.getY() + (float) Math.ceil(sprite.getHeight() / 3 * 2));
+						pos.getY() - origin.getY() + (float) Math.ceil(currentSprite.getHeight() / 3 * 2));
 
 				int x = (int) ((topLeft.getX() - NodeMap.XOFFSET) / NodeMap.NODE_WIDTH) + i;
 				int y = (int) ((topLeft.getY() - NodeMap.YOFFSET) / NodeMap.NODE_HEIGHT) + j;
@@ -65,9 +63,9 @@ public abstract class Building extends SelectableEntity {
 	}
 	
 	public void draw(Graphics g) {
-		float width = sprite.getWidth();
-		float height = sprite.getHeight();
-		sprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY(), width, height);
+		float width = currentSprite.getWidth();
+		float height = currentSprite.getHeight();
+		currentSprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY(), width, height);
 
 		for (Node[] nodeSet : nodes) {
 			for (Node node : nodeSet) {

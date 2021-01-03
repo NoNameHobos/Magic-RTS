@@ -43,7 +43,6 @@ public abstract class Unit extends SelectableEntity implements BasicCommandable 
 
 	public Unit(Player player, float x, float y, Image sprite) {
 		super(player, new Point(x, y), sprite);
-		type = "Unit";
 		des = new Point(x, y);
 		origin.setY(sprite.getHeight() - 5);
 

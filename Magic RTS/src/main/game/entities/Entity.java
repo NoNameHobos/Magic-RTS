@@ -9,39 +9,43 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.game.Game;
+import main.game.GameObject;
 import main.game.map.Map;
 import main.game.player.Player;
+import main.graphics.AnimObj;
 
-public abstract class Entity {
-
-	protected String type = "Entity";
-	protected Player player;
-
-	protected Image sprite;
+public abstract class Entity extends GameObject {
 	
-	protected int depth;
-	
-	protected SpriteSheet ss;
-
-	protected Point pos; // A Point as defined *IN THE GAME* NOT THE UI! use Game.pGameToUI() for its UI
-							// Counterpart
-	protected Point origin; //Origin of the sprite
-	
-	protected boolean selectable = false;
-	protected boolean dead = false;
-	
-	protected int[] alarm = new int[10];
-
 	public final static ArrayList<Entity> ENTITIES = new ArrayList<Entity>();
 
+	protected Player player;
+	protected Game game;
+	protected Map map;
+
+	protected Image currentSprite;
+	protected AnimObj animations[];
+	
+	// Rendering depth
+	// TODO: Implement this
+	protected int depth;
+	
+	// TODO: Make a function for this
+	protected boolean selectable = false;
+	
+	// Keep track of when to remove from entities list
+	protected boolean _dispose = false;
+	
+	protected SpriteSheet ss;
 	protected Rectangle boundingbox;
 
-	protected Map map;
+	protected Point pos; // A Point as defined *IN THE GAME* NOT THE UI! use Game.pGameToUI() for its UI
+	// Counterpart
+	protected Point origin; //Origin of the sprite
 	
-	protected Game game;
-	
+	public abstract void draw(Graphics g);
+
 	public Entity(Player p, Map map, Point pos, Image sprite) {
-		this.sprite = sprite;
+		this.currentSprite = sprite;
 		this.pos = pos;
 		this.map = map;
 		game = map.getGame();
@@ -54,8 +58,6 @@ public abstract class Entity {
 		boundingbox = new Rectangle(pos.getX() - origin.getX(), pos.getY() -
 				origin.getY(), sprite.getWidth(), sprite.getHeight());
 		
-		//Initialize the alarms and finally add this to the list of entities
-		initAlarms();
 		ENTITIES.add(this);
 	}
 
@@ -89,35 +91,18 @@ public abstract class Entity {
 		boundingbox.setX(x);
 		boundingbox.setY(y);
 		
-		//Tick down the alarms once per tick
-		for (int i = 0; i < alarm.length; i++) {
-			if (alarm[i] != -1) {
-				alarm[i] -= 1;
-			}
-		}
-		
-		depth = -(int)Math.round(pos.getY() + sprite.getHeight() * .8);
+		depth = -(int)Math.round(pos.getY() + currentSprite.getHeight() * .8);
 		step();
 	}
 
+	// Entity 
 	public void render(Graphics g) {
 		draw(g);
 	}
-	
-	public abstract void draw(Graphics g);
-	public abstract void step();
-
-
-	private void initAlarms() {
-		for (int i = 0; i < alarm.length; i++) {
-			alarm[i] = -1;
-		}
-	}
-	
-	
+		
 	// Getters and Setters
 	public Image getSprite() {
-		return sprite;
+		return currentSprite;
 	}
 
 	public static ArrayList<Entity> getEntities() {
@@ -130,10 +115,6 @@ public abstract class Entity {
 
 	public boolean isSelectable() {
 		return selectable;
-	}
-
-	public String getType() {
-		return type;
 	}
 
 	public Point getPos() {
@@ -155,11 +136,12 @@ public abstract class Entity {
 		return game;
 	}
 	
-	public boolean isDead() {
-		return dead;
+	// Disposal handling (Mainly for particle system)
+	public boolean toDispose() {
+		return _dispose;
 	}
 	
-	public void setDead(boolean d) {
-		dead = d;
+	public void dispose() {
+		_dispose = true;
 	}
 }

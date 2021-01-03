@@ -55,14 +55,14 @@ public class Engine implements Game {
 	public void update(GameContainer gc, int i) throws SlickException {
 		if (Engine.currentState != null) {
 			mouse.update();
-			Engine.currentState.tick();
+			Engine.currentState.step();
 		}
 	}
 
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 		g.setAntiAlias(false);
 		if (Engine.currentState != null) {
-			Engine.currentState.render(g);
+			Engine.currentState.draw(g);
 		}
 	}
 
@@ -93,7 +93,7 @@ public class Engine implements Game {
 
 	public static void setCurrentState(State currentState) {
 		Engine.currentState = currentState;
-		Engine.currentState.init();
+		Engine.currentState.start();
 	}
 
 	public static Input getInput() {

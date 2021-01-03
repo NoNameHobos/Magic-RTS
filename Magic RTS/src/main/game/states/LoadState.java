@@ -18,11 +18,11 @@ public class LoadState extends State {
 	}
 	
 	@Override
-	public void tick() {
+	public void step() {
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void draw(Graphics g) {
 		g.setBackground(Color.white);
 		g.setColor(Color.black);
 		g.drawString("Loading...",Engine.getWIDTH()/4, Engine.getHEIGHT()/4);

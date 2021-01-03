@@ -1,10 +1,58 @@
 package main.game;
 
+import java.util.ArrayList;
+
+import org.newdawn.slick.Graphics;
+
+import main.game.entities.Entity;
+
+public abstract class GameObject {
+
+	public static final int ALARM_COUNT = 9;
+	public static final ArrayList<GameObject> OBJECTS = new ArrayList<GameObject>();
+	
+	protected AlarmObject alarm[] = new AlarmObject[ALARM_COUNT];
+	
+	protected abstract void step();
+	
+	public GameObject() {
+		for(int i = 0; i < ALARM_COUNT; i++){
+			alarm[i] = new AlarmObject(null);
+		}
+		OBJECTS.add(this);
+	}
+	
+	private void update() {
+		for(AlarmObject a : alarm) {
+			a.update();
+		}
+		
+		step();
+	}
+	
+	
+	public static void updateAll() {
+		for(GameObject object : OBJECTS) {
+			object.update();
+		}
+	}
+	
+	public static void renderAll(Graphics g) {
+		for(GameObject object : OBJECTS) {
+			if(object instanceof Entity)
+				((Entity)object).render(g);
+		}
+	}
+	
+}
+
+
 interface Alarm {
 	void event();
 }
 
 class AlarmObject {
+	
 	private Alarm alarm;
 	private int timer;
 	
@@ -29,24 +77,4 @@ class AlarmObject {
 			timer = -1;
 		}
 	}
-}
-
-public abstract class GameObject {
-
-	public static final int ALARM_COUNT = 9;
-	
-	protected AlarmObject alarm[] = new AlarmObject[ALARM_COUNT];
-	
-	public GameObject() {
-		for(int i = 0; i < ALARM_COUNT; i++){
-			alarm[i] = new AlarmObject(null);
-		}
-	}
-	
-	public void tick() {
-		for(AlarmObject a : alarm) {
-			a.update();
-		}
-	}
-	
 }

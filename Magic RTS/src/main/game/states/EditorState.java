@@ -21,12 +21,13 @@ public class EditorState extends State {
 	}
 
 	@Override
-	public void tick() {
+	public void draw(Graphics g) {
 		
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void step() {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -40,12 +40,14 @@ public class Worker extends Unit {
 		float drawX = pos.getX() - origin.getX();
 		float drawY = pos.getY() - origin.getY();
 
-		g.drawImage(sprite, drawX, drawY);
+		g.drawImage(currentSprite, drawX, drawY);
 
 	}
 
 	@Override
 	public void step() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

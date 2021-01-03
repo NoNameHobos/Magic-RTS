@@ -14,29 +14,31 @@ public class GameState extends State {
 		super("Game");
 	}
 	
-	//Main Step Event for Game State
-	public void tick() {
-		if(game.isStarted()) {
-			game.tick();
-		}
+	@Override
+	protected void init() {
+		game = new Game();
+		game.init();
 	}
-
-	//Render the Game State
-	public void render(Graphics g) {
+	
+	@Override
+	public void draw(Graphics g) {
 		g.setBackground(Color.black);
 		if(game.isStarted()) {
 			game.render(g);
 		}
+		
 	}
-	
+
 	@Override
-	public void init() {
-		game = new Game();
-		System.out.println("Starting new game on map1"); //Place holder
-		game.init();
+	public void step() {
+		if(game.isStarted()) {
+			game.tick();
+		}
+		
 	}
 	
 	public Game getGame() {
 		return game;
 	}
+
 }

@@ -20,6 +20,7 @@ import main.game.entities.ai.pathfinding.NodeMap;
 import main.game.entities.resources.ManaNode;
 import main.game.player.Camera;
 import main.game.player.Player;
+import main.game.player.factions.FType;
 import main.game.ui.UI;
 import main.util.ResourceLoader;
 
@@ -94,8 +95,8 @@ public class Map {
 		int NODES_PER_SITE = 1;
 
 		players = new Player[spawns.length];
-		neutralPlayer = Player.createPlayer(new Point(0, 0), "NEUTARL", this, Color.green, "wild", 0);
-		focusedPlayer = Player.createPlayer(spawns[0], "BRYN", this, new Color(0, 0, 255), "vikings", 0);
+		neutralPlayer = Player.createPlayer(new Point(0, 0), "NEUTRAL", this, Color.green, FType.Wild, 0);
+		focusedPlayer = Player.createPlayer(spawns[0], "BRYN", this, new Color(0, 0, 255), FType.Viking, 0);
 		
 		players[0] = focusedPlayer;
 		spawnNodes(spawns[0], NODES_PER_SITE, 180 / 8, "MANA");
@@ -111,7 +112,7 @@ public class Map {
 			String str = PLAYER_NAMES[r.nextInt(PLAYER_NAMES.length - 1)];
 			Color c = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
 			
-			players[i] = Player.createPlayer(spawns[i], str, this, c, "steampunk",  i);
+			players[i] = Player.createPlayer(spawns[i], str, this, c, FType.Steampunk,  i);
 			
 			spawnNodes(spawns[i], NODES_PER_SITE, 180 / 8, "MANA");
 		}

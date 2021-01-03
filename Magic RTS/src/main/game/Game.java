@@ -41,6 +41,7 @@ public class Game {
 
 	public void init() {
 		Faction.initFactions();
+		System.out.println("Initializing game on " + MAP_TO_LOAD);
 		map = MAPS.get(MAP_TO_LOAD);
 		map.init(this);
 
@@ -59,12 +60,12 @@ public class Game {
 	public void tick() {
 		// Update Entities
 		ArrayList<Entity> entities = Entity.getEntities();
-		entities.removeIf(entity -> (entity.isDead()));
+		entities.removeIf(entity -> (entity.toDispose()));
 		
 		entities.sort(new SortByDepth());
 		for (Entity entity : entities) {
 			if(entity.getPos().getX() < 0 || entity.getPos().getY() < 0) {
-				entity.setDead(true);
+				entity.dispose();
 				continue;
 			}
 			entity.tick();

@@ -37,12 +37,12 @@ public class MenuState extends State {
 	}
 
 	@Override
-	public void tick() {
+	public void step() {
 		currentMenu.update();
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void draw(Graphics g) {
 		g.setBackground(new Color(0, 75, 0));
 		currentMenu.render(g);
 	}

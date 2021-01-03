@@ -11,7 +11,7 @@ import main.util.ResourceLoader;
 
 public abstract class Faction {
 
-	public static final HashMap<String, Faction> FACTIONS = new HashMap<String, Faction>();
+	public static final HashMap<FType, Faction> FACTIONS = new HashMap<FType, Faction>();
 	
 	protected HashMap<String, Image> sprites; //Hashmap for sprites
 	protected HashMap<String, SpriteSheet> sprite_sheets; //Hashmap for spritesheets
@@ -39,8 +39,9 @@ public abstract class Faction {
 	}
 	
 	public static void initFactions() {
-		FACTIONS.put("steampunk", new Steampunk());
-		FACTIONS.put("vikings", new Viking());
+		FACTIONS.put(FType.Steampunk, new Steampunk());
+		FACTIONS.put(FType.Viking, new Viking());
+		FACTIONS.put(FType.Wild, new Steampunk());
 	}
 	
 	

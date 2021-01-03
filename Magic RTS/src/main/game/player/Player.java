@@ -20,6 +20,7 @@ import main.game.entities.buildings.House;
 import main.game.entities.buildings.Townhall;
 import main.game.entities.selectables.Unit;
 import main.game.map.Map;
+import main.game.player.factions.FType;
 import main.game.ui.UI;
 
 public class Player {
@@ -48,6 +49,7 @@ public class Player {
 	private Selector selector;
 	
 	private Player(String name, int playerID, Map map, boolean AI, Color playerColor, Faction faction, Point s) {
+		System.out.println(faction);
 		this.game = map.getGame();
 		this.playerColor = playerColor;
 		this.isAI = AI;
@@ -103,12 +105,12 @@ public class Player {
 	 * @param name  Player name
 	 * @param map Map to spawn on
 	 * @param color Player color
-	 * @param faction Player faction (string)
+	 * @param faction Player faction (from FType enum)
 	 * @param id Player ID
 	 * @param ai isAI?
 	 * @return returns player object
 	 */
-	public static Player createPlayer(Point spawn, String name, Map map, Color color, String faction, int id, boolean ai) {
+	public static Player createPlayer(Point spawn, String name, Map map, Color color, FType faction, int id, boolean ai) {
 		System.out.println("Spawned player at: (" + spawn.getX() + ", " + spawn.getY() + ")");
 		Point tSpawn = new Point(spawn.getX() * TW_RENDER, spawn.getY() * TH_RENDER);
 		return new Player(name, id, map, ai, color, FACTIONS.get(faction), tSpawn);
@@ -123,7 +125,7 @@ public class Player {
 	 * @param id Player ID
 	 * @return returns player object
 	 */
-	public static Player createPlayer(Point spawn, String name, Map map, Color color, String faction, int id) {
+	public static Player createPlayer(Point spawn, String name, Map map, Color color, FType faction, int id) {
 		return createPlayer(spawn, name, map, color, faction, id, false);
 	}
 		

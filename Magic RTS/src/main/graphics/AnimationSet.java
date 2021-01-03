@@ -2,16 +2,19 @@ package main.graphics;
 
 import java.util.HashMap;
 
-import org.newdawn.slick.Animation;
-
 public class AnimationSet {
 
 	// TODO: Implement anim sets
+	// TODO: Decide on the feasibility of this
 	
-	public final HashMap<String, AnimObj> animations = new HashMap<String, AnimObj>();
-
+	private AnimObj anims[];
+	
+	public AnimationSet() {
+		
+	}
+	
 	private boolean addAnimObj(String name, AnimObj anim, boolean isFlipped) {
-		animations.put(name, anim);
-		return false;
+		//animations.put(name, anim);
+		return (anim != null);
 	}
 }

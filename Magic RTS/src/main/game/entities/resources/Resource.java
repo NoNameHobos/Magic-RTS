@@ -14,6 +14,6 @@ public abstract class Resource extends SelectableEntity {
 	}
 	
 	public void draw(Graphics g) {
-		sprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY());
+		currentSprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY());
 	}
 }

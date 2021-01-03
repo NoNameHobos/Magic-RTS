@@ -1,7 +1,5 @@
 package main.util;
 
-import static main.engine.Engine.ABS_PATH;
-
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
@@ -42,10 +40,6 @@ public class ResourceLoader {
 
 	public static void loadSprites() {
 		String path = "res\\sprites\\";
-		// LOAD GOLEM SPRITE AND WALK
-		SPRITES.put("spr_golem", loadImage(path + "mobs\\Golem"));
-		SPRITE_SHEETS.put("golem_walk", loadSpriteSheet(path + "mobs\\golemwalk_ss", 32, 32));
-
 		// Axeman
 		SPRITE_SHEETS.put("axeman_down", loadSpriteSheet(path + "mobs\\axeman\\axeman_down", 48, 48));
 		SPRITE_SHEETS.put("axeman_up", loadSpriteSheet(path + "mobs\\axeman\\axeman_up", 48, 48));
@@ -128,8 +122,8 @@ public class ResourceLoader {
 	public static void initResources() {
 
 		try {
-			missing = new Image(ABS_PATH + "res\\sprites\\missingtex.png");
-			missingSS = new SpriteSheet(ABS_PATH + "res\\sprites\\missingtex.png", 48, 48);
+			missing = new Image("res\\sprites\\missingtex.png");
+			missingSS = new SpriteSheet("res\\sprites\\missingtex.png", 48, 48);
 		} catch (SlickException e) {
 			System.err.println("Failed to load missingtex.png");
 			e.printStackTrace();
@@ -167,7 +161,7 @@ public class ResourceLoader {
 		Image i;
 		loaded++;
 		try {
-			i = new Image(ABS_PATH + dir + ".png");
+			i = new Image(dir + ".png");
 			System.out.println("Loaded " + dir + ".png");
 			i.setFilter(Image.FILTER_NEAREST);
 			i.clampTexture();
@@ -196,7 +190,7 @@ public class ResourceLoader {
 		SpriteSheet ss;
 		loaded++;
 		try {
-			ss = new SpriteSheet(ABS_PATH + dir + ".png", tw, th);
+			ss = new SpriteSheet(dir + ".png", tw, th);
 			System.out.println("Loaded " + dir + ".png as Sprite Sheet with Tile: " + tw + "x" + th);
 			ss.setFilter(Image.FILTER_NEAREST);
 			ss.clampTexture();
