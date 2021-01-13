@@ -8,22 +8,22 @@ import main.game.entities.Entity;
 
 public abstract class GameObject {
 
-	public static final int ALARM_COUNT = 9;
+	public static final int ALARM_COUNT = 10;
 	public static final ArrayList<GameObject> OBJECTS = new ArrayList<GameObject>();
 	
-	protected AlarmObject alarm[] = new AlarmObject[ALARM_COUNT];
+	protected Alarm alarm[] = new Alarm[ALARM_COUNT];
 	
 	protected abstract void step();
 	
 	public GameObject() {
-		for(int i = 0; i < ALARM_COUNT; i++){
-			alarm[i] = new AlarmObject(null);
+		for(int i = 0; i < ALARM_COUNT - 1; i++){
+			alarm[i] = new Alarm(null);
 		}
 		OBJECTS.add(this);
 	}
 	
 	private void update() {
-		for(AlarmObject a : alarm) {
+		for(Alarm a : alarm) {
 			a.update();
 		}
 		
@@ -57,21 +57,21 @@ public abstract class GameObject {
 }
 
 
-interface Alarm {
+interface AlarmEvent {
 	void event();
 }
 
-class AlarmObject {
+class Alarm {
 	
-	private Alarm alarm;
+	private AlarmEvent alarm;
 	private int timer;
 	
-	public AlarmObject(Alarm alarm) {
+	public Alarm(AlarmEvent alarm) {
 		this.alarm = alarm;
 		timer = -1;
 	}
 	
-	public void setEvent(Alarm alarm) {
+	public void setEvent(AlarmEvent alarm) {
 		this.alarm = alarm;
 	}
 	

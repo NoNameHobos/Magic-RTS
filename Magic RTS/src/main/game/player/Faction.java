@@ -7,15 +7,17 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
 import main.game.player.factions.*;
+import main.graphics.AnimSet;
 import main.util.ResourceLoader;
 
 public abstract class Faction {
 
 	public static final HashMap<FType, Faction> FACTIONS = new HashMap<FType, Faction>();
 	
-	protected HashMap<String, Image> sprites; //Hashmap for sprites
-	protected HashMap<String, SpriteSheet> sprite_sheets; //Hashmap for spritesheets
+	protected HashMap<String, AnimSet> sprites; //Hashmap for sprites
 	
+	
+	// TODO: Make Static
 	protected ArrayList<String> units;
 	protected ArrayList<String> buildings;
 	
@@ -26,13 +28,13 @@ public abstract class Faction {
 	public abstract void loadUI();
 	
 	public Faction(String name) {
-		sprites = new HashMap<String, Image>();
-		sprite_sheets = new HashMap<String, SpriteSheet>();
+		sprites = new HashMap<String, AnimSet>();
 		
 		units = new ArrayList<String>();
 		buildings = new ArrayList<String>();
 		
 		this.name = name;
+		
 		loadUnits();
 		loadBuildings();
 		loadUI();
@@ -53,17 +55,13 @@ public abstract class Faction {
 		return buildings;
 	}
 	
-	public Image getSprite(String index) {
+	public AnimSet getSprite(String index) {
 		if(sprites.get(index) != null)
 			return sprites.get(index);
 		else {
 			System.err.println(name + " failed to get " + index + " sprite");
 			return ResourceLoader.missing;
 		}
-	}
-	
-	public SpriteSheet getSpriteSheet(String index) { 
-		return sprite_sheets.get(index);
 	}
 
 	public String getName() {

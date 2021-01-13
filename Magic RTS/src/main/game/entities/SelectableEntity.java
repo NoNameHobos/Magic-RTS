@@ -11,14 +11,13 @@ import static main.GameConstants.STAT_PHYS_DEF;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
 import main.game.Game;
 import main.game.player.Camera;
 import main.game.player.Player;
+import main.graphics.AnimSet;
 
 public abstract class SelectableEntity extends Entity {
 
@@ -30,11 +29,11 @@ public abstract class SelectableEntity extends Entity {
 	// Stats
 	protected float[] stats = new float[STAT_COUNT];
 
-	public SelectableEntity(Player player, Point pos, Image sprite) {
-		super(player, player.getMap(), pos, sprite);
+	public SelectableEntity(Player player, Point pos, AnimSet animSet) {
+		super(player, player.getMap(), pos, animSet);
 		selectable = true;
-		width = sprite.getWidth();
-		height = sprite.getHeight();
+		width = animSet.getDefaultSprite().getWidth();
+		height = animSet.getDefaultSprite().getHeight();
 		selected = false;
 		
 		// Init Stats

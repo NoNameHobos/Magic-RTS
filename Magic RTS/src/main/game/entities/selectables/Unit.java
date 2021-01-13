@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import main.GameConstants;
@@ -18,6 +17,7 @@ import main.game.entities.ai.pathfinding.PathFinder;
 import main.game.entities.ai.pathfinding.PathObject;
 import main.game.entities.selectables.unit.abilities.BasicCommandable;
 import main.game.player.Player;
+import main.graphics.AnimSet;
 import main.util.Utils;
 
 public abstract class Unit extends SelectableEntity implements BasicCommandable {
@@ -41,10 +41,10 @@ public abstract class Unit extends SelectableEntity implements BasicCommandable 
 
 	public static final int TOLERANCE = 20; // Pathfinding Tolerance
 
-	public Unit(Player player, float x, float y, Image sprite) {
-		super(player, new Point(x, y), sprite);
+	public Unit(Player player, float x, float y, AnimSet anims) {
+		super(player, new Point(x, y), anims);
 		des = new Point(x, y);
-		origin.setY(sprite.getHeight() - 5);
+		origin.setY(anims.getDefaultSprite().getHeight() - 5);
 
 		pathing = false;
 		direction = 120;

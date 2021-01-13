@@ -12,7 +12,7 @@ import main.game.Game;
 import main.game.GameObject;
 import main.game.map.Map;
 import main.game.player.Player;
-import main.graphics.AnimObj;
+import main.graphics.AnimSet;
 
 public abstract class Entity extends GameObject {
 	
@@ -24,7 +24,7 @@ public abstract class Entity extends GameObject {
 
 	// Drawing Stuff
 	protected Image currentSprite;
-	protected AnimObj animations[];
+	protected AnimSet animations;
 	
 	// Rendering depth
 	// TODO: Implement this
@@ -45,16 +45,17 @@ public abstract class Entity extends GameObject {
 	
 	public abstract void draw(Graphics g);
 
-	public Entity(Player p, Map map, Point pos, Image sprite) {
-		this.currentSprite = sprite;
+	public Entity(Player p, Map map, Point pos, AnimSet anims) {
+		this.animations = anims;
 		this.pos = pos;
 		this.map = map;
 		this.player = p;
 		
-		//animations = new AnimObj[30];
-		
 		game = map.getGame();
 
+		// TODO: Optimize this
+		Image sprite = anims.getDefaultSprite().getImage(0);
+		
 		//Set origin to centre of image
 		origin = new Point(sprite.getWidth() / 2, sprite.getHeight() / 2); 
 		

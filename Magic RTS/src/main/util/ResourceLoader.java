@@ -15,6 +15,7 @@ import main.engine.Engine;
 import main.game.map.Map;
 import main.game.map.MapLoader;
 import main.game.map.TileSet;
+import main.graphics.AnimSet;
 
 public class ResourceLoader {
 	
@@ -31,14 +32,16 @@ public class ResourceLoader {
 	public static final HashMap<String, TileSet> TILE_SETS = new HashMap<String, TileSet>();
 	public static final HashMap<String, TrueTypeFont> FONTS = new HashMap<String, TrueTypeFont>();
 
+	public static AnimSet missingAnim;
+	
 	public static Image missing;
 	public static SpriteSheet missingSS;
 
 	public static final int thingsToLoad = 7;
 	private static int loaded = 0;
-
-
+	
 	public static void loadSprites() {
+		// TODO: Autoload and convert to AnimSet
 		String path = "res\\sprites\\";
 		// Axeman
 		SPRITE_SHEETS.put("axeman_down", loadSpriteSheet(path + "mobs\\axeman\\axeman_down", 48, 48));

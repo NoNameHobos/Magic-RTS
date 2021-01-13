@@ -2,7 +2,6 @@ package main.game.entities;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -10,6 +9,7 @@ import main.GameConstants;
 import main.game.entities.ai.pathfinding.Node;
 import main.game.entities.ai.pathfinding.NodeMap;
 import main.game.player.Player;
+import main.graphics.AnimSet;
 
 public abstract class Building extends SelectableEntity {
 
@@ -17,8 +17,11 @@ public abstract class Building extends SelectableEntity {
 
 	protected Node[][] nodes;
 
-	public Building(Player player, Point _pos, Image sprite) {
-		super(player, new Point(_pos.getX() + sprite.getWidth() / 2, _pos.getY() + sprite.getHeight() / 2), sprite);
+	public Building(Player player, Point _pos, AnimSet anims) {
+		// TODO: Rearrange this
+		super(player, 
+				new Point(_pos.getX() + anims.getDefaultSprite().getWidth() / 2, _pos.getY() + anims.getDefaultSprite().getHeight() / 2)
+				, anims);
 		
 		nodes = null;
 		while(nodes == null) nodes = findNodes();
