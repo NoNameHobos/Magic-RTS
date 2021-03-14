@@ -3,9 +3,10 @@ package main.game.entities.selectables.unit.abilities;
 import org.newdawn.slick.geom.Point;
 
 import main.GameConstants;
-import main.game.entities.SelectableEntity;
+import main.game.entities.Controllable;
+import main.game.entities.Unit;
 import main.game.entities.ai.pathfinding.Path;
-import main.game.entities.selectables.Unit;
+import main.game.entities.selectables.unit.UnitStat;
 
 public interface BasicCommandable {
 
@@ -31,12 +32,12 @@ public interface BasicCommandable {
 		}
 	}
 	
-	public default void attack(Unit unit, SelectableEntity target) {
-		if(unit.getDistanceTo(target.getPos()) > unit.getStat(GameConstants.STAT_ATTACK_RANGE) * GameConstants.TW_RENDER) {
+	public default void attack(Unit unit, Controllable target) {
+		if(unit.getDistanceTo(target.getPos()) > unit.getStat(UnitStat.ATTACK_RANGE) * GameConstants.TW_RENDER) {
 			unit.setState(GameConstants.STATE_MOVING);
 		} else {
-			float attack_dmg = unit.getStat(GameConstants.STAT_ATTACK);
-			target.setStat(GameConstants.STAT_HEALTH, -attack_dmg, true);
+			float attack_dmg = unit.getStat(UnitStat.ATTACK);
+			target.addToStat(UnitStat.HP, -attack_dmg);
 			// TODO: Make an attack anim
 		}
 	}

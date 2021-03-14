@@ -11,8 +11,9 @@ import main.engine.Engine;
 import main.game.entities.Entity;
 import main.game.map.Map;
 import main.game.player.Player;
-import main.game.ui.UI;
+import main.game.ui.SPRITES;
 import main.game.ui.UIElement;
+import main.graphics.res.Sprite;
 import main.input.Clickable;
 
 public class Minimap extends UIElement implements Clickable {
@@ -25,7 +26,7 @@ public class Minimap extends UIElement implements Clickable {
 
 	private float scaleX, scaleY;
 
-	private static Image sprite;
+	private static Sprite sprite;
 
 	private Point mouse;
 
@@ -39,7 +40,7 @@ public class Minimap extends UIElement implements Clickable {
 	int[][] fog_of_war;
 	Color[][] tiles;
 
-	public Minimap(UI ui, Point pos) {
+	public Minimap(SPRITES ui, Point pos) {
 		super(ui, pos, WIDTH, HEIGHT);
 		this.player = ui.getPlayer();
 		this.map = player.getMap();
@@ -90,7 +91,7 @@ public class Minimap extends UIElement implements Clickable {
 	public void draw(Graphics g) {
 
 		// Draw minimap sprite
-		g.drawImage(sprite, border.getX() - borderWidth, border.getY() - borderWidth);
+		sprite.draw(border.getX() - borderWidth, border.getY() - borderWidth);
 		g.setColor(Color.white);
 		g.drawString(player.getFaction().getName(), border.getX(), border.getY() - 15);
 

@@ -4,20 +4,15 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
 import main.game.map.Map;
 import main.game.player.Player;
-import main.game.ui.elements.core.CommandHUD;
-import main.game.ui.elements.core.Frame;
-import main.game.ui.elements.core.Minimap;
-import main.game.ui.elements.core.ResourceDisplay;
-import main.game.ui.elements.core.UnitAbilities;
-import main.game.ui.elements.core.UnitInfo;
+import main.game.ui.elements.core.*;
+import main.graphics.res.Sprite;
 
-public class UI {
+public class SPRITES {
 
 	private final ArrayList<UIElement> elements = new ArrayList<UIElement>();
 
@@ -25,13 +20,13 @@ public class UI {
 	
 	private int alpha = 255;
 	
-	public UI(Player player) {
+	public SPRITES(Player player) {
 		this.player = player;
 		player.setUI(this);
 
 		new Minimap(this, new Point(Engine.getWIDTH() - player.getFaction().getSprite("ui_minimap").getWidth(), 0));
 
-		Image frameSprite = player.getFaction().getSprite("ui_bottombar");
+		Sprite frameSprite = player.getFaction().getSprite("ui_bottombar");
 		new Frame(this, new Point(0, Engine.getHEIGHT() - frameSprite.getHeight()));
 
 		new CommandHUD(this, new Point(0, Engine.getHEIGHT() - CommandHUD.HEIGHT));
@@ -41,8 +36,6 @@ public class UI {
 		new UnitAbilities(this, new Point(Engine.getWIDTH() - UnitAbilities.WIDTH, Engine.getHEIGHT() - UnitAbilities.HEIGHT));
 		new UnitInfo(this, new Point(CommandHUD.WIDTH, Engine.getHEIGHT() - UnitInfo.HEIGHT));
 
-		new ResourceDisplay(this, new Point(5, 5));
-		
 		System.out.println("Created a ui");
 	}
 	

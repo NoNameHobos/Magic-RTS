@@ -3,7 +3,6 @@ package main.game.entities.buildings;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
-import main.game.entities.Building;
 import main.game.player.Player;
 
 public class House extends Building {

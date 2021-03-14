@@ -1,20 +1,20 @@
 package main.game.ui.elements.core;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
-import main.game.ui.UI;
+import main.game.ui.SPRITES;
 import main.game.ui.UIElement;
+import main.graphics.res.Sprite;
 
 public class Frame extends UIElement {
 
-	private Image sprite;
+	private Sprite sprite;
 	
 	private int width;
 	
-	public Frame(UI ui, Point pos) {
+	public Frame(SPRITES ui, Point pos) {
 		super(ui, pos, Engine.getWIDTH() ,64);
 		
 		sprite = player.getFaction().getSprite("ui_bottombar");
@@ -32,7 +32,10 @@ public class Frame extends UIElement {
 			
 				float xx = bounding.getX() + (x * sW);
 				float yy = bounding.getY();
-				g.drawImage(sprite, xx, yy);
+				
+				// TODO: Refactor drawing for frame
+				// Create a renderer?
+				sprite.draw(xx, yy);
 		}
 	}
 

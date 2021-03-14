@@ -2,6 +2,7 @@ package main.util;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -11,141 +12,72 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.TrueTypeFont;
 
-import main.engine.Engine;
 import main.game.map.Map;
-import main.game.map.MapLoader;
 import main.game.map.TileSet;
-import main.graphics.AnimSet;
+import main.graphics.res.Sprite;
+
+import static main.GameConstants.ERROR_MISSING_TEXTURE;
 
 public class ResourceLoader {
+
+	private String currentDir;
+	public static final int FONT_SIZE = 60;
 	
 	// TODO: Move onto separate thread
 
-	public static final int FONT_SIZE = 60;
+	private final HashMap<String, Sprite> SPRITES = new HashMap<String, Sprite>();
 
-	public static final HashMap<String, Image> SPRITES = new HashMap<String, Image>();
-	public static final HashMap<String, SpriteSheet> SPRITE_SHEETS = new HashMap<String, SpriteSheet>();
+	private final HashMap<String, Map> MAPS = new HashMap<String, Map>();
+	private final HashMap<String, TileSet> TILE_SETS = new HashMap<String, TileSet>();
+	private final HashMap<String, TrueTypeFont> FONTS = new HashMap<String, TrueTypeFont>();
 
-	public static final HashMap<String, Image> UI = new HashMap<String, Image>();
-
-	public static final HashMap<String, Map> MAPS = new HashMap<String, Map>();
-	public static final HashMap<String, TileSet> TILE_SETS = new HashMap<String, TileSet>();
-	public static final HashMap<String, TrueTypeFont> FONTS = new HashMap<String, TrueTypeFont>();
-
-	public static AnimSet missingAnim;
-	
-	public static Image missing;
-	public static SpriteSheet missingSS;
-
-	public static final int thingsToLoad = 7;
-	private static int loaded = 0;
-	
-	public static void loadSprites() {
-		// TODO: Autoload and convert to AnimSet
-		String path = "res\\sprites\\";
-		// Axeman
-		SPRITE_SHEETS.put("axeman_down", loadSpriteSheet(path + "mobs\\axeman\\axeman_down", 48, 48));
-		SPRITE_SHEETS.put("axeman_up", loadSpriteSheet(path + "mobs\\axeman\\axeman_up", 48, 48));
-		SPRITE_SHEETS.put("axeman_left", loadSpriteSheet(path + "mobs\\axeman\\axeman_left", 48, 48));
-		SPRITE_SHEETS.put("axeman_right", loadSpriteSheet(path + "mobs\\axeman\\axeman_right", 48, 48));
-		
-		// Warg
-		SPRITES.put("warg_right", loadImage(path + "mobs\\bigUnit\\warg\\warg"));
-
-		// Vikings
-		SPRITES.put("vike_hut", loadImage(path + "buildings\\viking\\hut"));
-		SPRITES.put("vike_th", loadImage(path + "buildings\\viking\\th"));
-
-		// Steampunk
-		SPRITES.put("steam_th", loadImage(path + "buildings\\steampunk\\th"));
-
-		// Resource Nodes
-		SPRITES.put("node_mana", loadImage(path + "objects\\resources\\mana"));
-		SPRITES.put("node_stone", loadImage(path + "objects\\resources\\stone"));
-		SPRITES.put("node_mithril", loadImage(path + "objects\\resources\\mithril"));
-
-		// Workers
-		SPRITES.put("worker_right", loadImage(path + "mobs\\worker\\miner"));
-		SPRITES.put("worker_left", loadImage(path + "mobs\\worker\\miner_left"));
-
-		// Report loaded resources
-		int resourceCount = SPRITES.size() + SPRITE_SHEETS.size();
-		System.out.println("Loaded " + resourceCount + " Resources!");
-	}
-
-	public static void loadUI() {
-		String path = "res\\sprites\\UI\\";
-		// Resources Icons
-		UI.put("manaIcon", loadImage(path + "icons\\manaIcon"));
-		UI.put("mithrilIcon", loadImage(path + "icons\\mithrilIcon"));
-		UI.put("stoneIcon", loadImage(path + "icons\\stoneIcon"));
-
-		// Progress bars
-		UI.put("UIManaBar", loadImage(path + "bars\\manaBar"));
-		UI.put("UIStoneBar", loadImage(path + "bars\\stoneBar"));
-		UI.put("UIMithrilBar", loadImage(path + "bars\\mithrilBar"));
-
-		// --Load UI Sprites--//
-		// Frames
-		UI.put("viking_bottom", loadImage(path + "frames\\bottombar_vike"));
-		UI.put("viking_minimap", loadImage(path + "minimap\\minimap_vike"));
-		UI.put("steam_bottom", loadImage(path + "frames\\bottombar_steam"));
-		UI.put("steam_minimap", loadImage(path + "minimap\\minimap_steam"));
-		
-		// Command Buttons
-		UI.put("move_button", loadImage(path + "buttons\\move"));
-		UI.put("attack_button", loadImage(path + "buttons\\attack"));
-		UI.put("build_button", loadImage(path + "buttons\\build"));
-		
-		// Command HUD
-		UI.put("commandhud", loadImage(path + "command hud\\commandhud"));
-	}
-
-	public static void loadMenuSprites() {
-		SPRITE_SHEETS.put("menu_button", loadSpriteSheet("res\\sprites\\menu\\button_anim", 220, 60));
-		SPRITE_SHEETS.put("menu_buttonR", loadSpriteSheet("res\\sprites\\menu\\button_animR", 220, 60));
-	}
-
-	public static void loadTiles() {
-
-		// Load setons tile set
-		TILE_SETS.put("setons", TileSet.loadTileSet("setons"));
-	}
-	
-	public static void loadFonts() {
-		FONTS.put("Menu", loadFont("FantaisieArtistique.ttf", 45));
-	}
-
-	public static void loadMaps() {
-		MAPS.put("Seton's Clutch", MapLoader.loadMap("maps\\setons"));
-		MAPS.put("Mountain Pass", MapLoader.loadMap("maps\\mountainpass"));
-		MAPS.put("Grass", MapLoader.loadMap("maps\\grass"));
-	}
-
-	public static void initResources() {
-
+	private static Sprite missingSprite;
+	private static SpriteSheet missing_ss;
+	/**
+	 * Initialize Resource Loader
+	 */
+	public void init() {
 		try {
-			missing = new Image("res\\sprites\\missingtex.png");
-			missingSS = new SpriteSheet("res\\sprites\\missingtex.png", 48, 48);
+			missing_ss = new SpriteSheet("res\\sprites\\missingtex.png", 48, 48);
 		} catch (SlickException e) {
 			System.err.println("Failed to load missingtex.png");
 			e.printStackTrace();
+			System.exit(ERROR_MISSING_TEXTURE);
 		}
-		// Don't change the load order please
-		loadFonts();
-		loadTiles();
-		report();
-		loadMaps();
-		System.err.println(MAPS.values());
-		report();
-		loadMenuSprites();
-		loadSprites();
-		loadUI();
-		report();
-
-		Engine.setCurrentState(Engine.menuState);
+		
+		// Create missingSprite object
+		missingSprite = Sprite.createSprite(missing_ss);
 	}
-
+	
+	/**
+	 * Load a sprite from the current directory with a given name
+	 * @param name - name of the file to load (will set sprite name to this)
+	 */
+	public void addSprite(String name) {
+		addSprite(name, name);
+	}
+	
+	/**
+	 * Add sprite to Sprites with given name at given path.
+	 * @param name - Sprite name to assign
+	 * @param path - Local Path to the sprite (see ResourceLoader.setCurrentDir())
+	 */
+	public void addSprite(String name, String path) {
+		Sprite sprite = loadSprite(path);
+		SPRITES.put(name, sprite);
+		// TODO: Add name to sprite
+	}
+	
+	/**
+	 * add a preloaded sprite to the sprite list
+	 * @param name - name of sprite
+	 * @param sprite - Sprite object to add
+	 */
+	public void addSprite(String name, Sprite sprite) {
+		SPRITES.put(name, sprite);
+	}
+	
+	// Resource loading functions
 	public static TrueTypeFont loadFont(String font, int size) {
 		InputStream is = org.newdawn.slick.util.ResourceLoader.getResourceAsStream("res\\font\\" + font);
 		TrueTypeFont ttf = null;
@@ -160,63 +92,120 @@ public class ResourceLoader {
 		return ttf;
 	}
 
-	public static Image loadImage(String dir) {
-		Image i;
-		loaded++;
+	// TODO: Unit Tests
+	/**
+	 * Load sprite from path.
+	 * Returns null if file is missing or corrupt
+	 * @param path - Path to the requested sprite
+	 * @return a new sprite based on the supplied path.
+	 */
+	public Sprite loadSprite(String path) {
+		File file = new File(currentDir + path);
+		if(!file.isFile())
+			return null;
+		else {
+			Image ref_img = loadImage(currentDir + path);
+			return Sprite.createSprite(ref_img);
+		}
+	}
+	
+	public Sprite loadSprite(String path, int tw, int th, int duration) {
+		Image ref_img = loadImage(path);
+		return Sprite.createSprite(ref_img, tw, th, duration);
+	}
+	
+	/**
+	 * load Sprite from SpriteSheet with duration from current working directory
+	 * @param s_sheet SpriteSheet to create Sprite from
+	 * @param duration
+	 * @return a Sprite based on the supplied SpriteSheet and given duration (int)
+	 */
+	public Sprite loadSprite(SpriteSheet s_sheet, int duration) {
+		return Sprite.createSprite(s_sheet, duration);
+	}
+	
+	public void addSpriteSheet(String name, String path, int tw, int th) {
+		SpriteSheet ss;
+		
 		try {
-			i = new Image(dir + ".png");
-			System.out.println("Loaded " + dir + ".png");
+			ss = new SpriteSheet(currentDir + path, tw, th);
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			ss = missing_ss;
+		}
+		
+		this.addSprite(name,loadSprite(ss, Sprite.DEFAULT_DURATION));
+	}
+	
+	/**
+	 * 
+	 * @param path
+	 * @return an Image from the path returns missing image otherwise
+	 */
+	private Image loadImage(String path) {
+		Image i;
+		try {
+			i = new Image(path);
+			System.out.println("Loaded " + path);
 			i.setFilter(Image.FILTER_NEAREST);
 			i.clampTexture();
 			return i;
-		} catch (SlickException e) {
-			System.err.println("Failed to load image at: " + dir);
+		} catch (Exception e) {
+			System.err.println("Failed to load image at: " + path);
 			e.printStackTrace();
-			return missing;
-		} catch (RuntimeException e) {
-			System.err.println("Failed to load image: " + dir);
-			return missing;
+			return null;
 		}
 	}
 
-	public static Image loadImageFromSS(SpriteSheet ss, int x, int y) {
-		ss.startUse();
-		Image i = ss.getSprite(x, y);
-		i.setFilter(Image.FILTER_NEAREST);
-		i.clampTexture();
-		ss.endUse();
-		loaded++;
-		return i;
-	}
-
-	public static SpriteSheet loadSpriteSheet(String dir, int tw, int th) {
+	public SpriteSheet loadSpriteSheet(String dir, int tw, int th) {
 		SpriteSheet ss;
-		loaded++;
 		try {
-			ss = new SpriteSheet(dir + ".png", tw, th);
-			System.out.println("Loaded " + dir + ".png as Sprite Sheet with Tile: " + tw + "x" + th);
+			ss = new SpriteSheet(dir, tw, th);
+			System.out.println("Loaded " + dir + " as Sprite Sheet with Tile: " + tw + "x" + th);
 			ss.setFilter(Image.FILTER_NEAREST);
 			ss.clampTexture();
 			return ss;
 		} catch (SlickException e) {
 			System.err.println("Failed to load Sprite Sheet at: " + dir + " (SlickException)");
 			e.printStackTrace();
-			return missingSS;
+			return missing_ss;
 		} catch (RuntimeException e) {
 			System.err.println("Failed to load Sprite Sheet at: " + dir + " (RuntimeException)");
-			return missingSS;
+			return missing_ss;
 		}
 	}
-
-	private static void report() {
-		System.out.print("Loaded: ");
-		System.out.print(loaded);
-		System.out.print("/");
-		System.out.println(thingsToLoad);
-	}
-
-	public static float getLoaded() {
-		return loaded / thingsToLoad;
+	
+	/**
+	 * Set current working directory to load resources from
+	 * @param dir - Directory load resources from
+	 * @param relative - is this directory relative? (true/false)
+	 */
+	public void setCurrentDir(String dir, boolean relative) {
+		if(relative) {
+			this.currentDir += dir;
+		} else this.currentDir = dir;
 	}
 	
+	/**
+	 * Set current absolute working directory to load resources from
+	 * @param dir - Directory load resources from
+	 */
+	public void setCurrentDir(String dir) {
+		this.setCurrentDir(dir, false);
+	}
+
+	/**
+	 * Get sprite from sprite list. Must be added to list with addSprite first.
+	 * @param name - name of sprite to retrieve
+	 * @return returns missingSprite if no sprite is found under the name
+	 */
+	public Sprite getSprite(String name) {
+		Sprite sprite = SPRITES.get(name);
+		if(sprite == null) {
+			System.err.println("Sprite missing: " + name);
+			return missingSprite;
+		} else return sprite;
+	}
+
 }

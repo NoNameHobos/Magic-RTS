@@ -4,6 +4,9 @@ import org.newdawn.slick.Input;
 
 public class GameConstants {
 
+	//~Errors
+	public static final int ERROR_MISSING_TEXTURE = 1;
+	
 	public static final int TILE_WIDTH = 64;
 	public static final int TILE_HEIGHT = 64;
 	
@@ -24,17 +27,4 @@ public class GameConstants {
 	public static final int STATE_IDLE   = 1;
 	public static final int STATE_ATTACK = 2;
 	public static final int STATE_PATROL = 3;
-	
-	// Unit stats
-	public static final int STAT_HEALTH       = 0;
-	public static final int STAT_HEALTH_MAX   = 1;
-	public static final int STAT_ACC          = 2;
-	public static final int STAT_MAX_SPD      = 3;
-	public static final int STAT_PHYS_DEF     = 4;
-	public static final int STAT_MAG_DEF      = 5;
-	public static final int STAT_ATTACK       = 6;
-	public static final int STAT_ATTACK_RANGE = 7;
-	
-	// TODO: Ensure this is consistent with stat count
-	public static final int STAT_COUNT = 8;
 }

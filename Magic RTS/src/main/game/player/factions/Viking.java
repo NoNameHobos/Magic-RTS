@@ -1,7 +1,5 @@
 package main.game.player.factions;
 
-import static main.util.ResourceLoader.*;
-
 import main.game.player.Faction;
 
 public class Viking extends Faction {
@@ -12,19 +10,19 @@ public class Viking extends Faction {
 
 	@Override
 	public void loadUnits() { //Put Unit stuff in here, add to unit hashmap
-		sprites.put("axeman", SPRITES.get("axeman"));
-		sprites.put("warg", SPRITES.get("warg_right"));
+		sprites.put("axeman", RES.getSprite("axeman"));
+		sprites.put("warg", RES.getSprite("warg_right"));
 	}
 
 	@Override
 	public void loadBuildings() {
-		sprites.put("house", SPRITES.get("vike_hut"));
-		sprites.put("townhall", SPRITES.get("vike_th"));
+		sprites.put("house", RES.getSprite("vike_hut"));
+		sprites.put("townhall", RES.getSprite("vike_th"));
 	}
 	
 	public void loadUI() {
-		sprites.put("ui_bottombar", UI.get("viking_bottom"));
-		sprites.put("ui_minimap", UI.get("viking_minimap"));
+		sprites.put("ui_bottombar", RES.getSprite("viking_bottom"));
+		sprites.put("ui_minimap", RES.getSprite("viking_minimap"));
 	}
 	
 }

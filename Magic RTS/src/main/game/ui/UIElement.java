@@ -7,18 +7,21 @@ import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
 import main.game.player.Player;
+import main.graphics.res.Sprite;
+import main.util.ResourceLoader;
 
 public abstract class UIElement {
-
-	protected UI ui;
-
-	protected Point uiPos;
-
+	protected static final ResourceLoader RES = Engine.RESOURCES;
+	
+	protected SPRITES ui;
 	protected Player player;
 
+	protected Point uiPos;
 	protected Rectangle bounding;
 	
-	public UIElement(UI ui, Point pos, float width, float height) {
+	protected Sprite sprite;
+	
+	public UIElement(SPRITES ui, Point pos, float width, float height) {
 		this.ui = ui;
 
 		this.player = ui.getPlayer();
@@ -50,7 +53,7 @@ public abstract class UIElement {
 
 	public abstract void step();
 
-	public UI getUI() {
+	public SPRITES getUI() {
 		return ui;
 	}
 

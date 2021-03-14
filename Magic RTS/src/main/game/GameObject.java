@@ -3,24 +3,35 @@ package main.game;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Point;
+import org.newdawn.slick.geom.Rectangle;
 
+import main.game.alarm.Alarm;
 import main.game.entities.Entity;
 
 public abstract class GameObject {
 
 	public static final int ALARM_COUNT = 10;
+
 	public static final ArrayList<GameObject> OBJECTS = new ArrayList<GameObject>();
 	
 	protected Alarm alarm[] = new Alarm[ALARM_COUNT];
+
+	// Keep track of when to remove from entities list
+	protected boolean _dispose = false;
+	protected Point pos;
+	protected Rectangle boundingbox;
 	
-	protected abstract void step();
-	
-	public GameObject() {
+	public GameObject(Point pos) {
+		this.pos = pos;
+		
 		for(int i = 0; i < ALARM_COUNT - 1; i++){
 			alarm[i] = new Alarm(null);
 		}
 		OBJECTS.add(this);
 	}
+
+	protected abstract void step();
 	
 	private void update() {
 		for(Alarm a : alarm) {
@@ -29,8 +40,7 @@ public abstract class GameObject {
 		
 		step();
 	}
-	
-	
+
 	public static void updateAll() {
 		for(GameObject object : OBJECTS) {
 			object.update();
@@ -38,9 +48,8 @@ public abstract class GameObject {
 			// Check if object is an entity, if so - check if it needs to be removed
 			if(object instanceof Entity) {
 				Entity entity = (Entity)object;
-				
-				if(entity.getPos().getX() < 0 || entity.getPos().getY() < 0) {
-					entity.dispose();
+				if(object.getPos().getX() < 0 || entity.getPos().getY() < 0) {
+					object.dispose();
 					continue;
 				}
 			}
@@ -49,42 +58,45 @@ public abstract class GameObject {
 	
 	public static void renderAll(Graphics g) {
 		for(GameObject object : OBJECTS) {
-			if(object instanceof Entity)
-				((Entity)object).draw(g);
+			if(object instanceof Renderable)
+				((Renderable)object).render(g);
 		}
 	}
 	
-}
+	public float getPointDirection(Point target) {
+		float deltaX = target.getX() - pos.getX();
+		float deltaY = target.getY() - pos.getY();
+		float disTo = getDistanceTo(target);
+		float angle = (float) Math.toDegrees(Math.acos(deltaX / disTo));
+		if (deltaY > 0) {
+			return angle;
+		} else
+			return 360 - angle;
+	}
 
+	public float getDistanceTo(Point target) {
+		float x1 = pos.getX();
+		float y1 = pos.getY();
 
-interface AlarmEvent {
-	void event();
-}
+		float x2 = target.getX();
+		float y2 = target.getY();
 
-class Alarm {
-	
-	private AlarmEvent alarm;
-	private int timer;
-	
-	public Alarm(AlarmEvent alarm) {
-		this.alarm = alarm;
-		timer = -1;
+		float dX = (float)Math.pow(x1 - x2, 2);
+		float dY = (float)Math.pow(y1 - y2, 2);
+		
+		return (float)Math.pow(dX + dY, 0.5);
 	}
 	
-	public void setEvent(AlarmEvent alarm) {
-		this.alarm = alarm;
+	// Disposal handling (Mainly for particle system)
+	public boolean toDispose() {
+		return _dispose;
 	}
 	
-	public void set(int time) {
-		timer = time;
+	public void dispose() {
+		_dispose = true;
 	}
-	
-	public void update() {
-		if(timer > 0)
-			timer -= 1;
-		else {
-			alarm.event();
-			timer = -1;
-		}
+
+	public Point getPos() {
+		return pos;
 	}
 }

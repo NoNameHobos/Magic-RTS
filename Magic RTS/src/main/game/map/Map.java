@@ -2,7 +2,6 @@ package main.game.map;
 
 import static main.GameConstants.TH_RENDER;
 import static main.GameConstants.TW_RENDER;
-import static main.util.ResourceLoader.TILE_SETS;
 
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import main.game.entities.resources.ManaNode;
 import main.game.player.Camera;
 import main.game.player.Player;
 import main.game.player.factions.FType;
-import main.game.ui.UI;
+import main.game.ui.SPRITES;
 import main.util.ResourceLoader;
 
 public class Map {
@@ -48,7 +47,7 @@ public class Map {
 	private Player neutralPlayer;
 
 	private Camera mainCamera;
-	private UI ui;
+	private SPRITES ui;
 
 	private NodeMap nodeMap;
 	
@@ -104,7 +103,7 @@ public class Map {
 		mainCamera = new Camera(this, focusedPlayer.getSpawn(), Engine.getWIDTH(), Engine.getHEIGHT());
 
 		// Create the UI
-		ui = new UI(focusedPlayer);
+		ui = new SPRITES(focusedPlayer);
 		mainCamera.setUI(ui);
 
 		for (int i = 1; i < players.length; i++) {
@@ -253,13 +252,13 @@ public class Map {
 		return tiles;
 	}
 
+	private class SortByDepth implements Comparator<Tile> {
+
+		@Override
+		public int compare(Tile t1, Tile t2) {
+			return (int) (t2.getDepth() - t1.getDepth());
+		}
+	}	
 }
 
-class SortByDepth implements Comparator<Tile> {
 
-	@Override
-	public int compare(Tile t1, Tile t2) {
-		return (int) (t2.getDepth() - t1.getDepth());
-	}
-
-}

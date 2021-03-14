@@ -1,26 +1,23 @@
-package main.game.entities.selectables;
-
-import static main.GameConstants.STAT_ACC;
+package main.game.entities;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
 import main.GameConstants;
-import main.game.entities.SelectableEntity;
 import main.game.entities.ai.pathfinding.Node;
 import main.game.entities.ai.pathfinding.NodeMap;
 import main.game.entities.ai.pathfinding.Path;
 import main.game.entities.ai.pathfinding.PathFinder;
 import main.game.entities.ai.pathfinding.PathObject;
+import main.game.entities.selectables.unit.UnitStat;
 import main.game.entities.selectables.unit.abilities.BasicCommandable;
 import main.game.player.Player;
-import main.graphics.AnimSet;
+import main.graphics.res.Sprite;
 import main.util.Utils;
 
-public abstract class Unit extends SelectableEntity implements BasicCommandable {
+public abstract class Unit extends Controllable implements BasicCommandable {
 
 	protected boolean walking = false;
 
@@ -30,22 +27,22 @@ public abstract class Unit extends SelectableEntity implements BasicCommandable 
 	protected boolean pathing;
 	protected float direction;
 	protected float speed, max_speed;
-	protected SelectableEntity target;
+	protected Controllable target;
 
 	// Patrol stuff
 	protected Point[] patrolPoints;
 	protected int cur_point;
 
 	// State stuff
-	protected int state;
+	protected int state; 
+	
 
 	public static final int TOLERANCE = 20; // Pathfinding Tolerance
 
-	public Unit(Player player, float x, float y, AnimSet anims) {
-		super(player, new Point(x, y), anims);
+	public Unit(Player player, float x, float y, Sprite sprite) {
+		super(new Point(x, y));
+		
 		des = new Point(x, y);
-		origin.setY(anims.getDefaultSprite().getHeight() - 5);
-
 		pathing = false;
 		direction = 120;
 		max_speed = 0.1f;
@@ -58,25 +55,25 @@ public abstract class Unit extends SelectableEntity implements BasicCommandable 
 	public void move(float spd, float angle) {
 		float sin = (float) Math.sin(Math.toRadians(angle));
 		float cos = (float) Math.cos(Math.toRadians(angle));
-		pos.setX(pos.getX() + spd * cos);
-		pos.setY(pos.getY() + spd * sin);
+		mapPos.setX(mapPos.getX() + spd * cos);
+		mapPos.setY(mapPos.getY() + spd * sin);
 	}
 
 	public void moveTo(Point target) {
 		if (getDistanceTo(target) >= (TOLERANCE)) {
 			direction = getPointDirection(target);
 			if (speed < max_speed)
-				speed += stats[STAT_ACC];
+				speed += stats[UnitStat.ACCELERATION.val()];
 		} else
 			speed = 0;
 	}
 
 	public Path findPath(Point target) {
-		if (Utils.distance(pos, target) > (NodeMap.NODE_WIDTH / (NodeMap.RES))) {
+		if (Utils.distance(mapPos, target) > (NodeMap.NODE_WIDTH / (NodeMap.RES))) {
 			Path p;
 
 			speed = 0;
-			ArrayList<Node> nearestStartNodes = getNearestNodes(pos);
+			ArrayList<Node> nearestStartNodes = getNearestNodes(mapPos);
 			ArrayList<Node> nearestEndNodes = getNearestNodes(target);
 
 			nearestStartNodes.sort(new SortByDist(target));
@@ -106,16 +103,16 @@ public abstract class Unit extends SelectableEntity implements BasicCommandable 
 			Point endPoint = path.getNodes().get(path.getNodes().size() - 1).getPos();
 			Point nodePos = path.getNodes().get(0).getPos();
 
-			float dist = Utils.distance(endPoint, pos);
+			float dist = Utils.distance(endPoint, mapPos);
 
-			if (Utils.distance(pos, nodePos) < TOLERANCE) {
+			if (Utils.distance(mapPos, nodePos) < TOLERANCE) {
 				path.getNodes().remove(0);
 			} else
 				moveTo(nodePos);
 
 			if (dist <= (1.5 * NodeMap.NODE_WIDTH)) {
-				des.setX(pos.getX());
-				des.setY(pos.getY());
+				des.setX(mapPos.getX());
+				des.setY(mapPos.getY());
 
 				speed = 0;
 				path = null;
@@ -145,10 +142,7 @@ public abstract class Unit extends SelectableEntity implements BasicCommandable 
 		return nodes;
 	}
 
-	public void tick() {
-		
-		super.tick();
-		
+	public void tick() {		
 		// State machine
 		
 		switch (state) {
@@ -170,9 +164,10 @@ public abstract class Unit extends SelectableEntity implements BasicCommandable 
 			break;
 			
 		case GameConstants.STATE_PATROL:
+			// Set some patrol points
 			if (patrolPoints == null)
-				// Set some patrol points
 				state = GameConstants.STATE_IDLE;
+			
 			patrol(this, patrolPoints);
 			break;
 			
@@ -183,11 +178,7 @@ public abstract class Unit extends SelectableEntity implements BasicCommandable 
 		step();
 	}
 	
-	public abstract void draw(Graphics g);
-
-	public abstract void step();
-
-	// Getters and Setters
+	// ============================================== Getters and Setters
 
 	public int getFacing() {
 		float dir = Math.abs(360 - direction);
@@ -216,10 +207,6 @@ public abstract class Unit extends SelectableEntity implements BasicCommandable 
 
 	public boolean isPathing() {
 		return pathing;
-	}
-
-	public void setPathing(boolean pathing) {
-		this.pathing = pathing;
 	}
 
 	public Path getPath() {

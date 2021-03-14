@@ -1,16 +1,14 @@
 package main.game.ui.elements.core;
 
-import static main.util.ResourceLoader.UI;
-
 import java.util.HashMap;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
-import main.game.ui.UI;
+import main.game.ui.SPRITES;
 import main.game.ui.UIElement;
 import main.game.ui.elements.UIButton;
+import main.graphics.res.Sprite;
 
 public class CommandHUD extends UIElement {
 
@@ -28,14 +26,15 @@ public class CommandHUD extends UIElement {
 			"BLANK6", "BLANK7","BLANK8" 
 	};
 
-	private static Image[] buttonSprites = { 
-			UI.get("move_button"), UI.get("attack_button"), UI.get("build_button"), 
+	private static Sprite[] buttonSprites = { 
+			RES.getSprite("move_button"), RES.getSprite("attack_button"), RES.getSprite("build_button"), 
 			null, null, null, 
 			null, null, null 
 	};
-	private static Image sprite = UI.get("commandhud");
+	
+	private static Sprite sprite = RES.getSprite("commandhud");
 
-	public CommandHUD(UI ui, Point pos) {
+	public CommandHUD(SPRITES ui, Point pos) {
 		super(ui, pos, WIDTH, HEIGHT);
 
 		buttons = new HashMap<String, UIButton>();
@@ -64,7 +63,7 @@ public class CommandHUD extends UIElement {
 				float y = yOffset + pos.getY() + frameMarginY + jindex * (UIButton.HEIGHT + marginY);
 
 				String name = buttonTags[index + jindex * buttonWidth];
-				Image image = buttonSprites[index + jindex * buttonWidth];
+				Sprite image = buttonSprites[index + jindex * buttonWidth];
 				
 				buttons.put(name, new UIButton(ui, this, new Point(x, y), name, image));
 			}
@@ -73,7 +72,7 @@ public class CommandHUD extends UIElement {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(sprite, bounding.getX(), bounding.getY());
+		sprite.draw(bounding.getX(), bounding.getY());
 	}
 
 	@Override

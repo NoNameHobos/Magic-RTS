@@ -33,7 +33,7 @@ public class MapLoader {
        
 			inputStream.close();
 			
-			//set mapid
+			//set map id
 			
 			step++;
 			//set title
@@ -43,7 +43,7 @@ public class MapLoader {
 			}
 			title = title.trim();
 			
-			//set playercount
+			//set player count
 			playerCount = byteData.get(step);
 			Point[] spawnLocations = new Point[playerCount];
 			step++;

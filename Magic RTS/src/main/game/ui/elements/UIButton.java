@@ -2,14 +2,14 @@ package main.game.ui.elements;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
-import main.game.ui.UI;
+import main.game.ui.SPRITES;
 import main.game.ui.UIElement;
+import main.graphics.res.Sprite;
 import main.input.Clickable;
 
 public class UIButton extends UIElement implements Clickable, KeyListener {
@@ -20,8 +20,6 @@ public class UIButton extends UIElement implements Clickable, KeyListener {
 
 	private boolean pressed = false;
 	private boolean overButton = false;
-	
-	private Image sprite;
 
 	public static final int WIDTH = 48, HEIGHT = 48;
 
@@ -29,7 +27,7 @@ public class UIButton extends UIElement implements Clickable, KeyListener {
 	
 	private char hotKey;
 	
-	public UIButton(UI ui, UIElement container, Point pos, String name, Image s) {
+	public UIButton(SPRITES ui, UIElement container, Point pos, String name, Sprite s) {
 		super(ui, pos, WIDTH, HEIGHT);
 
 		Engine.getInput().addMouseListener(this);
@@ -46,7 +44,7 @@ public class UIButton extends UIElement implements Clickable, KeyListener {
 		mouse = new Point(0, 0);
 	}
 	
-	public UIButton(UI ui, UIElement container, Point pos, String name) {
+	public UIButton(SPRITES ui, UIElement container, Point pos, String name) {
 		super(ui, pos, WIDTH, HEIGHT);
 
 		Engine.getInput().addMouseListener(this);
@@ -74,7 +72,7 @@ public class UIButton extends UIElement implements Clickable, KeyListener {
 			float y1 = bounding.getY();
 			float y2 = bounding.getY() + bounding.getHeight();
 			
-			g.drawImage(sprite, x1, y1, x2, y2, 0, 0, sprite.getWidth(), sprite.getHeight());
+			sprite.draw(x1, y1, x2, y2);
 		}
 		g.setColor(Color.red);
 		if (pressed)

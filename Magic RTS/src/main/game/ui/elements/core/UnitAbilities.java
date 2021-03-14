@@ -7,7 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
 import main.game.player.Player;
-import main.game.ui.UI;
+import main.game.ui.SPRITES;
 import main.game.ui.UIElement;
 import main.game.ui.elements.UIButton;
 
@@ -20,7 +20,7 @@ public class UnitAbilities extends UIElement {
 	public final static int WIDTH = 220;
 	public final static int HEIGHT = 220;
 	
-	public UnitAbilities(UI ui, Point pos) {
+	public UnitAbilities(SPRITES ui, Point pos) {
 		super(ui, pos, WIDTH, HEIGHT);
 		player = ui.getPlayer();
 		

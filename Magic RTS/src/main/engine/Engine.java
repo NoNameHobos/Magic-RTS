@@ -9,9 +9,14 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import main.game.State;
-import main.game.states.*;
+import main.game.states.EditorState;
+import main.game.states.GameState;
+import main.game.states.LoadState;
+import main.game.states.MenuState;
+import main.game.states.TestState;
 import main.graphics.Display;
 import main.input.Mouse;
+import main.util.ResourceLoader;
 
 public class Engine implements Game {
 
@@ -21,7 +26,6 @@ public class Engine implements Game {
 	private static int WIDTH, HEIGHT;
 
 	private static Input input;
-
 	private static Mouse mouse;
 
 	private static String TITLE;
@@ -31,6 +35,9 @@ public class Engine implements Game {
 	public static final State loadState = new LoadState();
 	public static final State gameState = new GameState();
 	public static final State editorState = new EditorState();
+	public static final State testState = new TestState();
+	
+	public static final ResourceLoader RESOURCES = new ResourceLoader();
 
 	public Engine(int WIDTH, int HEIGHT, String TITLE) {
 		System.out.println("Initializing Engine..");
@@ -47,9 +54,8 @@ public class Engine implements Game {
 		mouse = new Mouse(input);
 
 		// Start game here once everything is loaded
+		RESOURCES.init();
 		Engine.setCurrentState(loadState);
-
-		System.err.println(Engine.WIDTH + " " + Engine.HEIGHT);
 	}
 
 	public void update(GameContainer gc, int i) throws SlickException {

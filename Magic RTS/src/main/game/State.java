@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
 
+import main.engine.Engine;
+import main.util.ResourceLoader;
+
 public abstract class State {
+	protected static final ResourceLoader RES = Engine.RESOURCES;
 	
 	protected String name;
 	public static ArrayList<State> STATES = new ArrayList<State>();

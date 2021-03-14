@@ -5,23 +5,20 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
+import main.game.Renderable;
 import main.input.Mouse;
 
-public abstract class MenuElement {
+public abstract class MenuElement extends Renderable {
 
 	protected Menu menu;
 	protected Rectangle collider;
 	
-	protected Point pos;
-	
 	public MenuElement(Menu menu, String label, Point pos, Point size) {
+		super(pos);
 		this.menu = menu;
-		this.pos = pos;
-		
 		collider = new Rectangle(pos.getX(), pos.getY(), size.getX(), size.getY());
 	}
 	
-	public abstract void tick();
 	public abstract void render(Graphics g);
 	
 	public boolean mouseOver() {
@@ -34,7 +31,7 @@ public abstract class MenuElement {
 	}
 	
 	public Point getPos() {
-		return pos;
+		return mapPos;
 	}
 	
 }

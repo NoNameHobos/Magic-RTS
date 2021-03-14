@@ -3,7 +3,6 @@ package main.game.entities.buildings;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
-import main.game.entities.Building;
 import main.game.entities.selectables.unit.Worker;
 import main.game.player.Player;
 
@@ -14,7 +13,7 @@ public class Townhall extends Building {
 
 		for(int i = -2; i < 1; i++) {
 			// Spawn Workers
-			new Worker(player, pos.getX() + i * 60, pos.getY() + (i + 3) * 60);
+			new Worker(player, mapPos.getX() + i * 60, mapPos.getY() + (i + 3) * 60);
 		}
 	}
 

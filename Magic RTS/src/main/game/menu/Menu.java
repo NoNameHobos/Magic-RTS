@@ -50,7 +50,7 @@ public abstract class Menu implements Clickable {
 		}
 		if (menuState.getCurrentMenu() == this) {
 			for (MenuButton button : buttons) {
-				button.tick();
+				button.step();
 			}
 		}
 	}

@@ -1,7 +1,5 @@
 package main.game;
 
-import static main.util.ResourceLoader.MAPS;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 

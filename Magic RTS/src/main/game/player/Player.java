@@ -14,14 +14,14 @@ import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
 import main.game.Game;
-import main.game.entities.Building;
 import main.game.entities.Entity;
+import main.game.entities.Unit;
+import main.game.entities.buildings.Building;
 import main.game.entities.buildings.House;
 import main.game.entities.buildings.Townhall;
-import main.game.entities.selectables.Unit;
 import main.game.map.Map;
 import main.game.player.factions.FType;
-import main.game.ui.UI;
+import main.game.ui.SPRITES;
 
 public class Player {
 	
@@ -38,7 +38,7 @@ public class Player {
 	
 	//private Point spawn;
 	private Camera playerCamera;
-	private UI ui;
+	private SPRITES ui;
 	private Game game;
 	
 	private int playerID;
@@ -174,11 +174,11 @@ public class Player {
 		return map;
 	}
 
-	public UI getUI() {
+	public SPRITES getUI() {
 		return ui;
 	}
 	
-	public void setUI(UI ui) {
+	public void setUI(SPRITES ui) {
 		this.ui = ui;
 	}
 	

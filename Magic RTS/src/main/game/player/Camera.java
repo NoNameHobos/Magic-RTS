@@ -11,14 +11,14 @@ import org.newdawn.slick.geom.Rectangle;
 import main.GameConstants;
 import main.engine.Engine;
 import main.game.map.Map;
-import main.game.ui.UI;
+import main.game.ui.SPRITES;
 import main.input.Clickable;
 import main.util.Utils;
 
 public class Camera implements Clickable {
 
 	private Map map;
-	private UI ui;
+	private SPRITES ui;
 
 	private Point mouse;
 	
@@ -198,11 +198,11 @@ public class Camera implements Clickable {
 		return zoom;
 	}
 
-	public UI getUI() {
+	public SPRITES getUI() {
 		return ui;
 	}
 
-	public void setUI(UI ui) {
+	public void setUI(SPRITES ui) {
 		this.ui = ui;
 		uiOffsetLower = ui.getPlayer().getFaction().getSprite("ui_bottombar").getHeight();
 	}

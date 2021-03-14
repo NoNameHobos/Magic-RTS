@@ -3,18 +3,19 @@ package main.game.player;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SpriteSheet;
-
-import main.game.player.factions.*;
-import main.graphics.AnimSet;
+import main.engine.Engine;
+import main.game.player.factions.FType;
+import main.game.player.factions.Steampunk;
+import main.game.player.factions.Viking;
+import main.graphics.res.Sprite;
 import main.util.ResourceLoader;
 
 public abstract class Faction {
 
 	public static final HashMap<FType, Faction> FACTIONS = new HashMap<FType, Faction>();
+	protected static final ResourceLoader RES = Engine.RESOURCES;
 	
-	protected HashMap<String, AnimSet> sprites; //Hashmap for sprites
+	protected HashMap<String, Sprite> sprites; //Hashmap for sprites
 	
 	
 	// TODO: Make Static
@@ -28,7 +29,7 @@ public abstract class Faction {
 	public abstract void loadUI();
 	
 	public Faction(String name) {
-		sprites = new HashMap<String, AnimSet>();
+		sprites = new HashMap<String, Sprite>();
 		
 		units = new ArrayList<String>();
 		buildings = new ArrayList<String>();
@@ -55,12 +56,12 @@ public abstract class Faction {
 		return buildings;
 	}
 	
-	public AnimSet getSprite(String index) {
+	public Sprite getSprite(String index) {
 		if(sprites.get(index) != null)
 			return sprites.get(index);
 		else {
 			System.err.println(name + " failed to get " + index + " sprite");
-			return ResourceLoader.missing;
+			return null;
 		}
 	}
 
