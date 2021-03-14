@@ -1,4 +1,4 @@
-package main.game.entities.selectables.unit;
+package main.game.entities.controllables;
 
 public enum UnitStat {
 	

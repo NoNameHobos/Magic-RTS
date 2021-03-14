@@ -8,10 +8,10 @@ import org.newdawn.slick.geom.Rectangle;
 
 import main.GameConstants;
 import main.engine.Engine;
-import main.game.entities.Entity;
+import main.game.entities.controllables.Controllable;
 import main.game.map.Map;
 import main.game.player.Player;
-import main.game.ui.SPRITES;
+import main.game.ui.UI;
 import main.game.ui.UIElement;
 import main.graphics.res.Sprite;
 import main.input.Clickable;
@@ -40,7 +40,7 @@ public class Minimap extends UIElement implements Clickable {
 	int[][] fog_of_war;
 	Color[][] tiles;
 
-	public Minimap(SPRITES ui, Point pos) {
+	public Minimap(UI ui, Point pos) {
 		super(ui, pos, WIDTH, HEIGHT);
 		this.player = ui.getPlayer();
 		this.map = player.getMap();
@@ -108,34 +108,33 @@ public class Minimap extends UIElement implements Clickable {
 			}
 		}
 
-		// Render All Entities
-
-		for (Entity entity : Entity.getEntities()) {
+		// Render All Units on the map
+		for (Controllable controllable : Controllable.getControllables()) {
 			Color c;
-			if (entity.getPlayer() != null)
-				c = entity.getPlayer().getPlayerColor();
+			if (controllable.getPlayer() != null)
+				c = controllable.getPlayer().getPlayerColor();
 			else
 				c = new Color(0, 0, 200);
 			g.setColor(c);
 
-			float width = entity.getSprite().getWidth() * scaleX;
-			float height = entity.getSprite().getHeight() * scaleY;
+			float width = controllable.getSprite().getWidth() * scaleX;
+			float height = controllable.getSprite().getHeight() * scaleY;
 
-			Point miniPos = mapToMinimap(entity.getPos());
+			Point miniPos = mapToMinimap(controllable.getPos());
 
 			g.fillOval(miniPos.getX() - width / 2, miniPos.getY() - height / 2, width, height);
 		}
 
 		// Draw Selected entities
 		g.setColor(Color.white);
-		for (Entity entity : player.getSelected()) {
+		for (Controllable controllable : player.getSelected()) {
 
 			int buffer = 3;
 
-			float width = entity.getSprite().getWidth() * scaleX;
-			float height = entity.getSprite().getHeight() * scaleY;
+			float width = controllable.getSprite().getWidth() * scaleX;
+			float height = controllable.getSprite().getHeight() * scaleY;
 
-			Point miniPos = mapToMinimap(entity.getPos());
+			Point miniPos = mapToMinimap(controllable.getPos());
 
 			float x = miniPos.getX() - width / 2 + buffer;
 			float y = miniPos.getY() - height / 2 + buffer;

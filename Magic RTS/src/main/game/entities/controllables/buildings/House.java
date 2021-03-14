@@ -1,4 +1,4 @@
-package main.game.entities.buildings;
+package main.game.entities.controllables.buildings;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;

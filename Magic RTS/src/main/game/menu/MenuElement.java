@@ -5,7 +5,7 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
-import main.game.Renderable;
+import main.game.entities.Renderable;
 import main.input.Mouse;
 
 public abstract class MenuElement extends Renderable {

@@ -1,12 +1,12 @@
-package main.game.entities.selectables.unit.abilities;
+package main.game.entities.controllables.abilities;
 
 import org.newdawn.slick.geom.Point;
 
 import main.GameConstants;
-import main.game.entities.Controllable;
-import main.game.entities.Unit;
 import main.game.entities.ai.pathfinding.Path;
-import main.game.entities.selectables.unit.UnitStat;
+import main.game.entities.controllables.Controllable;
+import main.game.entities.controllables.Unit;
+import main.game.entities.controllables.UnitStat;
 
 public interface BasicCommandable {
 

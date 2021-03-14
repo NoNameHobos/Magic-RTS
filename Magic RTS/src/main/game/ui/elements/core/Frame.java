@@ -4,7 +4,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
-import main.game.ui.SPRITES;
+import main.game.ui.UI;
 import main.game.ui.UIElement;
 import main.graphics.res.Sprite;
 
@@ -14,7 +14,7 @@ public class Frame extends UIElement {
 	
 	private int width;
 	
-	public Frame(SPRITES ui, Point pos) {
+	public Frame(UI ui, Point pos) {
 		super(ui, pos, Engine.getWIDTH() ,64);
 		
 		sprite = player.getFaction().getSprite("ui_bottombar");

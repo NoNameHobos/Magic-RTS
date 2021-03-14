@@ -7,7 +7,7 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
-import main.game.ui.SPRITES;
+import main.game.ui.UI;
 import main.game.ui.UIElement;
 import main.graphics.res.Sprite;
 import main.input.Clickable;
@@ -27,7 +27,7 @@ public class UIButton extends UIElement implements Clickable, KeyListener {
 	
 	private char hotKey;
 	
-	public UIButton(SPRITES ui, UIElement container, Point pos, String name, Sprite s) {
+	public UIButton(UI ui, UIElement container, Point pos, String name, Sprite s) {
 		super(ui, pos, WIDTH, HEIGHT);
 
 		Engine.getInput().addMouseListener(this);
@@ -44,7 +44,7 @@ public class UIButton extends UIElement implements Clickable, KeyListener {
 		mouse = new Point(0, 0);
 	}
 	
-	public UIButton(SPRITES ui, UIElement container, Point pos, String name) {
+	public UIButton(UI ui, UIElement container, Point pos, String name) {
 		super(ui, pos, WIDTH, HEIGHT);
 
 		Engine.getInput().addMouseListener(this);

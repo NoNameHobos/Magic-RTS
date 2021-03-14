@@ -12,7 +12,7 @@ import main.game.player.Player;
 import main.game.ui.elements.core.*;
 import main.graphics.res.Sprite;
 
-public class SPRITES {
+public class UI {
 
 	private final ArrayList<UIElement> elements = new ArrayList<UIElement>();
 
@@ -20,7 +20,7 @@ public class SPRITES {
 	
 	private int alpha = 255;
 	
-	public SPRITES(Player player) {
+	public UI(Player player) {
 		this.player = player;
 		player.setUI(this);
 

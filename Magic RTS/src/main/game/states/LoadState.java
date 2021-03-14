@@ -98,13 +98,14 @@ public class LoadState extends State {
 		resources.addSpriteSheet("menu_button", "button_anim.png", 220, 60);
 		resources.addSpriteSheet("menu_buttonR", "button_animR.png", 220, 60);
 
-		FONTS.put("Menu", loadFont("FantaisieArtistique.ttf", 45));
-		// Load setons tile set
-		TILE_SETS.put("setons", TileSet.loadTileSet("setons"));
+		resources.addFont("Menu", loadFont"Fantaisieartisique.ttf", 45);
 		
-		MAPS.put("Seton's Clutch", MapLoader.loadMap("maps\\setons"));
-		MAPS.put("Mountain Pass", MapLoader.loadMap("maps\\mountainpass"));
-		MAPS.put("Grass", MapLoader.loadMap("maps\\grass"));
+		// Load setons tile set
+		resources.addTileSet("setons", TileSet.loadTileSet("setons"));
+		
+		resources.addMap("Seton's Clutch", MapLoader.loadMap("map\\setons"));
+		resources.addMap("Mountain Pass", MapLoader.loadMap("maps\\mountainpass"));
+		resources.addMap("Grass", MapLoader.loadMap("map\\grass"));
 	}
 
 }

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
-import main.game.ui.SPRITES;
+import main.game.ui.UI;
 import main.game.ui.UIElement;
 import main.game.ui.elements.UIButton;
 import main.graphics.res.Sprite;
@@ -34,7 +34,7 @@ public class CommandHUD extends UIElement {
 	
 	private static Sprite sprite = RES.getSprite("commandhud");
 
-	public CommandHUD(SPRITES ui, Point pos) {
+	public CommandHUD(UI ui, Point pos) {
 		super(ui, pos, WIDTH, HEIGHT);
 
 		buttons = new HashMap<String, UIButton>();

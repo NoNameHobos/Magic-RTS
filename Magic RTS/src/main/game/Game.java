@@ -10,12 +10,14 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
-import main.game.entities.Entity;
+import main.game.entities.Renderable;
 import main.game.map.Map;
 import main.game.player.Camera;
 import main.game.player.Faction;
 import main.game.player.Player;
 import main.input.Mouse;
+
+import static main.engine.Engine.RESOURCES;
 
 public class Game {
 
@@ -40,7 +42,7 @@ public class Game {
 	public void init() {
 		Faction.initFactions();
 		System.out.println("Initializing game on " + MAP_TO_LOAD);
-		map = MAPS.get(MAP_TO_LOAD);
+		map = RESOURCES.getMap(MAP_TO_LOAD);
 		map.init(this);
 
 		controllingPlayer = map.getFocusedPlayer();
@@ -57,18 +59,11 @@ public class Game {
 	// Update
 	public void tick() {
 		// Update Entities
-		ArrayList<Entity> entities = Entity.getEntities();
-		entities.removeIf(entity -> (entity.toDispose()));
+		ArrayList<GameObject> gameObjects = GameObject.getObjects();
 		
-		entities.sort(new SortByDepth());
-		for (Entity entity : entities) {
-			if(entity.getPos().getX() < 0 || entity.getPos().getY() < 0) {
-				entity.dispose();
-				continue;
-			}
-			entity.tick();
-		}
-
+		gameObjects.removeIf(obj -> (obj.toDispose()));
+		GameObject.updateAll();
+		
 		for (Player player : map.getPlayers()) {
 			if (player != null) {
 				player.tick();
@@ -83,7 +78,6 @@ public class Game {
 
 	// Render
 	public void render(Graphics g) {
-
 		Camera curCamera = map.getMainCamera();
 		Rectangle offset = curCamera.getViewRect();
 		float xOffset = offset.getX();
@@ -96,33 +90,29 @@ public class Game {
 		// Render all the tiles
 		map.renderTiles(g);
 
-		// Render Entities
-		ArrayList<Entity> entities = Entity.getEntities();
-
-		Camera c = map.getMainCamera();
+		// Render the Renderables
+		Camera cam = map.getMainCamera();
+		Renderable.renderAll(g, cam);
 
 		//UI ui = map.getControlledPlayer().getUI();
-		
-		for (Entity entity : entities) {
-			if (c.getRenderRect().contains(entity.getPos()) 
-					//&& !ui.contains(objectToUI(entity.getPos(), c))
-					)
-				entity.draw(g);
-		}
-
+		/*
+		 * for (Entity entity : entities) { if
+		 * (cam.getRenderRect().contains(entity.getPos()) //&&
+		 * !ui.contains(objectToUI(entity.getPos(), c)) ) entity.draw(g); }
+		 */
 		// Render player stuff
 		map.getFocusedPlayer().render(g);
 
 		// Render the view port if necessary
 		if (dispView) {
 			g.setColor(Color.blue);
-			g.draw(c.getRenderRect());
+			g.draw(cam.getRenderRect());
 
 			g.setColor(Color.pink);
-			g.drawOval(c.getPos(true).getX() - 16, c.getPos(true).getY() - 16, 32, 32);
+			g.drawOval(cam.getPos(true).getX() - 16, cam.getPos(true).getY() - 16, 32, 32);
 
 			g.setColor(Color.red);
-			g.draw(c.getViewRect());
+			g.draw(cam.getViewRect());
 		}
 
 		// Revert Camera transformations to draw the UI
@@ -198,15 +188,4 @@ public class Game {
 	public Player getControllingPlayer() {
 		return controllingPlayer;
 	}
-}
-
-// Comparators
-
-class SortByDepth implements Comparator<Entity> {
-
-	@Override
-	public int compare(Entity e1, Entity e2) {
-		return (e2.getDepth() - e1.getDepth());
-	}
-	
 }

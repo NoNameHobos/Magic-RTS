@@ -1,29 +1,29 @@
 package main.game;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.game.alarm.Alarm;
-import main.game.entities.Entity;
 
 public abstract class GameObject {
 
 	public static final int ALARM_COUNT = 10;
 
-	public static final ArrayList<GameObject> OBJECTS = new ArrayList<GameObject>();
+	private static final ArrayList<GameObject> OBJECTS = new ArrayList<GameObject>();
 	
 	protected Alarm alarm[] = new Alarm[ALARM_COUNT];
 
 	// Keep track of when to remove from entities list
 	protected boolean _dispose = false;
-	protected Point pos;
-	protected Rectangle boundingbox;
+	protected Point mapPos;
+	protected int depth;
+	protected Rectangle collider;
 	
 	public GameObject(Point pos) {
-		this.pos = pos;
+		this.mapPos = pos;
 		
 		for(int i = 0; i < ALARM_COUNT - 1; i++){
 			alarm[i] = new Alarm(null);
@@ -31,41 +31,42 @@ public abstract class GameObject {
 		OBJECTS.add(this);
 	}
 
+	/**
+	 * Step event. Gets called once per tick after object is updated
+	 */
 	protected abstract void step();
 	
+	/**
+	 * Update the game object and alarms
+	 */
 	private void update() {
 		for(Alarm a : alarm) {
 			a.update();
 		}
-		
+		depth = -(int)Math.round(mapPos.getY());
 		step();
 	}
 
+	/**
+	 * Update all objects and dispose entities outside of the map
+	 */
 	public static void updateAll() {
 		for(GameObject object : OBJECTS) {
-			object.update();
-			
-			// Check if object is an entity, if so - check if it needs to be removed
 			if(object instanceof Entity) {
-				Entity entity = (Entity)object;
-				if(object.getPos().getX() < 0 || entity.getPos().getY() < 0) {
+				if(object.getPos().getX() < 0 || object.getPos().getY() < 0) {
 					object.dispose();
 					continue;
 				}
 			}
+			
+			object.update();
 		}
 	}
-	
-	public static void renderAll(Graphics g) {
-		for(GameObject object : OBJECTS) {
-			if(object instanceof Renderable)
-				((Renderable)object).render(g);
-		}
-	}
+
 	
 	public float getPointDirection(Point target) {
-		float deltaX = target.getX() - pos.getX();
-		float deltaY = target.getY() - pos.getY();
+		float deltaX = target.getX() - mapPos.getX();
+		float deltaY = target.getY() - mapPos.getY();
 		float disTo = getDistanceTo(target);
 		float angle = (float) Math.toDegrees(Math.acos(deltaX / disTo));
 		if (deltaY > 0) {
@@ -75,8 +76,8 @@ public abstract class GameObject {
 	}
 
 	public float getDistanceTo(Point target) {
-		float x1 = pos.getX();
-		float y1 = pos.getY();
+		float x1 = mapPos.getX();
+		float y1 = mapPos.getY();
 
 		float x2 = target.getX();
 		float y2 = target.getY();
@@ -97,6 +98,29 @@ public abstract class GameObject {
 	}
 
 	public Point getPos() {
-		return pos;
+		return mapPos;
+	}
+	
+	public int getDepth() {
+		return depth;
+	}
+	
+	public Rectangle getCollider() {
+		return collider;
+	}
+	
+	public static ArrayList<GameObject> getObjects() {
+		return OBJECTS;
+	}
+
+	//Comparators
+	private class SortByDepth implements Comparator<GameObject> {
+
+		@Override
+		public int compare(GameObject obj1, GameObject obj2) {
+			return (obj2.getDepth() - obj1.getDepth());
+		}
+		
 	}
 }
+

@@ -24,9 +24,8 @@ public class ResourceLoader {
 	public static final int FONT_SIZE = 60;
 	
 	// TODO: Move onto separate thread
-
+	
 	private final HashMap<String, Sprite> SPRITES = new HashMap<String, Sprite>();
-
 	private final HashMap<String, Map> MAPS = new HashMap<String, Map>();
 	private final HashMap<String, TileSet> TILE_SETS = new HashMap<String, TileSet>();
 	private final HashMap<String, TrueTypeFont> FONTS = new HashMap<String, TrueTypeFont>();

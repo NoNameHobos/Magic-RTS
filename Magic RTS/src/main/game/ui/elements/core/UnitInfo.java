@@ -3,9 +3,9 @@ package main.game.ui.elements.core;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
-import main.game.entities.Entity;
+import main.game.entities.controllables.Controllable;
 import main.game.player.Player;
-import main.game.ui.SPRITES;
+import main.game.ui.UI;
 import main.game.ui.UIElement;
 import main.graphics.res.Sprite;
 
@@ -16,7 +16,7 @@ public class UnitInfo extends UIElement {
 	public static int WIDTH = 450;
 	public static final int HEIGHT = 64;
 	
-	public UnitInfo(SPRITES ui, Point pos) {
+	public UnitInfo(UI ui, Point pos) {
 		super(ui, pos, WIDTH, HEIGHT);
 		this.player = ui.getPlayer();
 	}
@@ -33,12 +33,12 @@ public class UnitInfo extends UIElement {
 			float y = bounding.getY() + marginY;
 			
 			for(int i = 0; i < player.getSelected().size(); i++) {
-				Entity e = player.getSelected().get(i);
+				Controllable controllable = player.getSelected().get(i);
 				
-				Sprite sprite = e.getSprite();
+				Sprite sprite = controllable.getSprite();
 				
 				if(i != 0) {
-					Entity prev = player.getSelected().get(i - 1);
+					Controllable prev = player.getSelected().get(i - 1);
 					x += prev.getSprite().getWidth();
 				}
 				

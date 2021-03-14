@@ -1,7 +1,7 @@
-package main.game.entities.selectables.unit.vikings;
+package main.game.entities.controllables.vikings;
 
-import main.game.entities.Unit;
-import main.game.entities.selectables.unit.UnitStat;
+import main.game.entities.controllables.Unit;
+import main.game.entities.controllables.UnitStat;
 import main.game.player.Player;
 
 public class Axeman extends Unit {

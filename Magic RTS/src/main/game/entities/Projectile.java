@@ -2,7 +2,6 @@ package main.game.entities;
 
 import org.newdawn.slick.geom.Point;
 
-import main.game.Renderable;
 import main.game.map.Map;
 import main.game.player.Player;
 import main.graphics.res.Sprite;

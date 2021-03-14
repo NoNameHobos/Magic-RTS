@@ -150,4 +150,12 @@ public class Sprite extends Resource {
 	public int getHeight() {
 		return anim.getHeight();
 	}
+	
+	public void setOrigin(Point o) {
+		origin = o;
+	}
+	
+	public Point getOrigin() {
+		return origin;
+	}
 }

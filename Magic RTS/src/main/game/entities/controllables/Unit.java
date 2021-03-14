@@ -1,4 +1,4 @@
-package main.game.entities;
+package main.game.entities.controllables;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -11,8 +11,7 @@ import main.game.entities.ai.pathfinding.NodeMap;
 import main.game.entities.ai.pathfinding.Path;
 import main.game.entities.ai.pathfinding.PathFinder;
 import main.game.entities.ai.pathfinding.PathObject;
-import main.game.entities.selectables.unit.UnitStat;
-import main.game.entities.selectables.unit.abilities.BasicCommandable;
+import main.game.entities.controllables.abilities.BasicCommandable;
 import main.game.player.Player;
 import main.graphics.res.Sprite;
 import main.util.Utils;

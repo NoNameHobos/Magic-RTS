@@ -14,14 +14,14 @@ import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
 import main.game.Game;
-import main.game.entities.Entity;
-import main.game.entities.Unit;
-import main.game.entities.buildings.Building;
-import main.game.entities.buildings.House;
-import main.game.entities.buildings.Townhall;
+import main.game.entities.controllables.Controllable;
+import main.game.entities.controllables.Unit;
+import main.game.entities.controllables.buildings.Building;
+import main.game.entities.controllables.buildings.House;
+import main.game.entities.controllables.buildings.Townhall;
 import main.game.map.Map;
 import main.game.player.factions.FType;
-import main.game.ui.SPRITES;
+import main.game.ui.UI;
 
 public class Player {
 	
@@ -29,7 +29,7 @@ public class Player {
 	private String name;
 	private Point spawn;
 	
-	private ArrayList<Entity> selected;
+	private ArrayList<Controllable> selected;
 	
 	private ArrayList<Building> buildings;
 	private ArrayList<Unit> units;
@@ -38,7 +38,7 @@ public class Player {
 	
 	//private Point spawn;
 	private Camera playerCamera;
-	private SPRITES ui;
+	private UI ui;
 	private Game game;
 	
 	private int playerID;
@@ -62,7 +62,7 @@ public class Player {
 		
 		buildings = new ArrayList<Building>();
 		units = new ArrayList<Unit>();
-		selected = new ArrayList<Entity>();
+		selected = new ArrayList<Controllable>();
 
 		buildings.add(new House(this, new Point(spawn.getX() + TW_RENDER * 5, spawn.getY() + TH_RENDER * 5)));
 		buildings.add(new Townhall(this, new Point(spawn.getX(), spawn.getY())));
@@ -134,11 +134,11 @@ public class Player {
 		return playerColor;
 	}
 
-	public ArrayList<Entity> getSelected() {
+	public ArrayList<Controllable> getSelected() {
 		return selected;
 	}
 	
-	public void setSelected(ArrayList<Entity> sel) {
+	public void setSelected(ArrayList<Controllable> sel) {
 		selected = sel;
 	}
 	
@@ -174,11 +174,11 @@ public class Player {
 		return map;
 	}
 
-	public SPRITES getUI() {
+	public UI getUI() {
 		return ui;
 	}
 	
-	public void setUI(SPRITES ui) {
+	public void setUI(UI ui) {
 		this.ui = ui;
 	}
 	

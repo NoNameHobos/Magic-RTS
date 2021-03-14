@@ -1,17 +1,16 @@
-package main.game.entities;
+package main.game.entities.controllables;
 
 import java.util.ArrayList;
 
 import org.newdawn.slick.geom.Point;
 
-import main.game.Renderable;
-import main.game.entities.selectables.unit.UnitStat;
+import main.game.entities.Renderable;
 import main.game.map.Map;
 import main.game.player.Player;
 
 public abstract class Controllable extends Renderable {
 
-	public static final ArrayList<Controllable> OBJECTS = new ArrayList<Controllable>();
+	private static final ArrayList<Controllable> OBJECTS = new ArrayList<Controllable>();
 	
 	protected Player player;
 	protected Map map;
@@ -72,5 +71,8 @@ public abstract class Controllable extends Renderable {
 		this.map = map;
 	}
 	
+	public static ArrayList<Controllable> getControllables() {
+		return OBJECTS;
+	}
 
 }

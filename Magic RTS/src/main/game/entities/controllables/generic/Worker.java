@@ -1,6 +1,7 @@
-package main.game.entities.selectables.unit;
+package main.game.entities.controllables.generic;
 
-import main.game.entities.Unit;
+import main.game.entities.controllables.Unit;
+import main.game.entities.controllables.UnitStat;
 import main.game.player.Player;
 
 public class Worker extends Unit {

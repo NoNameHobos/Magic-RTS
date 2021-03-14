@@ -1,10 +1,13 @@
-package main.game;
+package main.game.entities;
+
+import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
 import main.engine.Engine;
-import main.game.entities.Entity;
+import main.game.Entity;
+import main.game.player.Camera;
 import main.graphics.res.Sprite;
 import main.util.ResourceLoader;
 
@@ -15,6 +18,7 @@ import main.util.ResourceLoader;
  *
  */
 public abstract class Renderable extends Entity {
+	private static final ArrayList<Renderable> RENDERABLES = new ArrayList<Renderable>();
 
 	protected static final ResourceLoader RES = Engine.RESOURCES;
 	protected Sprite activeSprite;
@@ -31,6 +35,7 @@ public abstract class Renderable extends Entity {
 	public Renderable(Point pos, Sprite sprite) {
 		super(pos);
 		activeSprite = sprite;
+		RENDERABLES.add(this);
 	}
 	
 	/**
@@ -41,17 +46,23 @@ public abstract class Renderable extends Entity {
 		this(pos, null);
 	}
 	
+	public static void renderAll(Graphics g, Camera cam) {
+		for(Renderable ren : getRenderables()) {
+			if(cam.contains(ren)) {
+				ren.render(g);
+			}
+		}
+	}
+	
 	/**
-	 * Update depth and Render the active Sprite
+	 * Render the active Sprite
 	 */
-	protected void render(Graphics g) {
-		depth = -(int)Math.round(mapPos.getY() + activeSprite.getHeight() * .8);
-
+	private void render(Graphics g) {
 		if(activeSprite != null) {
 			activeSprite.draw(mapPos.getX(), mapPos.getY());
 		}
 	}
-		
+	
 	// Getters and Setters
 	/**
 	 * Get the active sprite currently being rendered
@@ -67,5 +78,9 @@ public abstract class Renderable extends Entity {
 	 */
 	public int getDepth() {
 		return depth;
+	}
+	
+	public static ArrayList<Renderable> getRenderables() {
+		return RENDERABLES;
 	}
 }

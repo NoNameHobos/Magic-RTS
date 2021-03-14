@@ -7,18 +7,20 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 
 import main.GameConstants;
 import main.engine.Engine;
+import main.game.entities.Renderable;
 import main.game.map.Map;
-import main.game.ui.SPRITES;
+import main.game.ui.UI;
 import main.input.Clickable;
 import main.util.Utils;
 
 public class Camera implements Clickable {
 
 	private Map map;
-	private SPRITES ui;
+	private UI ui;
 
 	private Point mouse;
 	
@@ -68,6 +70,14 @@ public class Camera implements Clickable {
 
 	}
 
+	public boolean contains(Shape shape) {
+		return renderRect.contains(shape);
+	}
+	
+	public boolean contains(Renderable renderable) {
+		return renderRect.contains(renderable.getPos());
+	}
+	
 	public void update() {
 		// Update UI
 		if (ui != null)
@@ -198,11 +208,11 @@ public class Camera implements Clickable {
 		return zoom;
 	}
 
-	public SPRITES getUI() {
+	public UI getUI() {
 		return ui;
 	}
 
-	public void setUI(SPRITES ui) {
+	public void setUI(UI ui) {
 		this.ui = ui;
 		uiOffsetLower = ui.getPlayer().getFaction().getSprite("ui_bottombar").getHeight();
 	}

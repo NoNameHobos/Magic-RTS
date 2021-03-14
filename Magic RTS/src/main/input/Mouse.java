@@ -9,7 +9,6 @@ import org.newdawn.slick.geom.Point;
 import main.engine.Engine;
 import main.game.Game;
 import main.game.GameObject;
-import main.game.entities.Entity;
 import main.game.player.Camera;
 import main.game.states.GameState;
 
@@ -52,10 +51,10 @@ public class Mouse implements MouseListener {
 		screenPos.setY(raw.getY());
 	}
 
-	public boolean overEntity() {
-		ArrayList<GameObject> entities = GameObject.OBJECTS;
-		for (int i = 0; i < entities.size(); i++) {
-			if (entities.get(i).getCollider().contains(pos))
+	public boolean overObject() {
+		ArrayList<GameObject> objects = GameObject.getObjects();
+		for (int i = 0; i < objects.size(); i++) {
+			if (objects.get(i).getCollider().contains(pos))
 				return true;
 		}
 		return false;

@@ -1,4 +1,4 @@
-package main.game.entities.buildings;
+package main.game.entities.controllables.buildings;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -6,9 +6,9 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.GameConstants;
-import main.game.entities.Controllable;
 import main.game.entities.ai.pathfinding.Node;
 import main.game.entities.ai.pathfinding.NodeMap;
+import main.game.entities.controllables.Controllable;
 import main.game.player.Player;
 import main.graphics.res.Sprite;
 
@@ -43,8 +43,8 @@ public abstract class Building extends Controllable {
 		for (int i = 0; i < n.length; i++) {
 			for (int j = 0; j < n[i].length; j++) {
 
-				Point topLeft = new Point(mapPos.getX() - origin.getX(),
-						mapPos.getY() - origin.getY() + (float) Math.ceil(activeSprite.getHeight() / 3 * 2));
+				Point topLeft = new Point(mapPos.getX() - activeSprite.getOrigin().getX(),
+						mapPos.getY() - activeSprite.getOrigin().getY() + (float) Math.ceil(activeSprite.getHeight() / 3 * 2));
 
 				int x = (int) ((topLeft.getX() - NodeMap.XOFFSET) / NodeMap.NODE_WIDTH) + i;
 				int y = (int) ((topLeft.getY() - NodeMap.YOFFSET) / NodeMap.NODE_HEIGHT) + j;

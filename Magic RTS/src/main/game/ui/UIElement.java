@@ -13,7 +13,7 @@ import main.util.ResourceLoader;
 public abstract class UIElement {
 	protected static final ResourceLoader RES = Engine.RESOURCES;
 	
-	protected SPRITES ui;
+	protected UI ui;
 	protected Player player;
 
 	protected Point uiPos;
@@ -21,7 +21,7 @@ public abstract class UIElement {
 	
 	protected Sprite sprite;
 	
-	public UIElement(SPRITES ui, Point pos, float width, float height) {
+	public UIElement(UI ui, Point pos, float width, float height) {
 		this.ui = ui;
 
 		this.player = ui.getPlayer();
@@ -53,7 +53,7 @@ public abstract class UIElement {
 
 	public abstract void step();
 
-	public SPRITES getUI() {
+	public UI getUI() {
 		return ui;
 	}
 
