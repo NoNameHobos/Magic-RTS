@@ -21,9 +21,6 @@ import main.game.player.Camera;
 import main.game.player.Player;
 import main.game.player.factions.FType;
 import main.game.ui.UI;
-import main.util.ResourceLoader;
-
-import static main.engine.Engine.RESOURCES;
 
 public class Map {
 
@@ -62,7 +59,7 @@ public class Map {
 	// For a loaded map
 	public Map(String title, String tileSet, ArrayList<String> mapData) {
 		mapName = title;
-		tileset = TILE_SETS.get(tileSet);
+		tileset = Engine.RES.getTileSet(tileSet);
 		players = new Player[maxPlayers];
 
 		mapWidth = mapData.get(0).split(" ").length;
@@ -92,7 +89,7 @@ public class Map {
 	}
 
 	public void loadPlayers() {
-
+		System.out.println("Loading players");
 		int NODES_PER_SITE = 1;
 
 		players = new Player[spawns.length];
@@ -124,9 +121,9 @@ public class Map {
 
 	public void spawnNodes(Point centrePoint, int density, float sep, String nodeType) {
 		for (int i = 0; i < density; i++) {
-			float x = (float) Math.cos(Math.toRadians(sep * i)) * RESOURCES.getSprite("node_mana").getWidth() * 2
+			float x = (float) Math.cos(Math.toRadians(sep * i)) * Engine.RES.getSprite("node_mana").getWidth() * 2
 					+ (centrePoint.getX() + 2) * TW_RENDER;
-			float y = (float) Math.sin(Math.toRadians(sep * i)) * (RESOURCES.getSprite("node_mana").getHeight())
+			float y = (float) Math.sin(Math.toRadians(sep * i)) * (Engine.RES.getSprite("node_mana").getHeight())
 					+ (centrePoint.getY() + 4) * TH_RENDER;
 			switch (nodeType.toUpperCase()) {
 			case "MANA":

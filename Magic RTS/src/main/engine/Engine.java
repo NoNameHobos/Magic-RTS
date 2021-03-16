@@ -1,6 +1,7 @@
 package main.engine;
 
 import java.io.File;
+import java.util.HashMap;
 
 import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
@@ -9,17 +10,14 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import main.game.State;
-import main.game.states.EditorState;
-import main.game.states.GameState;
-import main.game.states.LoadState;
-import main.game.states.MenuState;
-import main.game.states.TestState;
+import main.game.states.*;
 import main.graphics.Display;
 import main.input.Mouse;
 import main.util.ResourceLoader;
 
 public class Engine implements Game {
-
+	public static final ResourceLoader RES = new ResourceLoader();
+	
 	private static State currentState;
 	public static String ABS_PATH = (new File("").getAbsolutePath() + "\\");
 
@@ -29,15 +27,8 @@ public class Engine implements Game {
 	private static Mouse mouse;
 
 	private static String TITLE;
-
-	// Initialize States
-	public static final State menuState = new MenuState();
-	public static final State loadState = new LoadState();
-	public static final State gameState = new GameState();
-	public static final State editorState = new EditorState();
-	public static final State testState = new TestState();
 	
-	public static final ResourceLoader RESOURCES = new ResourceLoader();
+	public static final HashMap<String, State> STATES = new HashMap<String, State>();
 
 	public Engine(int WIDTH, int HEIGHT, String TITLE) {
 		System.out.println("Initializing Engine..");
@@ -46,7 +37,6 @@ public class Engine implements Game {
 		Engine.TITLE = TITLE;
 
 		new Display(this, WIDTH, HEIGHT);
-
 	}
 
 	public void init(GameContainer gc) throws SlickException {
@@ -54,11 +44,21 @@ public class Engine implements Game {
 		mouse = new Mouse(input);
 
 		// Start game here once everything is loaded
-		RESOURCES.init();
-		Engine.setCurrentState(loadState);
+		RES.init();
+		loadSprites();
+		createStates();
+		Engine.setCurrentState("menu");
+	}
+	
+	public void createStates() {
+		STATES.put("load", new LoadState());
+		STATES.put("game", new GameState());
+		STATES.put("editor", new EditorState());
+		STATES.put("menu", new MenuState());
+		STATES.put("test", new TestState());
 	}
 
-	public void update(GameContainer gc, int i) throws SlickException {
+	public void update(GameContainer gc, int delta) throws SlickException {
 		if (Engine.currentState != null) {
 			mouse.update();
 			Engine.currentState.step();
@@ -97,12 +97,93 @@ public class Engine implements Game {
 		return currentState;
 	}
 
-	public static void setCurrentState(State currentState) {
-		Engine.currentState = currentState;
-		Engine.currentState.start();
+	public static void setCurrentState(String stateName) {
+		State new_state = STATES.get(stateName);
+		if(new_state != null) {
+			Engine.currentState = new_state;
+			Engine.currentState.start();
+		} else System.err.println("Error changing state to: " + stateName);
 	}
 
 	public static Input getInput() {
 		return input;
+	}
+
+	/**
+	 * Load all sprites here!
+	 */
+	private void loadSprites() {
+		System.out.println("Loading resources");
+		// TODO: Autoload Sprites
+
+		//~UI Sprites====================================
+		final String sprite_path = "res\\sprites\\UI\\";
+		
+		// Resources Icons
+		RES.setCurrentDir(sprite_path);
+		RES.addSprite("manaIcon", "icons\\manaIcon.png");
+		RES.addSprite("mithrilIcon", "icons\\manaIcon.png");
+		RES.addSprite("stoneIcon", "icons\\manaIcon.png");
+		
+		RES.addSprite("UIManaBar", "bars\\manaBar.png");
+		RES.addSprite("UIStoneBar", "bars\\stoneBar.png");
+		RES.addSprite("UIMithrilBar", "bars\\mithrilBar.png");
+		
+		RES.addSprite("viking_bottom", "frames\\bottombar_vike.png");
+		RES.addSprite("steam_bottom", "frames\\bottombar_steam.png");
+		
+		RES.addSprite("viking_minimap", "minimap\\minimap_vike.png");
+		RES.addSprite("steam_minimap", "minimap\\minimap_steam.png");
+
+		RES.addSprite("move_button", "buttons\\move.png");
+		RES.addSprite("attack_button", "buttons\\attack.png");
+		RES.addSprite("build_button", "buttons\\build.png");
+		
+		RES.addSprite("commandhud", "command hud\\commandhud.png");
+		
+		//~Map Sprites====================================
+		// Warg
+		//resources.addSprite("warg_right", "mobs\\bigUnit\\warg\\warg");
+
+		// Vikings
+		RES.setCurrentDir("res\\sprites\\");
+		RES.addSprite("vike_hut", "buildings\\viking\\hut.png");
+		RES.addSprite("vike_th", "buildings\\viking\\th.png");
+		
+		// Steampunk
+		RES.addSprite("steam_th", "buildings\\steampunk\\th.png");
+
+		// Resource Nodes
+		RES.addSprite("node_mana", "objects\\resources\\mana.png");
+		RES.addSprite("node_stone", "objects\\resources\\stone.png");
+		RES.addSprite("node_mithril", "objects\\resources\\mithril.png");
+
+		// Workers
+		RES.addSprite("worker_right", "mobs\\worker\\miner.png");
+		RES.addSprite("worker_left", "mobs\\worker\\miner_left.png");
+		
+		// Axeman
+		RES.setCurrentDir("res\\sprites\\mobs\\");
+		RES.addSpriteSheet("axeman_down", "axeman\\axeman_down.png", 48, 48, 100);
+		RES.addSpriteSheet("axeman_up", "axeman\\axeman_up.png", 48, 48, 100);
+		RES.addSpriteSheet("axeman_left", "axeman\\axeman_left.png", 48, 48, 100);
+		RES.addSpriteSheet("axeman_right", "axeman\\axeman_right.png", 48, 48, 100);
+		
+		// Menu button
+		RES.setCurrentDir("res\\sprites\\menu\\");
+		RES.addSpriteSheet("menu_button", "button_anim.png", 220, 60, 3);
+		RES.addSpriteSheet("menu_buttonR", "button_animR.png", 220, 60, 3);
+
+		RES.setCurrentDir("res\\font\\");
+		RES.addFont("Menu", "FantaisieArtistique.ttf", 45);
+		
+		// Load setons tile set
+		RES.setCurrentDir("res\\sprites\\tilesets");
+		RES.addTileSet("setons", "setons");
+		
+		RES.setCurrentDir("res\\maps\\");
+		RES.loadMap("Seton's Clutch", "setons.map");
+		RES.loadMap("Mountain Pass", "mountainpass.map");
+		RES.loadMap("Grass", "grass.map");
 	}
 }

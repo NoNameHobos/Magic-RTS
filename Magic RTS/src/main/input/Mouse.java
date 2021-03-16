@@ -34,8 +34,8 @@ public class Mouse implements MouseListener {
 
 		Point raw = new Point(input.getMouseX(), input.getMouseY());
 
-		if (Engine.getCurrentState() == Engine.gameState) {
-			Camera c = ((GameState) Engine.gameState).getGame().getMap().getMainCamera();
+		if (Engine.getCurrentState() instanceof GameState) {
+			Camera c = ((GameState) Engine.getCurrentState()).getGame().getMap().getMainCamera();
 			if (c != null) {
 				Point targetPoint = Game.UIToObject(raw, c);
 

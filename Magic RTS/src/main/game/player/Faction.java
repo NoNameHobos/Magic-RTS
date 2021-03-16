@@ -13,7 +13,7 @@ import main.util.ResourceLoader;
 public abstract class Faction {
 
 	public static final HashMap<FType, Faction> FACTIONS = new HashMap<FType, Faction>();
-	protected static final ResourceLoader RES = Engine.RESOURCES;
+	protected static final ResourceLoader RES = Engine.RES;
 	
 	protected HashMap<String, Sprite> sprites; //Hashmap for sprites
 	

@@ -1,5 +1,7 @@
 package main.util;
 
+import static main.GameConstants.ERROR_MISSING_TEXTURE;
+
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
@@ -13,10 +15,9 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.TrueTypeFont;
 
 import main.game.map.Map;
+import main.game.map.MapLoader;
 import main.game.map.TileSet;
 import main.graphics.res.Sprite;
-
-import static main.GameConstants.ERROR_MISSING_TEXTURE;
 
 public class ResourceLoader {
 
@@ -30,8 +31,9 @@ public class ResourceLoader {
 	private final HashMap<String, TileSet> TILE_SETS = new HashMap<String, TileSet>();
 	private final HashMap<String, TrueTypeFont> FONTS = new HashMap<String, TrueTypeFont>();
 
-	private static Sprite missingSprite;
 	private static SpriteSheet missing_ss;
+	private static Sprite missingSprite;
+	
 	/**
 	 * Initialize Resource Loader
 	 */
@@ -45,7 +47,17 @@ public class ResourceLoader {
 		}
 		
 		// Create missingSprite object
-		missingSprite = Sprite.createSprite(missing_ss);
+		missingSprite = Sprite.createSprite("missing", missing_ss);
+	}
+
+	/**
+	 * add a preloaded sprite to the sprite list
+	 * @param name - name of sprite
+	 * @param sprite - Sprite object to add
+	 */
+	public void addSprite(String name, Sprite sprite) {
+		SPRITES.put(name, sprite);
+		// TODO: Put name in Sprite
 	}
 	
 	/**
@@ -62,23 +74,17 @@ public class ResourceLoader {
 	 * @param path - Local Path to the sprite (see ResourceLoader.setCurrentDir())
 	 */
 	public void addSprite(String name, String path) {
-		Sprite sprite = loadSprite(path);
-		SPRITES.put(name, sprite);
-		// TODO: Add name to sprite
-	}
-	
-	/**
-	 * add a preloaded sprite to the sprite list
-	 * @param name - name of sprite
-	 * @param sprite - Sprite object to add
-	 */
-	public void addSprite(String name, Sprite sprite) {
-		SPRITES.put(name, sprite);
+		System.out.println("Loading: " + name + " from " + path);
+		Sprite sprite = loadSprite(name, currentDir + path);
+		if(sprite == null)
+			sprite = missingSprite.copy();
+		addSprite(name, sprite);
 	}
 	
 	// Resource loading functions
-	public static TrueTypeFont loadFont(String font, int size) {
-		InputStream is = org.newdawn.slick.util.ResourceLoader.getResourceAsStream("res\\font\\" + font);
+	private TrueTypeFont loadFont(String font, int size) {
+		System.out.println("Loading: " + font + " from " + currentDir + font);
+		InputStream is = org.newdawn.slick.util.ResourceLoader.getResourceAsStream(currentDir + font);
 		TrueTypeFont ttf = null;
 		try {
 			Font f = Font.createFont(Font.TRUETYPE_FONT, is);
@@ -98,19 +104,19 @@ public class ResourceLoader {
 	 * @param path - Path to the requested sprite
 	 * @return a new sprite based on the supplied path.
 	 */
-	public Sprite loadSprite(String path) {
+	public Sprite loadSprite(String name, String path) {
 		File file = new File(currentDir + path);
 		if(!file.isFile())
 			return null;
 		else {
 			Image ref_img = loadImage(currentDir + path);
-			return Sprite.createSprite(ref_img);
+			return Sprite.createSprite(name, ref_img);
 		}
 	}
 	
-	public Sprite loadSprite(String path, int tw, int th, int duration) {
+	public Sprite loadSprite(String name, String path, int tw, int th, int duration) {
 		Image ref_img = loadImage(path);
-		return Sprite.createSprite(ref_img, tw, th, duration);
+		return Sprite.createSprite(name, ref_img, tw, th, duration);
 	}
 	
 	/**
@@ -119,22 +125,21 @@ public class ResourceLoader {
 	 * @param duration
 	 * @return a Sprite based on the supplied SpriteSheet and given duration (int)
 	 */
-	public Sprite loadSprite(SpriteSheet s_sheet, int duration) {
-		return Sprite.createSprite(s_sheet, duration);
+	public Sprite loadSprite(String name, SpriteSheet s_sheet, int duration) {
+		return Sprite.createSprite(name, s_sheet, duration);
 	}
 	
-	public void addSpriteSheet(String name, String path, int tw, int th) {
+	public void addSpriteSheet(String name, String path, int tw, int th, int duration) {
 		SpriteSheet ss;
-		
 		try {
+			System.err.println(currentDir + " : " + path);
 			ss = new SpriteSheet(currentDir + path, tw, th);
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			//e.printStackTrace();
 			ss = missing_ss;
 		}
 		
-		this.addSprite(name,loadSprite(ss, Sprite.DEFAULT_DURATION));
+		this.addSprite(name,loadSprite(name, ss, duration));
 	}
 	
 	/**
@@ -205,6 +210,64 @@ public class ResourceLoader {
 			System.err.println("Sprite missing: " + name);
 			return missingSprite;
 		} else return sprite;
+	}
+	
+	/**
+	 * Load a font
+	 * @param name - Name of the font
+	 * @param path - Relative Path to the font
+	 * @param size - size of the font
+	 */
+	public void addFont(String name, String path, int size) {
+		FONTS.put(name, loadFont(path, size));
+	}
+	
+	/**
+	 * Get a loaded font
+	 * @param name - Name of the Font (String)
+	 * @return TrueTypeFont
+	 */
+	public TrueTypeFont getFont(String name) {
+		TrueTypeFont font = FONTS.get(name);
+		if(font != null)
+			return font;
+		else {
+			System.err.println("Could not load font: " + name);
+			return null;
+		}
+	}
+	
+	public void addTileSet(String name, String path) {
+		TILE_SETS.put(name, TileSet.loadTileSet(path));
+	}
+	
+	public TileSet getTileSet(String name) {
+		return TILE_SETS.get(name);
+	}
+	
+	public void loadMap(String name, String path) {
+		 MAPS.put(name, MapLoader.loadMap(currentDir + path));
+	}
+	
+	public Map getMap(String name) {
+		Map m = MAPS.get(name);
+		if(m != null)
+			return m;
+		else {
+			System.err.println("Failed to retrieve map: " + name);
+			return null;
+		}
+	}
+	public Sprite getMissing() {
+		return missingSprite;
+	}
+	
+	public Image getMissingImage() {
+		return getMissing().getFrame(0);
+	}
+	
+	public HashMap<String, Map> getMaps() {
+		return MAPS;
 	}
 
 }

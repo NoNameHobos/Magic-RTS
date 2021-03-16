@@ -5,11 +5,10 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
 import main.graphics.res.Sprite;
-import main.util.ResourceLoader;
 
 public class MenuButton extends MenuElement  {
 
-	private Sprite sprite;
+	private Sprite forwardSprite, backwardSprite;
 	private String text;
 
 	private ButtonAction buttonAction;
@@ -17,36 +16,51 @@ public class MenuButton extends MenuElement  {
 	public MenuButton(Menu menu, Point pos, String text, boolean defunct) {
 		super(menu, text,  pos, new Point(190, 48));
 		this.text = text;
-		sprite = RES.getSprite("menu_button").copy();
+		forwardSprite = RES.getSprite("menu_button").copy();
+		forwardSprite.getAnim().setLooping(false);
+		backwardSprite = RES.getSprite("menu_buttonR");
+		backwardSprite.getAnim().setLooping(false);
 	}
 
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.white);
 		
-		//float x;
+		float x = 0;
 		
-		g.setFont(ResourceLoader.FONTS.get("Menu"));
+		g.setFont(RES.getFont("Menu"));
 		if (mouseOver()) {
-			sprite.draw(mapPos.getX(), mapPos.getY());
-			// TODO: In Sprite.java implement boolean isStopped()
-			//if(animation.isStopped())
-			//	animation.start();
+			forwardSprite.getAnim().start();
+			forwardSprite.draw(mapPos.getX(), mapPos.getY());
 			
 			//animation.draw(pos.getX(), pos.getY());
-			
-			//if(backAnim.getCurrentFrame())
+			if(backwardSprite.getAnim().getFrame() != 0) {
+				backwardSprite.getAnim().restart();
+				backwardSprite.getAnim().stop();
+			}
 			//backAnim.restart();
 			//backAnim.stop();
-			//x = pos.getX() + animation.getFrame() * 0.5f;
+			x = mapPos.getX() + forwardSprite.getAnim().getFrame() * 0.5f;
 		} else {
+			if(forwardSprite.getAnim().getFrame() > 0) {
+				backwardSprite.draw(mapPos.getX(), mapPos.getY());
+				backwardSprite.getAnim().start();
+			} else {
+				forwardSprite.draw(x, mapPos.getY());
+			}
+			if(!forwardSprite.getAnim().isStopped()) {
+				forwardSprite.getAnim().stop();
+				forwardSprite.getAnim().restart();
+			}
+			if(backwardSprite.getAnim().getFrame() == backwardSprite.lastFrame())
+				backwardSprite.getAnim().stop();
 			//animation.restart();
 			//animation.stop();
 			//backAnim.start();
-			//x = pos.getX() + (backAnim.getFrameCount() - backAnim.getFrame()) * 0.5f;
+			x = mapPos.getX() + (backwardSprite.getAnim().getFrameCount() - backwardSprite.getAnim().getFrame()) * 0.5f;
 			//backAnim.draw(pos.getX(), pos.getY());
 		}
-		g.drawString(text, mapPos.getX(), mapPos.getY() - g.getFont().getHeight(text)/8);
+		g.drawString(text, x, mapPos.getY() - g.getFont().getHeight(text)/8);
 	}
 
 	// Getters and Setters

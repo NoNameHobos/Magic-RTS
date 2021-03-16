@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
+import main.engine.Engine;
 import main.game.states.MenuState;
 import main.input.Clickable;
+import main.util.ResourceLoader;
 
 public abstract class Menu implements Clickable {
+	protected static final ResourceLoader RES = Engine.RES;
 	
 	protected ArrayList<MenuButton> buttons;
 

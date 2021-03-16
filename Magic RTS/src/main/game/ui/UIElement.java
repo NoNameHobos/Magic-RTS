@@ -11,7 +11,7 @@ import main.graphics.res.Sprite;
 import main.util.ResourceLoader;
 
 public abstract class UIElement {
-	protected static final ResourceLoader RES = Engine.RESOURCES;
+	protected static final ResourceLoader RES = Engine.RES;
 	
 	protected UI ui;
 	protected Player player;

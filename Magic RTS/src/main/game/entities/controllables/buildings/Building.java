@@ -20,16 +20,18 @@ public abstract class Building extends Controllable {
 
 	public Building(Player player, Point _pos, Sprite sprite) {
 		// TODO: Rearrange this
-		super(new Point(_pos.getX() + sprite.getWidth() / 2, _pos.getY() + sprite.getHeight() / 2));
+		super(new Point(_pos.getX() + sprite.getWidth() / 2, _pos.getY() + sprite.getHeight() / 2), sprite, player);
 		
-		nodes = null;
-		while(nodes == null) nodes = findNodes();
+		/*nodes = null;
+		//while (nodes == null)
+		//	nodes = findNodes();
+		if (nodes.length > 0) {
+			float colWidth = nodes[0].length * GameConstants.TW_RENDER;
+			float colHeight = nodes.length * GameConstants.TH_RENDER;
 
-		float colWidth = nodes[0].length * GameConstants.TW_RENDER;
-		float colHeight = nodes.length * GameConstants.TH_RENDER;
-
-		collider = new Rectangle(mapPos.getX() - colWidth / 2 * GameConstants.TW_RENDER,
-				mapPos.getY() - colHeight / 2 * GameConstants.TH_RENDER, colWidth, colHeight);
+			collider = new Rectangle(mapPos.getX() - colWidth / 2 * GameConstants.TW_RENDER,
+					mapPos.getY() - colHeight / 2 * GameConstants.TH_RENDER, colWidth, colHeight);
+		}*/
 	}
 
 	public Node[][] findNodes() {
@@ -43,8 +45,8 @@ public abstract class Building extends Controllable {
 		for (int i = 0; i < n.length; i++) {
 			for (int j = 0; j < n[i].length; j++) {
 
-				Point topLeft = new Point(mapPos.getX() - activeSprite.getOrigin().getX(),
-						mapPos.getY() - activeSprite.getOrigin().getY() + (float) Math.ceil(activeSprite.getHeight() / 3 * 2));
+				Point topLeft = new Point(mapPos.getX() - activeSprite.getOrigin().getX(), mapPos.getY()
+						- activeSprite.getOrigin().getY() + (float) Math.ceil(activeSprite.getHeight() / 3 * 2));
 
 				int x = (int) ((topLeft.getX() - NodeMap.XOFFSET) / NodeMap.NODE_WIDTH) + i;
 				int y = (int) ((topLeft.getY() - NodeMap.YOFFSET) / NodeMap.NODE_HEIGHT) + j;
@@ -52,22 +54,22 @@ public abstract class Building extends Controllable {
 					n[i][j] = nodeMap[y + 1][x + 1];
 					n[i][j].setCost(100);
 				} catch (ArrayIndexOutOfBoundsException e) {
-					if(System.currentTimeMillis() % 1000 == 0) 
+					if (System.currentTimeMillis() % 1000 == 0)
 						System.err.println(mapPos.getX() + " " + mapPos.getY());
 					mapPos.setX(map.getMapWidth() / 2);
 					mapPos.setY(map.getMapHeight() / 2);
-					return null;					
+					return null;
 				}
 			}
 		}
-		
 		return n;
 	}
-	
+
 	public void draw(Graphics g) {
-		//float width = activeSprite.getWidth();
-		//float height = activeSprite.getHeight();
-		//activeSprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY(), width, height);
+		// float width = activeSprite.getWidth();
+		// float height = activeSprite.getHeight();
+		// activeSprite.draw(pos.getX() - origin.getX(), pos.getY() - origin.getY(),
+		// width, height);
 
 		for (Node[] nodeSet : nodes) {
 			for (Node node : nodeSet) {

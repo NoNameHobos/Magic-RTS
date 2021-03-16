@@ -1,7 +1,6 @@
 package main.game;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -17,7 +16,6 @@ import main.game.player.Faction;
 import main.game.player.Player;
 import main.input.Mouse;
 
-import static main.engine.Engine.RESOURCES;
 
 public class Game {
 
@@ -42,7 +40,7 @@ public class Game {
 	public void init() {
 		Faction.initFactions();
 		System.out.println("Initializing game on " + MAP_TO_LOAD);
-		map = RESOURCES.getMap(MAP_TO_LOAD);
+		map = Engine.RES.getMap(MAP_TO_LOAD);
 		map.init(this);
 
 		controllingPlayer = map.getFocusedPlayer();

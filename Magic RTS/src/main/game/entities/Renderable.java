@@ -19,8 +19,8 @@ import main.util.ResourceLoader;
  */
 public abstract class Renderable extends Entity {
 	private static final ArrayList<Renderable> RENDERABLES = new ArrayList<Renderable>();
-
-	protected static final ResourceLoader RES = Engine.RESOURCES;
+	protected static final ResourceLoader RES = Engine.RES;
+	
 	protected Sprite activeSprite;
 	
 	// Rendering depth

@@ -7,6 +7,7 @@ import org.newdawn.slick.geom.Point;
 import main.game.entities.Renderable;
 import main.game.map.Map;
 import main.game.player.Player;
+import main.graphics.res.Sprite;
 
 public abstract class Controllable extends Renderable {
 
@@ -17,11 +18,21 @@ public abstract class Controllable extends Renderable {
 	
 	protected float[] stats;
 	
-	public Controllable(Point pos) {
-		super(pos);
+	public Controllable(Point pos, Sprite sprite, Player player) {
+		super(pos, sprite);
+		this.player = player;
 		stats = new float[UnitStat.values().length];
 		OBJECTS.add(this);
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isMouseOver() {
+		return false;
+	}
+	
 
 	/**
 	 * Get a stat from the unit
@@ -50,8 +61,7 @@ public abstract class Controllable extends Renderable {
 	public void setStat(UnitStat stat, float num) {
 		int val = stat.val();
 		stats[val] = num;
-	}
-	
+	}	
 	
 	// Getters and Setters
 	

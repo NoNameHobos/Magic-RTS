@@ -20,12 +20,7 @@ public class Sprite extends Resource {
 	// Default origin is top-left
 	private Point origin = new Point(0, 0);
 	
-	// TODO:Make this an enum
-	private boolean properties[] = {
-			false // FLIPPED
-	};
-	
-	public static final int FLIPPED = 0;
+	public boolean isFlipped = false;
 	
 	private int duration;
 
@@ -36,8 +31,6 @@ public class Sprite extends Resource {
 		this.duration = Arrays.stream(anim.getDurations()).sum();
 		this.name = name;
 		
-		System.out.println("Created new sprite: " + name);
-		System.out.println("Using: " + anim);
 	}
 	
 	/**
@@ -45,9 +38,9 @@ public class Sprite extends Resource {
 	 * @param sprite SpriteSheet to use
 	 * @return a new single image 
 	 */
-	public static Sprite createSprite(Image img) {
+	public static Sprite createSprite(String name, Image img) {
 		SpriteSheet ss = new SpriteSheet(img, img.getWidth(), img.getHeight());
-		return createSprite(ss, -1);
+		return createSprite(name, ss, -1);
 	}
 	
 	/**
@@ -56,11 +49,11 @@ public class Sprite extends Resource {
 	 * @param duration - Duration of animation (ms)
 	 * @return new sprite from the image with size tw x th.
 	 */
-	public static Sprite createSprite(SpriteSheet spriteSheet, int duration) {
+	public static Sprite createSprite(String name, SpriteSheet spriteSheet, int duration) {
 		Animation anim = new Animation(spriteSheet, duration);
-		Sprite s = new Sprite(anim, spriteSheet.getName());
-		
+		Sprite s = new Sprite(anim, name);
 		s.duration = duration;
+		System.out.println("Created new sprite: " + name);
 		return s;
 	}
 
@@ -72,9 +65,9 @@ public class Sprite extends Resource {
 	 * @param duration - Duration of animation (ms)
 	 * @return new sprite from the image with size tw x th.
 	 */
-	public static Sprite createSprite(Image image, int tw, int th, int duration) {
+	public static Sprite createSprite(String name, Image image, int tw, int th, int duration) {
 		SpriteSheet ss = new SpriteSheet(image, tw, th);
-		return createSprite(ss, duration);
+		return createSprite(name, ss, duration);
 	}
 
 	// Draw function wrappers
@@ -104,35 +97,26 @@ public class Sprite extends Resource {
 		Sprite spr = new Sprite(anim, name);
 		return spr;
 	}
-	
-	//public Sprite getScaledCopy(float width, float height) {
-		//sprite.getScaledCopy(width, sprite.getHeight())
-	//}
-	
+
 	// Getters and Setters
+	public boolean isStopped() {
+		return anim.isStopped();
+	}
+	
+	public int lastFrame() {
+		return anim.getFrameCount() - 1;
+	}
+	
 	public String getName() {
 		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Animation getAnim() {
 		return anim;
-	}
-
-	public boolean getProperty(int index) {
-		try {
-			return properties[index];
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.err.println("Failed to get property of " + name + " at index " + index);
-			return false;
-		}
-	}
-
-	public void setProperty(int index, boolean prop) {
-		try {
-			properties[index] = prop;
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.err.println("Could not retrieve property of " + name + " at index " + index);
-		}
 	}
 
 	public Image getFrame(int index) {

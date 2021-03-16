@@ -23,7 +23,7 @@ public class MapLoader {
 		
 		try {
 			//open file
-			InputStream inputStream = new FileInputStream(file + ".map");
+			InputStream inputStream = new FileInputStream(file);
 			int byteRead;
 			
 			//read data

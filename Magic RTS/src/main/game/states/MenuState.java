@@ -27,13 +27,13 @@ public class MenuState extends State {
 		MENUS.put("main", new MainMenu(this));
 		MENUS.put("map_select", new MapSelectMenu(this));
 		MENUS.put("editor", new EditorMenu(this));
-		currentMenu = MENUS.get("main");
+		MENUS.forEach((str, menu) -> Engine.getInput().addMouseListener(menu));
 	}
 
 	@Override
 	public void init() {
+		currentMenu = MENUS.get("main");
 		currentMenu.init();
-		MENUS.forEach((str, menu) -> Engine.getInput().addMouseListener(menu));
 	}
 
 	@Override

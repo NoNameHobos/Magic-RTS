@@ -39,7 +39,7 @@ public abstract class Unit extends Controllable implements BasicCommandable {
 	public static final int TOLERANCE = 20; // Pathfinding Tolerance
 
 	public Unit(Player player, float x, float y, Sprite sprite) {
-		super(new Point(x, y));
+		super(new Point(x, y), sprite, player);
 		
 		des = new Point(x, y);
 		pathing = false;

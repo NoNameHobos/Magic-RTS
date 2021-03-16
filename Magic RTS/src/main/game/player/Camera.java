@@ -13,6 +13,7 @@ import main.GameConstants;
 import main.engine.Engine;
 import main.game.entities.Renderable;
 import main.game.map.Map;
+import main.game.states.GameState;
 import main.game.ui.UI;
 import main.input.Clickable;
 import main.util.Utils;
@@ -251,6 +252,6 @@ public class Camera implements Clickable {
 
 	@Override
 	public boolean isAcceptingInput() {
-		return Engine.getCurrentState() == Engine.gameState;
+		return (Engine.getCurrentState() instanceof GameState);
 	}
 }

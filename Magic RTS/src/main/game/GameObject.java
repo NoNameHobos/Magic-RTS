@@ -28,6 +28,7 @@ public abstract class GameObject {
 		for(int i = 0; i < ALARM_COUNT - 1; i++){
 			alarm[i] = new Alarm(null);
 		}
+		
 		OBJECTS.add(this);
 	}
 
@@ -40,9 +41,9 @@ public abstract class GameObject {
 	 * Update the game object and alarms
 	 */
 	private void update() {
-		for(Alarm a : alarm) {
-			a.update();
-		}
+		//for(Alarm a : alarm) {
+		//	a.update();
+		//}
 		depth = -(int)Math.round(mapPos.getY());
 		step();
 	}

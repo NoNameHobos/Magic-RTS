@@ -17,7 +17,7 @@ public class TestState extends State {
 
 	@Override
 	protected void init() {
-		test_sprite = RES.getSprite("menu_button");
+		test_sprite = Engine.RES.getSprite("menu_button");
 		System.out.println("Loaded sprite: " + test_sprite);
 	}
 

@@ -9,7 +9,6 @@ import main.game.map.Map;
 import main.game.menu.Menu;
 import main.game.menu.MenuButton;
 import main.game.states.MenuState;
-import main.util.ResourceLoader;
 
 import static main.game.Game.MAP_TO_LOAD;;
 
@@ -26,7 +25,7 @@ public class MapSelectMenu extends Menu {
 		float y = 200;
 		float marginY = 55;
 		
-		mapList = ResourceLoader.MAPS;
+		mapList = RES.getMaps();
 		
 		String str = mapList.keySet().toString().replaceAll("\\[", "");
 		str = str.replaceAll("\\]", "");
@@ -37,7 +36,7 @@ public class MapSelectMenu extends Menu {
 			MenuButton cur_button = addButton(new Point(0, y + i * marginY), vals[i], null);
 			cur_button.setAction(() -> {
 				MAP_TO_LOAD = cur_button.getText();
-				Engine.setCurrentState(Engine.gameState);
+				Engine.setCurrentState("game");
 			});
 		}
 

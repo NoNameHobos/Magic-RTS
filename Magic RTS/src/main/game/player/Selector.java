@@ -8,9 +8,7 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import main.engine.Engine;
-import main.game.Entity;
 import main.game.Game;
-import main.game.GameObject;
 import main.game.entities.controllables.Controllable;
 import main.game.entities.controllables.Unit;
 import main.input.Mouse;
@@ -140,7 +138,7 @@ public class Selector implements MouseListener {
 				// Handle single selection
 				Controllable nearest = getNearestControllable();
 
-				if (nearest.mouseOver()) {
+				if (nearest.isMouseOver()) {
 					player.getSelected().add(nearest);
 					selectedSomething = true;
 				}

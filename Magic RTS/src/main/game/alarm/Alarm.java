@@ -23,8 +23,10 @@ public class Alarm {
 		if(timer > 0)
 			timer -= 1;
 		else {
-			alarm.event();
-			timer = -1;
+			if(this.alarm != null) {
+				alarm.event();
+				timer = -1;
+			}
 		}
 	}
 }
